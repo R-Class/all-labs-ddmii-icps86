@@ -1,0 +1,380 @@
+---
+title: "Lab3_4_DDMII"
+author: "ignacio"
+date: "February 2, 2017"
+output: github_document
+html_document:
+  df_print: paged
+  keep_md: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set( message=F, warning=F )
+```
+
+```{r, include= FALSE, }
+#install.packages("devtools")
+#install.packages("GISTools")
+#install.packages( "maptools" )
+#devtools::install_github("hrecht/censusapi")
+
+library( censusapi )
+library( devtools )
+library( maptools )
+library( sp )
+library( dplyr )
+library( pander )
+library( ggmap )
+library( ggplot2 )
+library( GISTools )
+library( maps )
+
+setwd("C:\\Users\\icps\\Dropbox\\3. Maxwell\\3. Spring Term\\5. Data Driven II\\Labs\\all-labs-ddmii-icps86\\Lab3_4\\")
+
+```
+
+
+###WEEK 1
+### First, getting the files and wrangling the data
+```{r, warning= F, error= F, comment= F, cache= F}
+# 3 data sets: (1)cendus api data, (2)shape files from census and (3)parcels data
+
+#extracting shape files
+#download.file("ftp://ftp2.census.gov/geo/tiger/TIGER2010/TRACT/2010/tl_2010_36067_tract10.zip", "onondaga census tracts.zip" )
+#unzip( "onondaga census tracts.zip" )
+#file.remove( "onondaga census tracts.zip" )
+
+#creating files: shape file and df
+shapes <- readShapePoly(fn="C:\\Users\\icps\\Dropbox\\3. Maxwell\\3. Spring Term\\5. Data Driven II\\Lab3_4\\shapefiles\\tl_2010_36067_tract10"
+                          ,proj4string=CRS("+proj=longlat +datum=WGS84"))
+
+#exploring the census variables
+#cdat <- read.csv("Census variables.csv")
+#cdat %>% pander
+
+###############################################
+
+# download acs5 2015 for Population, Median Household income, White, Black, Asian, Hispanic or latino, Unemployed, Income < poverty level last 12 months, In Labor Force
+censuskey <- "5a9ad013c3692d7dfdd344a9b2b774f36c50b43d"
+dat <- getCensus(name="acs5", vintage=2015, key=censuskey, 
+                       vars=c("B01001_001E", "B19013_001E", "B01001A_001E","B01001B_001E", "B01001D_001E", "B01001I_001E", "B23025_005E", "B17001_002E", "B23025_002E"), region="tract:*", regionin = "state: 36 + county: 067")
+
+colnames(dat)[4:12] <- c("Pop", "MHincome", "White", "Black", "Asian", "Hispanic", "Unemployed", "Poverty", "Labor")
+
+dat$p.Poverty <- dat$Poverty / dat$Labor
+dat$p.White <- dat$White / dat$Pop
+dat$p.Black <- dat$Black / dat$Pop
+dat$p.Asian <- dat$Asian / dat$Pop
+dat$p.Hispanic <- dat$Hispanic / dat$Pop
+dat$p.Unemployed <- dat$Unemployed / dat$Labor
+
+#reducing sice of dat
+dat <- dat[,c(3:5,13:18)]
+
+```
+
+###1.Household Income
+```{r, warning= FALSE}
+summary(dat$MHincome)
+
+#Setting up the colors
+f.color <- colorRampPalette( c("red2","white","chartreuse2"))
+colors <- f.color( 4 ) # number of groups you desire
+
+#dividing the ranked data into groups and adding color
+shape.colors <- cut( rank(dat$MHincome), breaks=4, labels=colors)
+shape.colors <- as.character(shape.colors)
+
+
+order <- match(shapes$TRACTCE10, dat$tract) #this order is used in other two maps
+shape.colors <- shape.colors[order]
+
+par( mar=c(0,0,1,0))
+plot(shapes, col=shape.colors, border = "white")
+title(main="Household Income in Onondaga County", line = 0)
+map.scale( metric=F, ratio=F, relwidth = 0.15, cex=0.5 )
+legend( "left", bg="white"
+        , cex=0.7
+        , legend= rev(c("$8,500   - $36,000","$36,000 - $57,000","$57,000 - $74,000","$74,000 - $126,000"))
+        , fill=rev(colors)
+        , box.col="white"
+        , title="Income groups" 
+        )
+```
+
+###3.Population density
+```{r, warning= FALSE}
+#summary(dat$Pop)
+#Setting up the colors
+f.color <- colorRampPalette( c("white", "light grey","dodgerblue4"))
+colors <- f.color( 6 ) # number of groups you desire
+
+#pie(1:6, col=colors)
+
+#dividing the ranked data into groups and adding color
+shape.colors <- cut( rank(dat$Pop), breaks=6, labels=colors)
+shape.colors <- as.character(shape.colors)
+
+shape.colors <- shape.colors[order]
+
+plot(shapes, col=shape.colors, main="Population Density in Onondaga County")
+map.scale( metric=F, ratio=F, relwidth = 0.15, cex=0.5 )
+legend( "left", bg="white"
+        , legend = c(1:6)
+        , cex=0.7
+        , fill=rev(colors)
+        , box.col="white"
+        , title="Density Ranking" 
+        )
+
+```
+
+
+###3.Census Tracks with mayority Black and White population
+```{r, warning= FALSE}
+
+#counties with mayority Black and white population
+black <- dat$p.Black > .6
+white <- dat$p.White > .8
+
+#Setting up the colors
+colors <- c("white","burlywood1","burlywood4")
+
+shape.colors <- replicate(140,colors[1])
+
+shape.colors[black] <- colors[3]
+shape.colors[white] <- colors[2]
+
+shape.colors <- shape.colors[order]
+
+plot(shapes, col=shape.colors, main="Predominantly Black and White Census Tracks")
+map.scale( metric=F, ratio=F, relwidth = 0.15, cex=0.5 )
+legend( "left", bg="white"
+        , cex=0.7
+        , legend= rev(c("Black (60%)", "White (80%)", "Undetermined"))
+        , fill=rev(colors[c(3,2,1)])
+        , box.col="white"
+        , title="Racial Segregation" 
+        )
+```
+
+
+Getting more info from census api
+
+```{r}
+# download acs5 2015 for Median Age, Single Mothers Below Poverty, Single Mothers Above Poverty, households
+dat2 <- getCensus(name="acs5", vintage=2015, key=censuskey
+                 ,vars=c("B01002A_001E", "B17010_017E", "B17010_037E")
+                 , region="tract:*"
+                 ,regionin = "state: 36 + county: 067")
+
+colnames(dat2)[4:6] <- c("Age", "Smoms.p", "Smoms")
+dat2$Smoms.t <- dat2$Smoms.p + dat2$Smoms
+#reducing sice of dat
+dat2 <- dat2[,c(3,4,5,7)]
+
+#getting total number of households
+x <- getCensus(name="sf1", vintage=2010, key=censuskey
+                 ,vars=c("P0180001")
+                 , region="tract:*"
+                 ,regionin = "state: 36 + county: 067")
+dat2$House <- x$P0180001
+dat2$p.Smoms <- dat2$Smoms.t / dat2$House
+
+
+```
+
+
+
+###WEEK 2
+
+###Question 1: How many single family homes are in each neighborhood?
+
+```{r, warning= FALSE}
+
+#loading shapes of parcels
+parcels <- readShapePoly(fn="C:\\Users\\icps\\Dropbox\\3. Maxwell\\3. Spring Term\\5. Data Driven II\\Lab3_4\\shapefiles\\01-05-2015"
+                          ,proj4string=CRS("+proj=longlat +datum=WGS84"))
+
+#str(parcels)
+
+#aggregate function to create a data.frame of agregation amount of Smoms
+
+x <- as.data.frame(parcels[,c("Nhood", "LandUse")])
+x$Smoms <- x$LandUse == "Single Family"
+ag.x <- aggregate(x$Smoms
+                      , by = list(type = x$Nhood)
+                      , FUN = sum)
+colnames(ag.x)[2] <- "Single Families"
+
+ag.x %>% pander
+
+#if you want to make both data sets mergeable
+#unique(shapes$TRACTCE10)
+#x <- as.numeric(as.character(shapes$TRACTCE10)) / 100
+
+##############################################
+
+#Setting up the colors
+colors <- c("light grey","cornflowerblue")
+
+unique(parcels$Nhood)
+
+
+
+#subsetting parcel data to have only single moms
+parcels.smoms <- parcels[parcels$LandUse == "Single Family",]
+parcels.not <- parcels[parcels$LandUse != "Single Family",]
+
+#Setting up the colors
+colors <- colorRampPalette(c("white","red","blue","green","yellow","black"))
+colors <- colors( 32 ) # number of groups you desire
+palette(colors)
+
+#plotting two maps
+par( mar=c(0,0,1,0))
+  plot(parcels.not, border=F, lwd= .1, col="light grey")
+  plot(parcels.smoms, lwd= .1, border=parcels.smoms$Nhood
+       , col=parcels.smoms$Nhood
+       , add=T)
+  title(main="Single Family Homes in Syracuse", line = 0)
+  legend("left"
+         , bg="white"
+         , cex=0.5
+         , legend= c(as.character(levels(parcels$Nhood)))
+         , fill=colors
+         , box.col="white"
+         , title="The Hoods" 
+        )
+  
+  
+```
+
+###Question 2: Where does land in Syracuse have the highest value? 
+
+- Create a table of the count of single family homes with values above $200k in each neighborhood, as a pecentage of all single family homes
+
+- Plot the value / acre of all parcels in Syracuse
+
+```{r}
+#Total of24392 obs of Single Families
+
+#determinig the amount of parcels with SingleFam and >200k
+
+#creating a logical vector when the value is >200
+q2 <- as.data.frame(parcels.smoms[,c("AssessedVa", "Nhood")])
+
+x <- q2$AssessedVa >= 200000
+q2$log <- x #adding the log vec to the dataframe
+
+ag.q2 <- aggregate(q2$log
+                   , by = list(Nhood = q2$Nhood)
+                   , FUN = sum)
+colnames(ag.q2)[2] <- "SingleFam200k"
+
+ag.q2 %>% pander
+
+
+
+#calculating the total Single families
+t.smoms <- as.data.frame(table(parcels.smoms$Nhood))
+colnames(t.smoms) <- c("Nhood", "Total")
+
+#missing Nhood
+match(t.smoms$Nhood, ag.q2$Nhood)
+t.smoms$Nhood[7]
+# Missing Nhood is "Franklin Square"
+
+t.smoms$s200k <- c(ag.q2$SingleFam200k[1:6], 0 ,ag.q2$SingleFam200k[7:31])
+
+t.smoms$percent <- t.smoms$s200k / t.smoms$Total * 100
+
+t.smoms %>% pander
+
+
+#######################################
+
+#getting the colors i want
+f.color <- colorRampPalette( c("light grey","dodgerblue4"))
+colors <- f.color( 5 ) # number of groups 
+
+#creating the variable with assesd value / acres
+parcels$AVacre <- parcels$AssessedVa / parcels$Acres
+
+#determining color
+shape.colors <- cut( rank(parcels$AVacre), breaks=5, labels=colors)
+shape.colors <- as.character(shape.colors)
+
+#plot
+par( mar=c(0,0,1,0))
+  plot(parcels, col=shape.colors, border = F)
+  title(main="Value of Acre in all parcels of Syracuse", line = 0)
+  legend("topleft"
+         , bg="white"
+         , cex=.7
+         , legend= c(1:5)
+         , fill=colors
+         , box.col="white"
+         , title="Acre Value Rank" 
+        )
+  map.scale( metric=F, ratio=F, relwidth = 0.15, cex=0.5 )
+
+```
+
+
+###Question 3: What is the age of single family homes in each neighborhood?
+
+-Create a table that reports the 10th, 25th, 50th, 75th, and 90th percentile of home ages in each neighborhood.
+
+```{r}
+q3 <- as.data.frame(parcels.smoms)
+q3 <- mutate(q3, age = 2017 - as.numeric(as.character(YearBuilt)))
+q3group <- group_by(q3, Nhood)
+
+table <- summarize(q3group
+                   , tenth = quantile(age, .1, na.rm = T)
+                   , twentyFifth = quantile(age, .25, na.rm = T)
+                   , median = quantile(age, .5, na.rm = T)
+                   , seventyFifth = quantile(age, .75, na.rm = T)
+                   , ninetyth = quantile(age, .9, na.rm = T)
+                   )
+
+table <- arrange(table, desc(median))
+table %>% pander
+```
+
+
+
+-Create a choropleth map that shows the age of properties by decade, pre-1900s can be one category.
+
+```{r}
+#formatting the date
+q3 <- as.data.frame(parcels)
+q3 <- as.numeric(as.character(q3$YearBuilt))
+q3[q3 == 0] <- NA
+summary(q3) %>% pander
+
+#getting the colors i want
+
+f.color <- colorRampPalette( c("light grey", "grey", "dodgerblue4"))
+colors <- f.color( 13 ) # number of groups 
+pie(1:13, col=colors)
+
+shape.colors <- cut(q3, breaks=c(1790, seq(from = 1900, to = 2020, by =10)), labels=colors)  
+shape.colors <- as.character(shape.colors)
+
+par( mar=c(0,0,1,0))
+  plot(parcels, col=shape.colors, border = F)
+  title(main="New and old houses in Syracuse", line = 0)
+  legend("topleft"
+         , bg="white"
+         , cex=.7
+         , legend= c("<1900", seq(from = 1910, to = 2020, by =10))
+         , fill=colors
+         , box.col="white"
+         , title="Decades" 
+        )
+  map.scale( metric=F, ratio=F, relwidth = 0.15, cex=0.5 )
+
+```
+

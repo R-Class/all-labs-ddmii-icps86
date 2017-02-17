@@ -1,21 +1,9 @@
----
-title: "Lab2 DD2, Ignacio"
-author: "ignacio"
-date: "February 2, 2017"
-output: github_document
-html_document:
-  df_print: paged
-  keep_md: true
+Lab2 DD2, Ignacio
+================
+ignacio
+February 2, 2017
 
----
-
-```{r setup, include=FALSE}
-
-knitr::opts_chunk$set( message=F, warning=F )
-
-```
-
-```{r}
+``` r
 #install.packages("animation")
 #install.packages("magick")
 library(animation)
@@ -43,5 +31,6 @@ saveGIF({
 , movie.name = "random_walk.gif"
 , ani.width = 800
 , ani.height = 800)
-
 ```
+
+    ## [1] TRUE
