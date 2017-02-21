@@ -9,7 +9,6 @@ February 2, 2017
 library(animation)
 library(magick)
 
-
 #creating the folder
 dir.create("gifs")
 setwd("gifs")
@@ -34,3 +33,5 @@ saveGIF({
 ```
 
     ## [1] TRUE
+
+![animation.gif](gifs/random_walk.gif)

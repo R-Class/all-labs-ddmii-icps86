@@ -21,7 +21,6 @@ knitr::opts_chunk$set( message=F, warning=F )
 library(animation)
 library(magick)
 
-
 #creating the folder
 dir.create("gifs")
 setwd("gifs")
@@ -45,3 +44,6 @@ saveGIF({
 , ani.height = 800)
 
 ```
+
+![animation.gif](gifs/random_walk.gif)
+

@@ -10,9 +10,7 @@ html_document:
 ---
 
 ```{r setup, include=FALSE}
-
 knitr::opts_chunk$set( message=F, warning=F )
-
 ```
 
 
@@ -85,7 +83,7 @@ levels( dat$Complaint.Type ) <- new.labels
 ```{r}
 #creating a subdata set for only illegal trash outs.
 trash <- dat[ dat$Complaint.Type == "Illegal Trash" , ]
-levels(trash$year)
+#levels(trash$year)
 
 #eliminating unecesary factors
 trash$year <- factor(trash$year)
@@ -112,12 +110,11 @@ barplot(trash.y.m, beside = T)
 
 trash.ym <- format( trash$Violation.Date, "%Y-%m" )
 
-table(trash.ym)
 plot(table(trash.ym), lty=3, lwd=3, las=2, cex.axis=0.5, yaxt="n", ylab="")
 
 #day in all months and years
 trash.ymd <- format( trash$Violation.Date, "%Y-%m-%d" )
-table(trash.ymd)
+#table(trash.ymd)
 barplot(table(trash.ymd), cex.axis=5, yaxt="n", ylab="")
 
 
@@ -125,6 +122,7 @@ barplot(table(trash.ymd), cex.axis=5, yaxt="n", ylab="")
 trash2012 <- trash[ trash$year == "2012" , ]
 trash2012$year <- factor(trash2012$year)
 table(trash2012$year)
+
 barplot(table(trash$month), las=1,ylab="")
 mtext("Year 2012")
 
