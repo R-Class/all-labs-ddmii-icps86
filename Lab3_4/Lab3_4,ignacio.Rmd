@@ -356,9 +356,9 @@ summary(q3) %>% pander
 
 #getting the colors i want
 
-f.color <- colorRampPalette( c("light grey", "grey", "dodgerblue4"))
+f.color <- colorRampPalette( c("white", "grey", "dodgerblue4"))
 colors <- f.color( 13 ) # number of groups 
-pie(1:13, col=colors)
+#pie(rep(1, length(colors)), col=colors)
 
 shape.colors <- cut(q3, breaks=c(1790, seq(from = 1900, to = 2020, by =10)), labels=colors)  
 shape.colors <- as.character(shape.colors)
