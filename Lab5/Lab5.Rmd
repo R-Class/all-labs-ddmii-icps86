@@ -10,7 +10,7 @@ html_document:
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set( message=F, warning=F )
- 
+
 setwd("C:/Users/icps/Dropbox/3. Maxwell/3. Spring Term/5. Data Driven II/Labs/all-labs-ddmii-icps86/Lab5/")
 
 #install.packages( "RCurl" )
@@ -27,6 +27,7 @@ library( ggmap )
 library( jsonlite )
 library( memisc )
 library( ggmap )
+library( GISTools )
 
 ```
 
