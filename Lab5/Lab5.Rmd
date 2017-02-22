@@ -32,7 +32,7 @@ library( GISTools )
 ```
 
 
-1. Load dataset of home prices and assests from Zillow
+###1. Load dataset of home prices and assests from Zillow
 
 ```{}
 #loading the dataset
@@ -45,7 +45,7 @@ dat$House.Price <- as.numeric(gsub( ",","", dat$House.Price ))
 
 ```
 
-2. Add a census tract FIPS ID to each home (spatial join)
+###2. Add a census tract FIPS ID to each home (spatial join)
 
 ```{}
 #cleaning the addresses
@@ -113,9 +113,9 @@ proj4string(dat) <- CRS("+proj=longlat +datum=WGS84")
 
 #Points in poly
 pp <- point.in.poly( dat, shapes )
-head(pp@data)
-dim(pp@data)
-dim(dat@data)
+#head(pp@data)
+#dim(pp@data)
+#dim(dat@data)
 
 #looking at how many points in each poly
 x <- tapply(pp@data$Fadd, pp@data$TRACTCE10, FUN=length)
@@ -133,12 +133,12 @@ x <- as.data.frame(x)
 
 ```
 
-3. Add census data to each home
+###3. Add census data to each home
 ```{r}
 
 ```
 
-4. Aggregate crimes by census tract(spatial join) and add to the dataset.
+###4. Aggregate crimes by census tract(spatial join) and add to the dataset.
 ```{r}
 
 ```
@@ -146,8 +146,8 @@ x <- as.data.frame(x)
 
 ##Lab6
 
-1. Create a map of property values in Buffalo
-2. Create a map of the change in property values
+###1. Create a map of property values in Buffalo
+###2. Create a map of the change in property values
 
 
 
