@@ -111,7 +111,9 @@ plot(shapes)
 #making zoom to the plot 
 plot(shapes
      , xlim=c(min.lon, max.lon) 
-     , ylim=c(min.lat, max.lat) ) 
+     , ylim=c(min.lat, max.lat)
+     , axes = T
+     ) 
   points(dat, pch=20, col="dodgerblue4")
 
 #Running Points in poly to add shape id to points in dat
@@ -175,7 +177,8 @@ proj4string(crime) <- CRS("+proj=longlat +datum=WGS84") #fixing the  "+proj=long
 
 plot(shapes
      , xlim=c(min.lon, max.lon) 
-     , ylim=c(min.lat, max.lat) ) 
+     , ylim=c(min.lat, max.lat)
+     , axes = T) 
   points(crime
          , cex = .8
          , pch=20
@@ -204,25 +207,31 @@ shapes@data$Crimes <- x$Crimes[these.order]
 #formatting the colors
 #summary(shapes@data$Crimes) #45 levels
 f.color <- colorRampPalette( c("white", "light grey","dodgerblue4"))
-colors <- f.color( 11 ) # number of colors
+colors <- f.color( 20 ) # number of colors
 
 #dividing the ranked data into groups and adding color
-shape.colors <- cut( rank(shapes@data$Crimes), breaks=11, labels=colors)
+shape.colors <- cut( rank(shapes@data$Crimes), breaks=20, labels=colors)
 shape.colors <- as.character(shape.colors)
 
 #an alernative way of making colors is to fix the buildin palette of colors like this: palette(colors) and then in the plot just reference a number or a factor and the palette will be automatically used.
 
-#plotting a graph to show crime density
-plot(shapes, col=shape.colors, main="Crimes in Syracuse"
-     , xlim=c(min.lon, max.lon) 
-     , ylim=c(min.lat, max.lat)) 
-legend( "bottomleft", bg="white"
-        , cex=0.7
-        , legend= c("Highest", "Median", "Lowest")
-        , fill=rev(c("white", "light grey","dodgerblue4"))
-        , box.col="white"
-        , title="Crime Rank" 
-        )
+#Using layout to output two plots next to each other
+layout(matrix(c(rep(1,12), 3, 2, 3), nrow=3, ncol=5), widths=c(5,1))
+
+#plotting the graphof crime density
+  par(mar= c(2,4,3,1), oma=c(1,1,1,1), las=1)
+  plot(shapes, col=shape.colors, main="Crimes in Syracuse"
+       , xlim=c(min.lon, max.lon) 
+       , ylim=c(min.lat, max.lat)
+       , axes = T
+       , cex.axis=.8
+       ) 
+#plotting a second image as the  legend
+  par(mar=c(0,1,2,4))
+  image(matrix(1:20, ncol = 20, nrow= 1), col=colors, axes=F)
+  title(main="Rate", line = 1, outer = F, cex.main = 1, adj = 0)
+  axis(4, at= seq(0,1, by=1/4), cex.axis = 1, labels= c("High", "",  "Mid", "", "Low"))
+
 ```
 
 
