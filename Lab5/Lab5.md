@@ -285,11 +285,16 @@ shapes@data$Crimes <- x$Crimes[these.order]
 #formatting the colors
 #summary(shapes@data$Crimes) #45 levels
 f.color <- colorRampPalette( c("white", "light grey","dodgerblue4"))
-colors <- f.color( 45 ) # number of colors
-palette(colors) #setting the pallete into the colors
+colors <- f.color( 11 ) # number of colors
+
+#dividing the ranked data into groups and adding color
+shape.colors <- cut( rank(shapes@data$Crimes), breaks=11, labels=colors)
+shape.colors <- as.character(shape.colors)
+
+#an alernative way of making colors is to fix the buildin palette of colors like this: palette(colors) and then in the plot just reference a number or a factor and the palette will be automatically used.
 
 #plotting a graph to show crime density
-plot(shapes, col=shapes@data$Crimes, main="Crimes in Syracuse"
+plot(shapes, col=shape.colors, main="Crimes in Syracuse"
      , xlim=c(min.lon, max.lon) 
      , ylim=c(min.lat, max.lat)) 
 legend( "bottomleft", bg="white"
