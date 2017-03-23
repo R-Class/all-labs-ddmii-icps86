@@ -1,0 +1,60 @@
+---
+title: "Lab6"
+author: "ignacio"
+date: "March 23, 2017"
+output: github_document
+html_document:
+  df_print: paged
+  keep_md: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set( message=F, warning=F )
+
+setwd("C:/Users/icps/Dropbox/3. Maxwell/3. Spring Term/5. Data Driven II/Labs/all-labs-ddmii-icps86/Lab6/")
+setwd( "./shapefiles" )
+dir()
+
+```
+
+```{r}
+#Downloading Shapfiles
+
+#dir.create( "shapefiles" )
+#setwd( "./shapefiles" )
+#download.file("ftp://ftp2.census.gov/geo/tiger/TIGER2010/TRACT/2010/tl_2010_36067_tract10.zip", "onondaga census tracts.zip" )
+#unzip( "onondaga census tracts.zip" )
+#file.remove( "onondaga census tracts.zip" )
+
+#download.file("ftp://ftp2.census.gov/geo/tiger/TIGER2015/PRISECROADS/tl_2015_36_prisecroads.zip", "primary_and_secondary_roads.zip" )
+#unzip( "primary_and_secondary_roads.zip" )
+#file.remove( "primary_and_secondary_roads.zip" )
+
+################################
+
+
+library( maptools )
+library( sp )
+
+#shapefile
+syr <- readShapePoly( fn="tl_2010_36067_tract10", proj4string=CRS("+proj=longlat +datum=WGS84") )
+par( mar=c(0,0,0,0) )
+plot( syr,  border="gray10" )
+
+#getting roads
+roads <- readShapeLines( fn="tl_2015_36_prisecroads", proj4string=CRS("+proj=longlat +datum=WGS84") )
+head( roads@data )
+table( roads$RTTYP )
+
+#plotting roads
+par( mar=c(0,0,0,0) )
+plot( syr,  border="gray80" )
+plot( roads, col="steelblue", lwd=2, add=T )
+
+interstate <- roads[ roads$RTTYP == "I" , ]
+plot( interstate, col="red", add=T ) 
+
+
+
+```
+
