@@ -27,32 +27,42 @@ types <- data.frame(type = names(table(dat$Type)), freq = as.numeric(table(dat$T
 types <- types[order(types$freq, decreasing = T),]
 rownames(types) <- NULL
 pander(types)
+dim(dat)
 ```
 
 
-**Residential**
 
+We want to know about adding value to improve homes, business renovations.
+
+using value of the permit to 
+
+Investments
+site work, pools, 
+
+Activities can give an idea of vibrancy.
+
+
+
+
+**Residential**
 * Res. Remodel/Chg Occ :  Residential remodeling / Change in occupanc?
 * Res. New 1-2 Family
 
 **businesses**
+* Com. Reno/Rem/Chg Occ:  ???????
 
 * Loading Zone (Business)
 * Block Party (Business)
 * Parking Meter Rental
 
 **uncertain** - difficult to tell if its residential or business
-
 * Com. New Building        
-* Demolition              
+* Demolition per census track              
 * Site Work
 * Footing / Foundation
 
 **Not sure if should be used**
-
 * HVAC/Mechanical:        Heating, ventilation, AC or mechanical repair. (uncertain)
-* Com. Reno/Rem/Chg Occ:  ???????
-* Electric (Meter Set)
 
 **to be Ignored**
 
@@ -61,6 +71,7 @@ pander(types)
 * Sidewalk Replace
 * Fire Alarm
 * Electric
+* Electric (Meter Set)
 * Liability Waiver
 * Road Cut                 
 * Security Alarm
@@ -81,7 +92,17 @@ pander(types)
 types$type <- as.character(types$type)
 class(types$type)
 
-#x <- types$type == "Res. Remodel/Chg Occ" | "Res. New 1-2 Family" | "Loading Zone (Business)" | "Block Party (Business)" | "Parking Meter Rental" | "Com. New Building" | "Demolition" | "Site Work" | "Footing / Foundation" | "HVAC/Mechanical" | "Com. Reno/Rem/Chg Occ" | "Electric (Meter Set)"
+x <- types$type == "Res. Remodel/Chg Occ" | types$type == "Res. New 1-2 Family" | types$type == "Loading Zone (Business)" | types$type == "Block Party (Business)" | types$type == "Parking Meter Rental" | types$type == "Com. New Building" | types$type == "Demolition" | types$type == "Site Work" | types$type == "Footing / Foundation" | types$type == "HVAC/Mechanical" | types$type == "Com. Reno/Rem/Chg Occ" 
+
+types2 <- types[x, ]
+
+types2$type <- as.factor(types2$type)
+
+class(types2)
+barplot(x = types2$type, y=)
+
+unique(dat$Applicant)
+
 
 ```
 
