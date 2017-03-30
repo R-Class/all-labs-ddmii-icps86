@@ -1,0 +1,88 @@
+---
+title: "Permits and ED"
+author: "ignacio"
+date: "March 30, 2017"
+output: github_document
+html_document:
+  df_print: paged
+  keep_md: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set( message=F, warning=F )
+
+setwd("C:/Users/icps/Dropbox/3. Maxwell/3. Spring Term/5. Data Driven II/Labs/all-labs-ddmii-icps86/Permits_and_EC/")
+dir()
+
+dat <- read.csv("C:/Users/icps/Dropbox/3. Maxwell/3. Spring Term/5. Data Driven II/Labs/Instructions/Permits_ED/PrivateInvestment_Clean.csv", stringsAsFactors = F)
+
+library(pander)
+library(dplyr)
+
+
+```
+###Looking at the Permit Data set
+```{r}
+types <- data.frame(type = names(table(dat$Type)), freq = as.numeric(table(dat$Type)))
+types <- types[order(types$freq, decreasing = T),]
+rownames(types) <- NULL
+pander(types)
+```
+
+
+**Residential**
+
+* Res. Remodel/Chg Occ :  Residential remodeling / Change in occupanc?
+* Res. New 1-2 Family
+
+**businesses**
+
+* Loading Zone (Business)
+* Block Party (Business)
+* Parking Meter Rental
+
+**uncertain** - difficult to tell if its residential or business
+
+* Com. New Building        
+* Demolition              
+* Site Work
+* Footing / Foundation
+
+**Not sure if should be used**
+
+* HVAC/Mechanical:        Heating, ventilation, AC or mechanical repair. (uncertain)
+* Com. Reno/Rem/Chg Occ:  ???????
+* Electric (Meter Set)
+
+**to be Ignored**
+
+* Sprinkler
+* Misc.(deck, fence,ramp) 
+* Sidewalk Replace
+* Fire Alarm
+* Electric
+* Liability Waiver
+* Road Cut                 
+* Security Alarm
+* Sign
+* Sidewalk Cafe            
+* Elevator                 
+* Public Assembly
+* Block Party (Residential)
+* Antenna / Dish
+* Pool / Hot Tub           
+* Tank
+* Curb Cut
+* Encroach (Major)
+* Encroachment (Converted)
+* Encroach (Deminimus)
+
+```{r}
+types$type <- as.character(types$type)
+class(types$type)
+
+#x <- types$type == "Res. Remodel/Chg Occ" | "Res. New 1-2 Family" | "Loading Zone (Business)" | "Block Party (Business)" | "Parking Meter Rental" | "Com. New Building" | "Demolition" | "Site Work" | "Footing / Foundation" | "HVAC/Mechanical" | "Com. Reno/Rem/Chg Occ" | "Electric (Meter Set)"
+
+```
+
+

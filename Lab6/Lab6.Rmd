@@ -38,21 +38,28 @@ library( sp )
 
 #shapefile
 syr <- readShapePoly( fn="tl_2010_36067_tract10", proj4string=CRS("+proj=longlat +datum=WGS84") )
+syr1 <- syr[as.numeric(as.character(syr$NAME10)) < 64, ] #Cutting all tracks that are not in syracuse. lower than 64 gets this.
 par( mar=c(0,0,0,0) )
-plot( syr,  border="gray10" )
 
 #getting roads
 roads <- readShapeLines( fn="tl_2015_36_prisecroads", proj4string=CRS("+proj=longlat +datum=WGS84") )
-head( roads@data )
-table( roads$RTTYP )
 
-#plotting roads
-par( mar=c(0,0,0,0) )
-plot( syr,  border="gray80" )
-plot( roads, col="steelblue", lwd=2, add=T )
-
+#getting interstate in a separate object
 interstate <- roads[ roads$RTTYP == "I" , ]
-plot( interstate, col="red", add=T ) 
+
+#plotting map and roads
+par(mar=c(0,0,0,0))
+plot(syr,  border="gray80")
+plot(roads, col="steelblue", lwd=2, add=T)
+plot(interstate, col = "red", add = T)
+
+#clipping roads and interstate
+library(raster)
+library(rgeos)
+
+interstate <- gIntersection(syr, interstate)
+roads <-gIntersection(syr, roads)
+
 
 
 
