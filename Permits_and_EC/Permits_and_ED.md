@@ -3,26 +3,11 @@ Permits and ED
 ignacio
 March 30, 2017
 
-SOME INFORMATION
-================
-
-### CENSUS NEW RESIDENTIAL CONSTRUCTION REPORT
-
-The US Census Bureau and HUD release a MONTHLY NEW RESIDENTIAL CONSTRUCTION REPORT where they show 3 indicators:
-
-The Privately-owned: - Housing permits - Housing starts - Housing completion
-
-(from: <https://www.census.gov/construction/nrc/index.html>)
-
-### Links
-
-Business improvement districts <https://business.syrgov.net/open/business-improvement-districts-bids/>
-
-Vaccant property registry <http://www.syracuse.ny.us/VacantRegistry.aspx>
-
 ### PROPOSED INDICATORS
 
-**1.New Foundations starts (Found)**
+    ## [1] NA
+
+### **1.New Foundations starts (Found)**
 
 <table style="width:90%;">
 <colgroup>
@@ -55,21 +40,18 @@ Vaccant property registry <http://www.syracuse.ny.us/VacantRegistry.aspx>
 </tbody>
 </table>
 
-<table style="width:22%;">
+<table style="width:10%;">
 <colgroup>
-<col width="11%" />
-<col width="11%" />
+<col width="9%" />
 </colgroup>
 <thead>
 <tr class="header">
 <th align="center">FALSE</th>
-<th align="center">TRUE</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td align="center">12</td>
-<td align="center">4</td>
 </tr>
 </tbody>
 </table>
@@ -97,17 +79,17 @@ Vaccant property registry <http://www.syracuse.ny.us/VacantRegistry.aspx>
 <tr class="odd">
 <td align="center">0</td>
 <td align="center">0</td>
-<td align="center">37500</td>
-<td align="center">353400</td>
-<td align="center">4e+05</td>
+<td align="center">125000</td>
+<td align="center">456600</td>
+<td align="center">788900</td>
 <td align="center">2117000</td>
 </tr>
 </tbody>
 </table>
 
-![](Permits_and_ED_files/figure-markdown_github/unnamed-chunk-7-1.png)
+![](Permits_and_ED_files/figure-markdown_github/unnamed-chunk-7-1.png)![](Permits_and_ED_files/figure-markdown_github/unnamed-chunk-7-2.png)
 
-**2.New/Reno Residential (Res)**
+### **2.New/Reno Residential (Res)**
 
 <table style="width:90%;">
 <colgroup>
@@ -148,21 +130,18 @@ Vaccant property registry <http://www.syracuse.ny.us/VacantRegistry.aspx>
 </tbody>
 </table>
 
-<table style="width:22%;">
+<table style="width:10%;">
 <colgroup>
-<col width="11%" />
-<col width="11%" />
+<col width="9%" />
 </colgroup>
 <thead>
 <tr class="header">
 <th align="center">FALSE</th>
-<th align="center">TRUE</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td align="center">2195</td>
-<td align="center">73</td>
 </tr>
 </tbody>
 </table>
@@ -191,16 +170,16 @@ Vaccant property registry <http://www.syracuse.ny.us/VacantRegistry.aspx>
 <td align="center">0</td>
 <td align="center">1000</td>
 <td align="center">3000</td>
-<td align="center">9064</td>
+<td align="center">8609</td>
 <td align="center">9000</td>
 <td align="center">360000</td>
 </tr>
 </tbody>
 </table>
 
-![](Permits_and_ED_files/figure-markdown_github/unnamed-chunk-8-1.png)
+![](Permits_and_ED_files/figure-markdown_github/unnamed-chunk-8-1.png)![](Permits_and_ED_files/figure-markdown_github/unnamed-chunk-8-2.png)
 
-**3.New/Reno Commercial (Com)**
+### **3.New/Reno Commercial (Com)**
 
 <table style="width:90%;">
 <colgroup>
@@ -241,21 +220,18 @@ Vaccant property registry <http://www.syracuse.ny.us/VacantRegistry.aspx>
 </tbody>
 </table>
 
-<table style="width:22%;">
+<table style="width:10%;">
 <colgroup>
-<col width="11%" />
-<col width="11%" />
+<col width="9%" />
 </colgroup>
 <thead>
 <tr class="header">
 <th align="center">FALSE</th>
-<th align="center">TRUE</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td align="center">1245</td>
-<td align="center">504</td>
 </tr>
 </tbody>
 </table>
@@ -282,18 +258,18 @@ Vaccant property registry <http://www.syracuse.ny.us/VacantRegistry.aspx>
 <tbody>
 <tr class="odd">
 <td align="center">0</td>
-<td align="center">8745</td>
-<td align="center">35000</td>
-<td align="center">324900</td>
-<td align="center">137300</td>
+<td align="center">6000</td>
+<td align="center">25000</td>
+<td align="center">354400</td>
+<td align="center">125000</td>
 <td align="center">31810000</td>
 </tr>
 </tbody>
 </table>
 
-![](Permits_and_ED_files/figure-markdown_github/unnamed-chunk-9-1.png)
+![](Permits_and_ED_files/figure-markdown_github/unnamed-chunk-9-1.png)![](Permits_and_ED_files/figure-markdown_github/unnamed-chunk-9-2.png)
 
-**4.Demolitions (Dem)**
+### **4.Demolitions (Dem)**
 
 <table style="width:75%;">
 <colgroup>
@@ -326,21 +302,18 @@ Vaccant property registry <http://www.syracuse.ny.us/VacantRegistry.aspx>
 </tbody>
 </table>
 
-<table style="width:22%;">
+<table style="width:10%;">
 <colgroup>
-<col width="11%" />
-<col width="11%" />
+<col width="9%" />
 </colgroup>
 <thead>
 <tr class="header">
 <th align="center">FALSE</th>
-<th align="center">TRUE</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td align="center">564</td>
-<td align="center">35</td>
 </tr>
 </tbody>
 </table>
@@ -367,18 +340,18 @@ Vaccant property registry <http://www.syracuse.ny.us/VacantRegistry.aspx>
 <tbody>
 <tr class="odd">
 <td align="center">0</td>
-<td align="center">6000</td>
-<td align="center">11500</td>
-<td align="center">17480</td>
-<td align="center">18120</td>
+<td align="center">5900</td>
+<td align="center">11370</td>
+<td align="center">15840</td>
+<td align="center">18000</td>
 <td align="center">3e+05</td>
 </tr>
 </tbody>
 </table>
 
-![](Permits_and_ED_files/figure-markdown_github/unnamed-chunk-10-1.png)
+![](Permits_and_ED_files/figure-markdown_github/unnamed-chunk-10-1.png)![](Permits_and_ED_files/figure-markdown_github/unnamed-chunk-10-2.png)
 
-**5.Installations and Repairs (Ins)**
+### **5.Installations and Repairs (Ins)**
 
 <table style="width:94%;">
 <colgroup>
@@ -491,33 +464,30 @@ Vaccant property registry <http://www.syracuse.ny.us/VacantRegistry.aspx>
 </tbody>
 </table>
 
-<table style="width:22%;">
+<table style="width:10%;">
 <colgroup>
-<col width="11%" />
-<col width="11%" />
+<col width="9%" />
 </colgroup>
 <thead>
 <tr class="header">
 <th align="center">FALSE</th>
-<th align="center">TRUE</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td align="center">11188</td>
-<td align="center">2095</td>
 </tr>
 </tbody>
 </table>
 
-<table style="width:69%;">
+<table style="width:68%;">
 <colgroup>
 <col width="9%" />
 <col width="13%" />
 <col width="12%" />
 <col width="9%" />
 <col width="13%" />
-<col width="9%" />
+<col width="8%" />
 </colgroup>
 <thead>
 <tr class="header">
@@ -532,18 +502,18 @@ Vaccant property registry <http://www.syracuse.ny.us/VacantRegistry.aspx>
 <tbody>
 <tr class="odd">
 <td align="center">0</td>
-<td align="center">785</td>
-<td align="center">2400</td>
-<td align="center">24660</td>
-<td align="center">8000</td>
-<td align="center">9765000</td>
+<td align="center">700</td>
+<td align="center">2000</td>
+<td align="center">20060</td>
+<td align="center">6000</td>
+<td align="center">8e+06</td>
 </tr>
 </tbody>
 </table>
 
-![](Permits_and_ED_files/figure-markdown_github/unnamed-chunk-11-1.png)
+![](Permits_and_ED_files/figure-markdown_github/unnamed-chunk-11-1.png)![](Permits_and_ED_files/figure-markdown_github/unnamed-chunk-11-2.png)
 
-**Ignored (Ign)**
+### **Ignored (Ign)**
 
 <table style="width:97%;">
 <colgroup>
@@ -722,3 +692,33 @@ Vaccant property registry <http://www.syracuse.ny.us/VacantRegistry.aspx>
 </table>
 
 ![](Permits_and_ED_files/figure-markdown_github/unnamed-chunk-12-1.png)
+
+### **All together**
+
+``` r
+plot(shapes
+     , axes = T
+     ) 
+  title(main = "All points")
+  points(df.I, pch=20, cex= .2, col=adjustcolor("darkorange3", alpha.f = .3))
+  points(df.C, pch=20, cex= .2, col=adjustcolor("firebrick", alpha.f = .5))
+  points(df.R, pch=20, cex = .4, col=adjustcolor("dodgerblue4", alpha.f = .5))
+  points(df.D, pch=20, cex = .4, col=adjustcolor("deeppink4", alpha.f = 7))
+  points(df.F, pch=20, cex= 1.2, col=adjustcolor("forestgreen", alpha.f = 1))
+```
+
+![](Permits_and_ED_files/figure-markdown_github/unnamed-chunk-13-1.png)
+
+### CENSUS NEW RESIDENTIAL CONSTRUCTION REPORT
+
+The US Census Bureau and HUD release a MONTHLY NEW RESIDENTIAL CONSTRUCTION REPORT where they show 3 indicators:
+
+The Privately-owned: - Housing permits - Housing starts - Housing completion
+
+(from: <https://www.census.gov/construction/nrc/index.html>)
+
+### Links
+
+Business improvement districts <https://business.syrgov.net/open/business-improvement-districts-bids/>
+
+Vaccant property registry <http://www.syracuse.ny.us/VacantRegistry.aspx>

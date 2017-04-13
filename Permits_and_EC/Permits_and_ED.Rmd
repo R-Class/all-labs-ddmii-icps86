@@ -13,8 +13,12 @@ knitr::opts_chunk$set( message=F, warning=F )
 
 setwd("C:/Users/icps/Dropbox/3. Maxwell/3. Spring Term/5. Data Driven II/Labs/all-labs-ddmii-icps86/Permits_and_EC/")
 
-library(pander)
 library(dplyr)
+library(spatialEco) # spatial econometrics package
+library(GISTools)
+library(pander)
+library(ggmap)
+
 ```
 
 
@@ -66,29 +70,6 @@ types$maxval <- x$x
 save(types, file= "types.rda")
 
 ```
-
-#SOME INFORMATION
-
-###CENSUS NEW RESIDENTIAL CONSTRUCTION REPORT
-
-The US Census Bureau and HUD release a MONTHLY NEW RESIDENTIAL CONSTRUCTION REPORT where they show 3 indicators:
-
-The Privately-owned:
-- Housing permits 
-- Housing starts
-- Housing completion
-
-(from: https://www.census.gov/construction/nrc/index.html)
-
-
-###Links
-
-Business improvement districts
-https://business.syrgov.net/open/business-improvement-districts-bids/
-
-Vaccant property registry
-http://www.syracuse.ny.us/VacantRegistry.aspx 
-
 
 ###PROPOSED INDICATORS
 
@@ -199,67 +180,203 @@ save(df.I, file = "df.I.rda")
 save(df.Ign, file = "df.Ign.rda")
 ```
 
-```{r, echo=FALSE}
-#loading geocoded df
-load("df.C.rda")
-load("df.D.rda")
-load("df.F.rda")
-load("df.I.rda")
-load("df.R.rda")
-load("df.Ign.rda")
+
+
+
+```{r, echo=F}
+#LOADING THE SHAPEFILES
+load("shapestracts.rda") #loading the shape file with the census tracts.
+shapes <- shapes[as.numeric(as.character(shapes$NAME10)) < 64, ] #Cutting all tracks that are not in syracuse. lower than 64 gets this.#DO THIS FOR  REMOVING SHAPES NOT WANTED.
+
+#FORMATTING THE SPATIAL DATA FOR PLOTTING
+
+#FOUNDATIONS
+
+load("df.F.rda") #loading the data frame 
+x <- is.na(df.F$lat)
+df.F <- df.F[!x,] #removing NAs
+coordinates(df.F) = ~lon+lat #making it a coordinates object
+proj4string(df.F) <- CRS("+proj=longlat +datum=WGS84") #fixing it 
+df.F@data <- data.frame(id = 1:nrow(df.F@data), df.F@data[,]) #adding an id variable
+
+
+#RESIDENTIAL
+
+load("df.R.rda") #loading the data frame 
+x <- is.na(df.R$lat)
+df.R <- df.R[!x,] #removing NAs
+coordinates(df.R) = ~lon+lat #making it a coordinates object
+#In order to do the points in poly operation, we need to specify  the proj4strings for the dat dataframe
+#look at: http://r-sig-geo.2731867.n2.nabble.com/point-in-polygon-or-over-help-td7583635.html
+proj4string(df.R) # the output is NA
+proj4string(df.R) <- CRS("+proj=longlat +datum=WGS84") #fixing it 
+
+#adding an id variable
+df.R@data <- data.frame(id = 1:nrow(df.R@data), df.R@data[,])
+
+#COMERCIAL
+
+load("df.C.rda") #loading the data frame 
+x <- is.na(df.C$lat)
+df.C <- df.C[!x,] #removing NAs
+coordinates(df.C) = ~lon+lat #making it a coordinates object
+proj4string(df.C) <- CRS("+proj=longlat +datum=WGS84") #fixing it 
+df.C@data <- data.frame(id = 1:nrow(df.C@data), df.C@data[,]) #adding an id variable
+
+
+#Demolition
+
+load("df.D.rda") #loading the data frame 
+x <- is.na(df.D$lat)
+df.D <- df.D[!x,] #removing NAs
+coordinates(df.D) = ~lon+lat #making it a coordinates object
+proj4string(df.D) <- CRS("+proj=longlat +datum=WGS84") #fixing it 
+df.D@data <- data.frame(id = 1:nrow(df.D@data), df.D@data[,]) #adding an id variable
+
+
+#Instalations and repairs
+
+load("df.I.rda") #loading the data frame 
+x <- is.na(df.I$lat)
+df.I <- df.I[!x,] #removing NAs
+coordinates(df.I) = ~lon+lat #making it a coordinates object
+proj4string(df.I) <- CRS("+proj=longlat +datum=WGS84") #fixing it 
+df.I@data <- data.frame(id = 1:nrow(df.I@data), df.I@data[,]) #adding an id variable
+
+#IGNORED
+load("df.Ign.rda") 
+
+
 ```
 
-**1.New Foundations starts (Found)**
+
+
+
+
+###**1.New Foundations starts (Found)**
 ```{r, echo=FALSE}
 pander(Found)
 table(is.na(df.F$lon)) %>% pander
 summary(df.F$Valuation) %>% pander
 barplot(sort(df.F$Valuation, decreasing = T))
 
+plot(shapes
+     , axes = T
+     ) 
+  title(main = "Foundation starts Permits")
+  points(df.F, pch=20, cex = 1.2, col=adjustcolor("deeppink4", alpha.f = 1))
+
+
 ```
 
-**2.New/Reno Residential (Res)**
+###**2.New/Reno Residential (Res)**
 ```{r, echo=FALSE}
 pander(Res)
 table(is.na(df.R$lon)) %>% pander
 summary(df.R$Valuation) %>% pander
 barplot(sort(df.R$Valuation, decreasing = T))
 
+#plotting Residential 
+plot(shapes
+     , axes = T
+     ) 
+  title(main = "Residential Permits")
+  points(df.R, pch=20, cex = .4, col=adjustcolor("dodgerblue4", alpha.f = .8))
+
 ```
 
-**3.New/Reno Commercial (Com)**
+###**3.New/Reno Commercial (Com)**
 ```{r, echo=FALSE}
 pander(Com)
 table(is.na(df.C$lon)) %>% pander
 summary(df.C$Valuation) %>% pander
 barplot(sort(df.C$Valuation, decreasing = T))
 
+plot(shapes
+     , axes = T
+     ) 
+title(main = "Residential and commercial Permits")
+points(df.C, pch=20, cex= .2, col=adjustcolor("firebrick", alpha.f = .8))
+
+
 ```
 
-**4.Demolitions (Dem)**
+###**4.Demolitions (Dem)**
 ```{r, echo=FALSE}
 pander(Dem)
 table(is.na(df.D$lon)) %>% pander
 summary(df.D$Valuation) %>% pander
 barplot(sort(df.D$Valuation, decreasing = T))
 
+plot(shapes
+     , axes = T
+     ) 
+title(main = "Demolition Permits")
+points(df.D, pch=20, cex= .2, col=adjustcolor("forestgreen", alpha.f = .8))
+
+
 ```
 
-**5.Installations and Repairs (Ins)**
+###**5.Installations and Repairs (Ins)**
 ```{r, echo=FALSE}
 pander(Ins)
 table(is.na(df.I$lon)) %>% pander
 summary(df.I$Valuation) %>% pander
 barplot(sort(df.I$Valuation, decreasing = T))
+
+plot(shapes
+     , axes = T
+     ) 
+title(main = "Instalations and Repairs")
+points(df.I, pch=20, cex= .2, col=adjustcolor("darkorange3", alpha.f = .4))
+
 ```
 
-**Ignored (Ign)**
+###**Ignored (Ign)**
 ```{r, echo=FALSE}
 pander(Ign)
 paste("total cases:", nrow(df.Ign))
 summary(df.Ign$Valuation) %>% pander
 barplot(sort(df.Ign$Valuation, decreasing = T))
 
+
 ```
 
+###**All together**
+```{r}
+
+plot(shapes
+     , axes = T
+     ) 
+  title(main = "All points")
+  points(df.I, pch=20, cex= .2, col=adjustcolor("darkorange3", alpha.f = .3))
+  points(df.C, pch=20, cex= .2, col=adjustcolor("firebrick", alpha.f = .5))
+  points(df.R, pch=20, cex = .4, col=adjustcolor("dodgerblue4", alpha.f = .5))
+  points(df.D, pch=20, cex = .4, col=adjustcolor("deeppink4", alpha.f = 7))
+  points(df.F, pch=20, cex= 1.2, col=adjustcolor("forestgreen", alpha.f = 1))
+  
+
+```
+
+
+
+###CENSUS NEW RESIDENTIAL CONSTRUCTION REPORT
+
+The US Census Bureau and HUD release a MONTHLY NEW RESIDENTIAL CONSTRUCTION REPORT where they show 3 indicators:
+
+The Privately-owned:
+- Housing permits 
+- Housing starts
+- Housing completion
+
+(from: https://www.census.gov/construction/nrc/index.html)
+
+
+###Links
+
+Business improvement districts
+https://business.syrgov.net/open/business-improvement-districts-bids/
+
+Vaccant property registry
+http://www.syracuse.ny.us/VacantRegistry.aspx 
 
