@@ -12,97 +12,253 @@ html_document:
 knitr::opts_chunk$set( message=F, warning=F )
 
 setwd("C:/Users/icps/Dropbox/3. Maxwell/3. Spring Term/5. Data Driven II/Labs/all-labs-ddmii-icps86/Permits_and_EC/")
-dir()
-
-dat <- read.csv("C:/Users/icps/Dropbox/3. Maxwell/3. Spring Term/5. Data Driven II/Labs/Instructions/Permits_ED/PrivateInvestment_Clean.csv", stringsAsFactors = F)
 
 library(pander)
 library(dplyr)
+```
 
+
+```{r, echo=FALSE, eval=FALSE}
+#Formatting the dataframe
+dat <- read.csv("C:/Users/icps/Dropbox/3. Maxwell/3. Spring Term/5. Data Driven II/Labs/Instructions/Permits_ED/PrivateInvestment_Clean.csv", stringsAsFactors = F)
+
+#making valuation and fee variables to be numeric
+x <- dat$Valuation
+x <- gsub("$", "", x, fixed = T)
+x <- gsub(",", "", x, fixed = T)
+x <- as.numeric(x)
+dat$Valuation <- x
+
+x <- dat$Fee.Amount
+x <- gsub("$", "", x, fixed = T)
+x <- gsub(",", "", x, fixed = T)
+x <- as.numeric(x)
+dat$Fee.Amount <- x
+
+save(dat, file= "Permits.rda")
 
 ```
-###Looking at the Permit Data set
-```{r}
+
+```{r, echo=FALSE, eval=FALSE}
+#Generating a dataframe about the permits types
+
+#using table to create a dataframe with the frequencies for each category
 types <- data.frame(type = names(table(dat$Type)), freq = as.numeric(table(dat$Type)))
 types <- types[order(types$freq, decreasing = T),]
 rownames(types) <- NULL
-pander(types)
-dim(dat)
+types <- arrange(types, type) #ordering types alphabetically
+
+#getting the mean/max/min value per type
+x <- aggregate(dat$Valuation, by=list(dat$Type), FUN=mean)
+x <- arrange(x, Group.1)
+types$meanval <- x$x
+
+#getting the min value per type
+x <- aggregate(dat$Valuation, by=list(dat$Type), FUN=min)
+x <- arrange(x, Group.1)
+types$minval <- x$x
+
+#getting the max value per type
+x <- aggregate(dat$Valuation, by=list(dat$Type), FUN=max)
+x <- arrange(x, Group.1)
+types$maxval <- x$x
+
+save(types, file= "types.rda")
+
+```
+
+#SOME INFORMATION
+
+###CENSUS NEW RESIDENTIAL CONSTRUCTION REPORT
+
+The US Census Bureau and HUD release a MONTHLY NEW RESIDENTIAL CONSTRUCTION REPORT where they show 3 indicators:
+
+The Privately-owned:
+- Housing permits 
+- Housing starts
+- Housing completion
+
+(from: https://www.census.gov/construction/nrc/index.html)
+
+
+###Links
+
+Business improvement districts
+https://business.syrgov.net/open/business-improvement-districts-bids/
+
+Vaccant property registry
+http://www.syracuse.ny.us/VacantRegistry.aspx 
+
+
+###PROPOSED INDICATORS
+
+```{r, echo=FALSE}
+load("Permits.rda")
+load("types.rda")
+
+#CREATING THE SUBSETS OF TYPES TABLE TO SHOW SUMMARY DESCRIPTIVES OF PERMITS IN EACH VARIABLE
+x<- as.character(types$type)
+
+#Foundation
+Found <- x == "Footing / Foundation"
+Found <- types[Found, ]
+
+#Res
+Res <- x== "Res. Remodel/Chg Occ" | x == "Res. New 1-2 Family" 
+Res <- types[Res,]
+
+#Com
+Com <- x== "Com. New Building" | x=="Com. Reno/Rem/Chg Occ"
+Com <- types[Com,]
+
+#Dem
+Dem <- x=="Demolition"
+Dem <- types[Dem,]
+
+#Ins
+Ins <- x=="Antenna / Dish" | x=="Electric" | x=="Electric (Meter Set)" | x=="Elevator" | x=="Fire Alarm" | x=="HVAC/Mechanical" | x=="Misc.(deck, fence,ramp)" | x=="Pool / Hot Tub" | x=="Security Alarm" | x=="Sprinkler" | x=="Tank"
+Ins <- types[Ins,]
+
+
+#Ign
+Ign <- x=="Block Party (Business)" | x=="Block Party (Residential)" | x=="Curb Cut" | x=="Encroach (Deminimus)" | x=="Encroach (Major)"  | x=="Encroachment (Converted)" | x=="Liability Waiver" | x=="Loading Zone (Business)" | x=="Parking Meter Rental" | x=="Public Assembly" | x=="Road Cut" | x=="Sidewalk Cafe" | x=="Sidewalk Replace" | x=="Sign" | x=="Site Work"
+Ign <- types[Ign,]  
+  
+```
+
+```{r, echo=FALSE, eval=FALSE}
+#CREATING DF SUBSETS from de dat Dataframe FOR EACH VARIABLE
+
+#Found
+x <- as.character(dat$Type)
+
+df.F <- x == "Footing / Foundation"
+df.F <- dat[df.F, ]
+
+#Res
+df.R <- x== "Res. Remodel/Chg Occ" | x == "Res. New 1-2 Family" 
+df.R <- dat[df.R,]
+
+#Com
+df.C <- x== "Com. New Building" | x=="Com. Reno/Rem/Chg Occ"
+df.C <- dat[df.C,]
+
+#Dem
+df.D <- x=="Demolition"
+df.D <- dat[df.D,]
+
+#Ins
+df.I <- x=="Antenna / Dish" | x=="Electric" | x=="Electric (Meter Set)" | x=="Elevator" | x=="Fire Alarm" | x=="HVAC/Mechanical" | x=="Misc.(deck, fence,ramp)" | x=="Pool / Hot Tub" | x=="Security Alarm" | x=="Sprinkler" | x=="Tank"
+df.I <- dat[df.I,]
+
+
+#Ign
+df.Ign <- x=="Block Party (Business)" | x=="Block Party (Residential)" | x=="Curb Cut" | x=="Encroach (Deminimus)" | x=="Encroach (Major)"  | x=="Encroachment (Converted)" | x=="Liability Waiver" | x=="Loading Zone (Business)" | x=="Parking Meter Rental" | x=="Public Assembly" | x=="Road Cut" | x=="Sidewalk Cafe" | x=="Sidewalk Replace" | x=="Sign" | x=="Site Work"
+df.Ign <- dat[df.Ign,]  
+
 ```
 
 
+```{r, echo=FALSE, eval=FALSE}
+#geocoding
 
-We want to know about adding value to improve homes, business renovations.
+library(ggmap)
+#devtools::install_github("dkahle/ggmap") #Installing latest ggmap from the creators webpage. Need to download this in order for the code to work.
 
-using value of the permit to 
+register_google(key = "YOUR KEY HERE", account_type = "premium", day_limit = 100000) #Need to put premium to fool the function. I did not have a premium, just a google API key that was authorized to bill me
+ggmap_credentials()
+geocodeQueryCheck()
 
-Investments
-site work, pools, 
+#in what follows I geocoded 17,933 permits in approx 3h
 
-Activities can give an idea of vibrancy.
+#Found
+df.F$Location2 <- paste(df.F$Location, ", Syracuse, New York")
+df.F <- mutate_geocode(df.F, Location2, source = "google")
+save(df.F, file = "df.F.rda")
 
+#Res
+df.R$Location2 <- paste(df.R$Location, ", Syracuse, New York")
+df.R <- mutate_geocode(df.R, Location2, source = "google")
+save(df.R, file = "df.R.rda")
 
+#Com
+df.C$Location2 <- paste(df.C$Location, ", Syracuse, New York")
+df.C <- mutate_geocode(df.C, Location2, source = "google")
+save(df.C, file = "df.C.rda")
 
+#Dem
+df.D$Location2 <- paste(df.D$Location, ", Syracuse, New York")
+df.D <- mutate_geocode(df.D, Location2, source = "google")
+save(df.D, file = "df.D.rda")
 
-**Residential**
-* Res. Remodel/Chg Occ :  Residential remodeling / Change in occupanc?
-* Res. New 1-2 Family
+#Ins
+df.I$Location2 <- paste(df.I$Location, ", Syracuse, New York")
+df.I <- mutate_geocode(df.I, Location2, source = "google")
+save(df.I, file = "df.I.rda")
 
-**businesses**
-* Com. Reno/Rem/Chg Occ:  ???????
+save(df.Ign, file = "df.Ign.rda")
+```
 
-* Loading Zone (Business)
-* Block Party (Business)
-* Parking Meter Rental
+```{r, echo=FALSE}
+#loading geocoded df
+load("df.C.rda")
+load("df.D.rda")
+load("df.F.rda")
+load("df.I.rda")
+load("df.R.rda")
+load("df.Ign.rda")
+```
 
-**uncertain** - difficult to tell if its residential or business
-* Com. New Building        
-* Demolition per census track              
-* Site Work
-* Footing / Foundation
+**1.New Foundations starts (Found)**
+```{r, echo=FALSE}
+pander(Found)
+table(is.na(df.F$lon)) %>% pander
+summary(df.F$Valuation) %>% pander
+barplot(sort(df.F$Valuation, decreasing = T))
 
-**Not sure if should be used**
-* HVAC/Mechanical:        Heating, ventilation, AC or mechanical repair. (uncertain)
+```
 
-**to be Ignored**
+**2.New/Reno Residential (Res)**
+```{r, echo=FALSE}
+pander(Res)
+table(is.na(df.R$lon)) %>% pander
+summary(df.R$Valuation) %>% pander
+barplot(sort(df.R$Valuation, decreasing = T))
 
-* Sprinkler
-* Misc.(deck, fence,ramp) 
-* Sidewalk Replace
-* Fire Alarm
-* Electric
-* Electric (Meter Set)
-* Liability Waiver
-* Road Cut                 
-* Security Alarm
-* Sign
-* Sidewalk Cafe            
-* Elevator                 
-* Public Assembly
-* Block Party (Residential)
-* Antenna / Dish
-* Pool / Hot Tub           
-* Tank
-* Curb Cut
-* Encroach (Major)
-* Encroachment (Converted)
-* Encroach (Deminimus)
+```
 
-```{r}
-types$type <- as.character(types$type)
-class(types$type)
+**3.New/Reno Commercial (Com)**
+```{r, echo=FALSE}
+pander(Com)
+table(is.na(df.C$lon)) %>% pander
+summary(df.C$Valuation) %>% pander
+barplot(sort(df.C$Valuation, decreasing = T))
 
-x <- types$type == "Res. Remodel/Chg Occ" | types$type == "Res. New 1-2 Family" | types$type == "Loading Zone (Business)" | types$type == "Block Party (Business)" | types$type == "Parking Meter Rental" | types$type == "Com. New Building" | types$type == "Demolition" | types$type == "Site Work" | types$type == "Footing / Foundation" | types$type == "HVAC/Mechanical" | types$type == "Com. Reno/Rem/Chg Occ" 
+```
 
-types2 <- types[x, ]
+**4.Demolitions (Dem)**
+```{r, echo=FALSE}
+pander(Dem)
+table(is.na(df.D$lon)) %>% pander
+summary(df.D$Valuation) %>% pander
+barplot(sort(df.D$Valuation, decreasing = T))
 
-types2$type <- as.factor(types2$type)
+```
 
-class(types2)
-barplot(x = types2$type, y=)
+**5.Installations and Repairs (Ins)**
+```{r, echo=FALSE}
+pander(Ins)
+table(is.na(df.I$lon)) %>% pander
+summary(df.I$Valuation) %>% pander
+barplot(sort(df.I$Valuation, decreasing = T))
+```
 
-unique(dat$Applicant)
-
+**Ignored (Ign)**
+```{r, echo=FALSE}
+pander(Ign)
+paste("total cases:", nrow(df.Ign))
+summary(df.Ign$Valuation) %>% pander
+barplot(sort(df.Ign$Valuation, decreasing = T))
 
 ```
 
