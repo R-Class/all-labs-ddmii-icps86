@@ -5,8 +5,6 @@ March 30, 2017
 
 ### PROPOSED INDICATORS
 
-    ## [1] NA
-
 ### **1.New Foundations starts (Found)**
 
 <table style="width:90%;">
@@ -40,18 +38,30 @@ March 30, 2017
 </tbody>
 </table>
 
-<table style="width:10%;">
+<table style="width:49%;">
 <colgroup>
+<col width="9%" />
+<col width="9%" />
+<col width="9%" />
+<col width="9%" />
 <col width="9%" />
 </colgroup>
 <thead>
 <tr class="header">
-<th align="center">FALSE</th>
+<th align="center">2012</th>
+<th align="center">2013</th>
+<th align="center">2014</th>
+<th align="center">2015</th>
+<th align="center">2016</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td align="center">12</td>
+<td align="center">5</td>
+<td align="center">2</td>
+<td align="center">1</td>
+<td align="center">3</td>
+<td align="center">1</td>
 </tr>
 </tbody>
 </table>
@@ -87,7 +97,7 @@ March 30, 2017
 </tbody>
 </table>
 
-![](Permits_and_ED_files/figure-markdown_github/unnamed-chunk-7-1.png)![](Permits_and_ED_files/figure-markdown_github/unnamed-chunk-7-2.png)
+![](Permits_and_ED_files/figure-markdown_github/unnamed-chunk-6-1.png)![](Permits_and_ED_files/figure-markdown_github/unnamed-chunk-6-2.png)
 
 ### **2.New/Reno Residential (Res)**
 
@@ -130,18 +140,30 @@ March 30, 2017
 </tbody>
 </table>
 
-<table style="width:10%;">
+<table style="width:49%;">
 <colgroup>
+<col width="9%" />
+<col width="9%" />
+<col width="9%" />
+<col width="9%" />
 <col width="9%" />
 </colgroup>
 <thead>
 <tr class="header">
-<th align="center">FALSE</th>
+<th align="center">2012</th>
+<th align="center">2013</th>
+<th align="center">2014</th>
+<th align="center">2015</th>
+<th align="center">2016</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td align="center">2195</td>
+<td align="center">278</td>
+<td align="center">402</td>
+<td align="center">539</td>
+<td align="center">583</td>
+<td align="center">392</td>
 </tr>
 </tbody>
 </table>
@@ -177,7 +199,7 @@ March 30, 2017
 </tbody>
 </table>
 
-![](Permits_and_ED_files/figure-markdown_github/unnamed-chunk-8-1.png)![](Permits_and_ED_files/figure-markdown_github/unnamed-chunk-8-2.png)
+![](Permits_and_ED_files/figure-markdown_github/unnamed-chunk-7-1.png)![](Permits_and_ED_files/figure-markdown_github/unnamed-chunk-7-2.png)
 
 ### **3.New/Reno Commercial (Com)**
 
@@ -220,18 +242,30 @@ March 30, 2017
 </tbody>
 </table>
 
-<table style="width:10%;">
+<table style="width:49%;">
 <colgroup>
+<col width="9%" />
+<col width="9%" />
+<col width="9%" />
+<col width="9%" />
 <col width="9%" />
 </colgroup>
 <thead>
 <tr class="header">
-<th align="center">FALSE</th>
+<th align="center">2012</th>
+<th align="center">2013</th>
+<th align="center">2014</th>
+<th align="center">2015</th>
+<th align="center">2016</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td align="center">1245</td>
+<td align="center">299</td>
+<td align="center">209</td>
+<td align="center">259</td>
+<td align="center">240</td>
+<td align="center">230</td>
 </tr>
 </tbody>
 </table>
@@ -267,7 +301,7 @@ March 30, 2017
 </tbody>
 </table>
 
-![](Permits_and_ED_files/figure-markdown_github/unnamed-chunk-9-1.png)![](Permits_and_ED_files/figure-markdown_github/unnamed-chunk-9-2.png)
+![](Permits_and_ED_files/figure-markdown_github/unnamed-chunk-8-1.png)![](Permits_and_ED_files/figure-markdown_github/unnamed-chunk-8-2.png)
 
 ### **4.Demolitions (Dem)**
 
@@ -302,18 +336,30 @@ March 30, 2017
 </tbody>
 </table>
 
-<table style="width:10%;">
+<table style="width:49%;">
 <colgroup>
+<col width="9%" />
+<col width="9%" />
+<col width="9%" />
+<col width="9%" />
 <col width="9%" />
 </colgroup>
 <thead>
 <tr class="header">
-<th align="center">FALSE</th>
+<th align="center">2012</th>
+<th align="center">2013</th>
+<th align="center">2014</th>
+<th align="center">2015</th>
+<th align="center">2016</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td align="center">564</td>
+<td align="center">84</td>
+<td align="center">81</td>
+<td align="center">116</td>
+<td align="center">160</td>
+<td align="center">123</td>
 </tr>
 </tbody>
 </table>
@@ -349,7 +395,7 @@ March 30, 2017
 </tbody>
 </table>
 
-![](Permits_and_ED_files/figure-markdown_github/unnamed-chunk-10-1.png)![](Permits_and_ED_files/figure-markdown_github/unnamed-chunk-10-2.png)
+![](Permits_and_ED_files/figure-markdown_github/unnamed-chunk-9-1.png)![](Permits_and_ED_files/figure-markdown_github/unnamed-chunk-9-2.png)
 
 ### **5.Installations and Repairs (Ins)**
 
@@ -464,18 +510,30 @@ March 30, 2017
 </tbody>
 </table>
 
-<table style="width:10%;">
+<table style="width:49%;">
 <colgroup>
+<col width="9%" />
+<col width="9%" />
+<col width="9%" />
+<col width="9%" />
 <col width="9%" />
 </colgroup>
 <thead>
 <tr class="header">
-<th align="center">FALSE</th>
+<th align="center">2012</th>
+<th align="center">2013</th>
+<th align="center">2014</th>
+<th align="center">2015</th>
+<th align="center">2016</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td align="center">11188</td>
+<td align="center">2246</td>
+<td align="center">2402</td>
+<td align="center">2387</td>
+<td align="center">2233</td>
+<td align="center">1903</td>
 </tr>
 </tbody>
 </table>
@@ -511,7 +569,7 @@ March 30, 2017
 </tbody>
 </table>
 
-![](Permits_and_ED_files/figure-markdown_github/unnamed-chunk-11-1.png)![](Permits_and_ED_files/figure-markdown_github/unnamed-chunk-11-2.png)
+![](Permits_and_ED_files/figure-markdown_github/unnamed-chunk-10-1.png)![](Permits_and_ED_files/figure-markdown_github/unnamed-chunk-10-2.png)
 
 ### **Ignored (Ign)**
 
@@ -658,6 +716,34 @@ March 30, 2017
 </tbody>
 </table>
 
+<table style="width:49%;">
+<colgroup>
+<col width="9%" />
+<col width="9%" />
+<col width="9%" />
+<col width="9%" />
+<col width="9%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center">2012</th>
+<th align="center">2013</th>
+<th align="center">2014</th>
+<th align="center">2015</th>
+<th align="center">2016</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">513</td>
+<td align="center">655</td>
+<td align="center">739</td>
+<td align="center">801</td>
+<td align="center">930</td>
+</tr>
+</tbody>
+</table>
+
     ## [1] "total cases: 3641"
 
 <table style="width:69%;">
@@ -691,7 +777,7 @@ March 30, 2017
 </tbody>
 </table>
 
-![](Permits_and_ED_files/figure-markdown_github/unnamed-chunk-12-1.png)
+![](Permits_and_ED_files/figure-markdown_github/unnamed-chunk-11-1.png)
 
 ### **All together**
 
@@ -700,25 +786,52 @@ plot(shapes
      , axes = T
      ) 
   title(main = "All points")
-  points(df.I, pch=20, cex= .2, col=adjustcolor("darkorange3", alpha.f = .3))
+  points(df.I, pch=20, cex= .2, col=adjustcolor("gold1", alpha.f = .6))
   points(df.C, pch=20, cex= .2, col=adjustcolor("firebrick", alpha.f = .5))
   points(df.R, pch=20, cex = .4, col=adjustcolor("dodgerblue4", alpha.f = .5))
   points(df.D, pch=20, cex = .4, col=adjustcolor("deeppink4", alpha.f = 7))
   points(df.F, pch=20, cex= 1.2, col=adjustcolor("forestgreen", alpha.f = 1))
 ```
 
-![](Permits_and_ED_files/figure-markdown_github/unnamed-chunk-13-1.png)
+![](Permits_and_ED_files/figure-markdown_github/unnamed-chunk-12-1.png)
 
-### CENSUS NEW RESIDENTIAL CONSTRUCTION REPORT
+### NAs in the data per variables
 
-The US Census Bureau and HUD release a MONTHLY NEW RESIDENTIAL CONSTRUCTION REPORT where they show 3 indicators:
-
-The Privately-owned: - Housing permits - Housing starts - Housing completion
-
-(from: <https://www.census.gov/construction/nrc/index.html>)
-
-### Links
-
-Business improvement districts <https://business.syrgov.net/open/business-improvement-districts-bids/>
-
-Vaccant property registry <http://www.syracuse.ny.us/VacantRegistry.aspx>
+<table style="width:24%;">
+<colgroup>
+<col width="16%" />
+<col width="6%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center">variable</th>
+<th align="center">NAs</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">Foundations</td>
+<td align="center">4</td>
+</tr>
+<tr class="even">
+<td align="center">Residential</td>
+<td align="center">73</td>
+</tr>
+<tr class="odd">
+<td align="center">Comercial</td>
+<td align="center">504</td>
+</tr>
+<tr class="even">
+<td align="center">Demolition</td>
+<td align="center">35</td>
+</tr>
+<tr class="odd">
+<td align="center">Int and Rep</td>
+<td align="center">2095</td>
+</tr>
+<tr class="even">
+<td align="center">Ignored</td>
+<td align="center">0</td>
+</tr>
+</tbody>
+</table>

@@ -21,7 +21,6 @@ library(ggmap)
 
 ```
 
-
 ```{r, echo=FALSE, eval=FALSE}
 #Formatting the dataframe
 dat <- read.csv("C:/Users/icps/Dropbox/3. Maxwell/3. Spring Term/5. Data Driven II/Labs/Instructions/Permits_ED/PrivateInvestment_Clean.csv", stringsAsFactors = F)
@@ -39,76 +38,20 @@ x <- gsub(",", "", x, fixed = T)
 x <- as.numeric(x)
 dat$Fee.Amount <- x
 
+
+#Creating a variable for the year
+x <- dat$Issued
+x <- gsub( "\\d{2}/\\d{2}/", "", x) #deleting everything except the year. btw: "\\d{2}" means any two digits
+x <- as.numeric(x)
+dat$Year <- x
+dat <- dat[,c(1:6,9,7,8)]
 save(dat, file= "Permits.rda")
-
 ```
 
 ```{r, echo=FALSE, eval=FALSE}
-#Generating a dataframe about the permits types
+#CREATING SUBSETS from the PERMITS.rda (dat) for EACH VARIABLE
 
-#using table to create a dataframe with the frequencies for each category
-types <- data.frame(type = names(table(dat$Type)), freq = as.numeric(table(dat$Type)))
-types <- types[order(types$freq, decreasing = T),]
-rownames(types) <- NULL
-types <- arrange(types, type) #ordering types alphabetically
-
-#getting the mean/max/min value per type
-x <- aggregate(dat$Valuation, by=list(dat$Type), FUN=mean)
-x <- arrange(x, Group.1)
-types$meanval <- x$x
-
-#getting the min value per type
-x <- aggregate(dat$Valuation, by=list(dat$Type), FUN=min)
-x <- arrange(x, Group.1)
-types$minval <- x$x
-
-#getting the max value per type
-x <- aggregate(dat$Valuation, by=list(dat$Type), FUN=max)
-x <- arrange(x, Group.1)
-types$maxval <- x$x
-
-save(types, file= "types.rda")
-
-```
-
-###PROPOSED INDICATORS
-
-```{r, echo=FALSE}
 load("Permits.rda")
-load("types.rda")
-
-#CREATING THE SUBSETS OF TYPES TABLE TO SHOW SUMMARY DESCRIPTIVES OF PERMITS IN EACH VARIABLE
-x<- as.character(types$type)
-
-#Foundation
-Found <- x == "Footing / Foundation"
-Found <- types[Found, ]
-
-#Res
-Res <- x== "Res. Remodel/Chg Occ" | x == "Res. New 1-2 Family" 
-Res <- types[Res,]
-
-#Com
-Com <- x== "Com. New Building" | x=="Com. Reno/Rem/Chg Occ"
-Com <- types[Com,]
-
-#Dem
-Dem <- x=="Demolition"
-Dem <- types[Dem,]
-
-#Ins
-Ins <- x=="Antenna / Dish" | x=="Electric" | x=="Electric (Meter Set)" | x=="Elevator" | x=="Fire Alarm" | x=="HVAC/Mechanical" | x=="Misc.(deck, fence,ramp)" | x=="Pool / Hot Tub" | x=="Security Alarm" | x=="Sprinkler" | x=="Tank"
-Ins <- types[Ins,]
-
-
-#Ign
-Ign <- x=="Block Party (Business)" | x=="Block Party (Residential)" | x=="Curb Cut" | x=="Encroach (Deminimus)" | x=="Encroach (Major)"  | x=="Encroachment (Converted)" | x=="Liability Waiver" | x=="Loading Zone (Business)" | x=="Parking Meter Rental" | x=="Public Assembly" | x=="Road Cut" | x=="Sidewalk Cafe" | x=="Sidewalk Replace" | x=="Sign" | x=="Site Work"
-Ign <- types[Ign,]  
-  
-```
-
-```{r, echo=FALSE, eval=FALSE}
-#CREATING DF SUBSETS from de dat Dataframe FOR EACH VARIABLE
 
 #Found
 x <- as.character(dat$Type)
@@ -136,14 +79,13 @@ df.I <- dat[df.I,]
 #Ign
 df.Ign <- x=="Block Party (Business)" | x=="Block Party (Residential)" | x=="Curb Cut" | x=="Encroach (Deminimus)" | x=="Encroach (Major)"  | x=="Encroachment (Converted)" | x=="Liability Waiver" | x=="Loading Zone (Business)" | x=="Parking Meter Rental" | x=="Public Assembly" | x=="Road Cut" | x=="Sidewalk Cafe" | x=="Sidewalk Replace" | x=="Sign" | x=="Site Work"
 df.Ign <- dat[df.Ign,]  
+save(df.Ign, file = "df.Ign.rda")
 
 ```
 
+```{r,echo=F, eval=F}
+#GEOCODING the dataframes
 
-```{r, echo=FALSE, eval=FALSE}
-#geocoding
-
-library(ggmap)
 #devtools::install_github("dkahle/ggmap") #Installing latest ggmap from the creators webpage. Need to download this in order for the code to work.
 
 register_google(key = "YOUR KEY HERE", account_type = "premium", day_limit = 100000) #Need to put premium to fool the function. I did not have a premium, just a google API key that was authorized to bill me
@@ -177,86 +119,113 @@ df.I$Location2 <- paste(df.I$Location, ", Syracuse, New York")
 df.I <- mutate_geocode(df.I, Location2, source = "google")
 save(df.I, file = "df.I.rda")
 
-save(df.Ign, file = "df.Ign.rda")
 ```
 
+```{r,echo=F, eval=F}
+#Solving Geocoding NAs
+load("df.F.rda") #loading the data frame 
 
 
+```
+
+```{r, echo=FALSE, eval=FALSE}
+#Generating the TYPES dataframe: to show the freq of the permits types
+
+#using table to create a dataframe with the frequencies for each category
+types <- data.frame(type = names(table(dat$Type)), freq = as.numeric(table(dat$Type)))
+types <- types[order(types$freq, decreasing = T),]
+rownames(types) <- NULL
+types <- arrange(types, type) #ordering types alphabetically
+
+#getting the mean/max/min value per type
+x <- aggregate(dat$Valuation, by=list(dat$Type), FUN=mean)
+x <- arrange(x, Group.1)
+types$meanval <- x$x
+
+#getting the min value per type
+x <- aggregate(dat$Valuation, by=list(dat$Type), FUN=min)
+x <- arrange(x, Group.1)
+types$minval <- x$x
+
+#getting the max value per type
+x <- aggregate(dat$Valuation, by=list(dat$Type), FUN=max)
+x <- arrange(x, Group.1)
+types$maxval <- x$x
+
+save(types, file= "types.rda")
+
+```
 
 ```{r, echo=F}
 #LOADING THE SHAPEFILES
 load("shapestracts.rda") #loading the shape file with the census tracts.
 shapes <- shapes[as.numeric(as.character(shapes$NAME10)) < 64, ] #Cutting all tracks that are not in syracuse. lower than 64 gets this.#DO THIS FOR  REMOVING SHAPES NOT WANTED.
 
-#FORMATTING THE SPATIAL DATA FOR PLOTTING
+#FORMATTING the DATAFRAMES into SPATIAL DATA FOR PLOTTING
+#In order to do the points in poly operation, I will convert the dataframes into coordinate objects (this disables the view option in Rstudio) and I will also  specify  the value of the proj4strings (see code below... proj4string(df.F) <- CRS("+proj=longlat +datum=WGS84"))
+#For more reference look at: http://r-sig-geo.2731867.n2.nabble.com/point-in-polygon-or-over-help-td7583635.html
 
 #FOUNDATIONS
-
 load("df.F.rda") #loading the data frame 
 x <- is.na(df.F$lat)
+missing <- data.frame("variable" = "Foundations", "NAs" = sum(x), row.names = NULL, stringsAsFactors = F) #creating a dataframe with the NAs for each variable
 df.F <- df.F[!x,] #removing NAs
 coordinates(df.F) = ~lon+lat #making it a coordinates object
 proj4string(df.F) <- CRS("+proj=longlat +datum=WGS84") #fixing it 
-df.F@data <- data.frame(id = 1:nrow(df.F@data), df.F@data[,]) #adding an id variable
-
 
 #RESIDENTIAL
-
 load("df.R.rda") #loading the data frame 
 x <- is.na(df.R$lat)
+missing[nrow(missing) + 1,] <- c("variable" = "Residential", "Nas" = sum(x))
 df.R <- df.R[!x,] #removing NAs
 coordinates(df.R) = ~lon+lat #making it a coordinates object
-#In order to do the points in poly operation, we need to specify  the proj4strings for the dat dataframe
-#look at: http://r-sig-geo.2731867.n2.nabble.com/point-in-polygon-or-over-help-td7583635.html
-proj4string(df.R) # the output is NA
 proj4string(df.R) <- CRS("+proj=longlat +datum=WGS84") #fixing it 
 
-#adding an id variable
-df.R@data <- data.frame(id = 1:nrow(df.R@data), df.R@data[,])
-
 #COMERCIAL
-
 load("df.C.rda") #loading the data frame 
 x <- is.na(df.C$lat)
+missing[nrow(missing) + 1,] <- c("variable" = "Comercial", "Nas" = sum(x))
 df.C <- df.C[!x,] #removing NAs
 coordinates(df.C) = ~lon+lat #making it a coordinates object
 proj4string(df.C) <- CRS("+proj=longlat +datum=WGS84") #fixing it 
-df.C@data <- data.frame(id = 1:nrow(df.C@data), df.C@data[,]) #adding an id variable
 
-
-#Demolition
-
+#DEMOLITION
 load("df.D.rda") #loading the data frame 
 x <- is.na(df.D$lat)
+missing[nrow(missing) + 1,] <- c("variable" = "Demolition", "Nas" = sum(x))
 df.D <- df.D[!x,] #removing NAs
 coordinates(df.D) = ~lon+lat #making it a coordinates object
 proj4string(df.D) <- CRS("+proj=longlat +datum=WGS84") #fixing it 
-df.D@data <- data.frame(id = 1:nrow(df.D@data), df.D@data[,]) #adding an id variable
 
-
-#Instalations and repairs
-
+#INSTALATIONS AND REPAIRS
 load("df.I.rda") #loading the data frame 
 x <- is.na(df.I$lat)
+missing[nrow(missing) + 1,] <- c("variable" = "Int and Rep", "Nas" = sum(x))
 df.I <- df.I[!x,] #removing NAs
 coordinates(df.I) = ~lon+lat #making it a coordinates object
 proj4string(df.I) <- CRS("+proj=longlat +datum=WGS84") #fixing it 
-df.I@data <- data.frame(id = 1:nrow(df.I@data), df.I@data[,]) #adding an id variable
 
 #IGNORED
-load("df.Ign.rda") 
-
+load("df.Ign.rda")
 
 ```
 
 
+###PROPOSED INDICATORS
 
+```{r, echo=FALSE}
+#loading the types dataframe and creating an index of the types to run the following code chunks
+load("types.rda")
+x<- as.character(types$type)
 
+```
 
 ###**1.New Foundations starts (Found)**
 ```{r, echo=FALSE}
+Found <- x == "Footing / Foundation"
+Found <- types[Found, ]
 pander(Found)
-table(is.na(df.F$lon)) %>% pander
+pander(table(df.F$Year))
 summary(df.F$Valuation) %>% pander
 barplot(sort(df.F$Valuation, decreasing = T))
 
@@ -271,8 +240,10 @@ plot(shapes
 
 ###**2.New/Reno Residential (Res)**
 ```{r, echo=FALSE}
+Res <- x== "Res. Remodel/Chg Occ" | x == "Res. New 1-2 Family" 
+Res <- types[Res,]
 pander(Res)
-table(is.na(df.R$lon)) %>% pander
+pander(table(df.R$Year))
 summary(df.R$Valuation) %>% pander
 barplot(sort(df.R$Valuation, decreasing = T))
 
@@ -287,8 +258,10 @@ plot(shapes
 
 ###**3.New/Reno Commercial (Com)**
 ```{r, echo=FALSE}
+Com <- x== "Com. New Building" | x=="Com. Reno/Rem/Chg Occ"
+Com <- types[Com,]
 pander(Com)
-table(is.na(df.C$lon)) %>% pander
+pander(table(df.C$Year))
 summary(df.C$Valuation) %>% pander
 barplot(sort(df.C$Valuation, decreasing = T))
 
@@ -303,8 +276,10 @@ points(df.C, pch=20, cex= .2, col=adjustcolor("firebrick", alpha.f = .8))
 
 ###**4.Demolitions (Dem)**
 ```{r, echo=FALSE}
+Dem <- x=="Demolition"
+Dem <- types[Dem,]
 pander(Dem)
-table(is.na(df.D$lon)) %>% pander
+pander(table(df.D$Year))
 summary(df.D$Valuation) %>% pander
 barplot(sort(df.D$Valuation, decreasing = T))
 
@@ -319,8 +294,10 @@ points(df.D, pch=20, cex= .2, col=adjustcolor("forestgreen", alpha.f = .8))
 
 ###**5.Installations and Repairs (Ins)**
 ```{r, echo=FALSE}
+Ins <- x=="Antenna / Dish" | x=="Electric" | x=="Electric (Meter Set)" | x=="Elevator" | x=="Fire Alarm" | x=="HVAC/Mechanical" | x=="Misc.(deck, fence,ramp)" | x=="Pool / Hot Tub" | x=="Security Alarm" | x=="Sprinkler" | x=="Tank"
+Ins <- types[Ins,]
 pander(Ins)
-table(is.na(df.I$lon)) %>% pander
+pander(table(df.I$Year))
 summary(df.I$Valuation) %>% pander
 barplot(sort(df.I$Valuation, decreasing = T))
 
@@ -328,17 +305,19 @@ plot(shapes
      , axes = T
      ) 
 title(main = "Instalations and Repairs")
-points(df.I, pch=20, cex= .2, col=adjustcolor("darkorange3", alpha.f = .4))
+points(df.I, pch=20, cex= .2, col=adjustcolor("gold1", alpha.f = .6))
 
 ```
 
 ###**Ignored (Ign)**
 ```{r, echo=FALSE}
+Ign <- x=="Block Party (Business)" | x=="Block Party (Residential)" | x=="Curb Cut" | x=="Encroach (Deminimus)" | x=="Encroach (Major)"  | x=="Encroachment (Converted)" | x=="Liability Waiver" | x=="Loading Zone (Business)" | x=="Parking Meter Rental" | x=="Public Assembly" | x=="Road Cut" | x=="Sidewalk Cafe" | x=="Sidewalk Replace" | x=="Sign" | x=="Site Work"
+Ign <- types[Ign,]  
 pander(Ign)
+pander(table(df.Ign$Year))
 paste("total cases:", nrow(df.Ign))
 summary(df.Ign$Valuation) %>% pander
 barplot(sort(df.Ign$Valuation, decreasing = T))
-
 
 ```
 
@@ -349,7 +328,7 @@ plot(shapes
      , axes = T
      ) 
   title(main = "All points")
-  points(df.I, pch=20, cex= .2, col=adjustcolor("darkorange3", alpha.f = .3))
+  points(df.I, pch=20, cex= .2, col=adjustcolor("gold1", alpha.f = .6))
   points(df.C, pch=20, cex= .2, col=adjustcolor("firebrick", alpha.f = .5))
   points(df.R, pch=20, cex = .4, col=adjustcolor("dodgerblue4", alpha.f = .5))
   points(df.D, pch=20, cex = .4, col=adjustcolor("deeppink4", alpha.f = 7))
@@ -359,24 +338,11 @@ plot(shapes
 ```
 
 
+###NAs in the data per variables
 
-###CENSUS NEW RESIDENTIAL CONSTRUCTION REPORT
+```{r, echo=F}
+missing[nrow(missing)+1,] <- c("Ignored", "0")
+missing %>% pander
 
-The US Census Bureau and HUD release a MONTHLY NEW RESIDENTIAL CONSTRUCTION REPORT where they show 3 indicators:
-
-The Privately-owned:
-- Housing permits 
-- Housing starts
-- Housing completion
-
-(from: https://www.census.gov/construction/nrc/index.html)
-
-
-###Links
-
-Business improvement districts
-https://business.syrgov.net/open/business-improvement-districts-bids/
-
-Vaccant property registry
-http://www.syracuse.ny.us/VacantRegistry.aspx 
+```
 
