@@ -331,18 +331,17 @@ df.Ina$Location2 <- miss
 
 #2. GEOCODING THE NAs
 
-register_google(key = "AIzaSyDBm-VOPaYO3vNdHL93whQQIB7IuVWzWm0", account_type = "premium", day_limit = 100000) #Need to put premium to fool the function. I did not have a premium, just a google API key that was authorized to bill me
+register_google(key = "YOUR KEY HERE", account_type = "premium", day_limit = 100000) #Need to put premium to fool the function. I did not have a premium, just a google API key that was authorized to bill me
 ggmap_credentials()
 geocodeQueryCheck()
 
 #Found
 df.Fna <- mutate_geocode(df.Fna, Location2, source = "google")
-save(df.Fna, file = "df.Fna.rda")
 sum(is.na(df.Fna$lat)) #no NAs
+save(df.Fna, file = "df.Fna.rda")
 
 #Res
 df.Rna <- mutate_geocode(df.Rna, Location2, source = "google")
-save(df.Rna, file = "df.Rna.rda")
 sum(is.na(df.Rna$lat)) #1 NA
 
 x <- is.na(df.Rna$lat)
@@ -359,10 +358,11 @@ df.Rna[x,12] <- location[,1]
 #adding lat
 df.Rna[x,13] <- location[,2]
 
+save(df.Rna, file = "df.Rna.rda")
+
 
 #Com
 df.Cna <- mutate_geocode(df.Cna, Location2, source = "google")
-save(df.Cna, file = "df.Cna.rda")
 sum(is.na(df.Cna$lat)) #4 NAs
 
 x <- is.na(df.Cna$lat)
@@ -382,16 +382,17 @@ df.Cna[x,12] <- location[,1]
 #adding lat
 df.Cna[x,13] <- location[,2]
 
+save(df.Cna, file = "df.Cna.rda")
 
 
 #Dem
 df.Dna <- mutate_geocode(df.Dna, Location2, source = "google")
-save(df.Dna, file = "df.Dna.rda")
 sum(is.na(df.Dna$lat)) #no NAs
+
+save(df.Dna, file = "df.Dna.rda")
 
 #Installations
 df.Ina <- mutate_geocode(df.Ina, Location2, source = "google")
-save(df.Ina, file = "df.Ina.rda")
 sum(is.na(df.Ina$lat)) #2 NAs
 
 x <- is.na(df.Ina$lat)
@@ -407,6 +408,8 @@ df.Ina[x,12] <- location[,1]
 
 #adding lat
 df.Ina[x,13] <- location[,2]
+
+save(df.Ina, file = "df.Ina.rda")
 
 
 ########################
@@ -652,7 +655,7 @@ barplot(sort(df.Ign$Valuation, decreasing = T))
 ```
 
 ###**All together**
-```{r}
+```{r, echo=F}
 
 plot(shapes
      , axes = T
@@ -669,7 +672,7 @@ plot(shapes
 
 
 ###NAs in the data per variables
-
+After a lot, A LOT, of clever replacing (regular expressions), I fixed all missing NAs:
 ```{r, echo=F}
 missing[nrow(missing)+1,] <- c("Ignored", "0")
 missing %>% pander

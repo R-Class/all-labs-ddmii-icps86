@@ -797,6 +797,8 @@ plot(shapes
 
 ### NAs in the data per variables
 
+After a lot, A LOT, of clever replacing (regular expressions), I fixed all missing NAs:
+
 <table style="width:24%;">
 <colgroup>
 <col width="16%" />
