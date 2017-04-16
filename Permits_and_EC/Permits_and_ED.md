@@ -97,7 +97,7 @@ March 30, 2017
 </tbody>
 </table>
 
-![](Permits_and_ED_files/figure-markdown_github/unnamed-chunk-6-1.png)![](Permits_and_ED_files/figure-markdown_github/unnamed-chunk-6-2.png)
+![](Permits_and_ED_files/figure-markdown_github/unnamed-chunk-8-1.png)![](Permits_and_ED_files/figure-markdown_github/unnamed-chunk-8-2.png)
 
 ### **2.New/Reno Residential (Res)**
 
@@ -199,7 +199,7 @@ March 30, 2017
 </tbody>
 </table>
 
-![](Permits_and_ED_files/figure-markdown_github/unnamed-chunk-7-1.png)![](Permits_and_ED_files/figure-markdown_github/unnamed-chunk-7-2.png)
+![](Permits_and_ED_files/figure-markdown_github/unnamed-chunk-9-1.png)![](Permits_and_ED_files/figure-markdown_github/unnamed-chunk-9-2.png)
 
 ### **3.New/Reno Commercial (Com)**
 
@@ -301,7 +301,7 @@ March 30, 2017
 </tbody>
 </table>
 
-![](Permits_and_ED_files/figure-markdown_github/unnamed-chunk-8-1.png)![](Permits_and_ED_files/figure-markdown_github/unnamed-chunk-8-2.png)
+![](Permits_and_ED_files/figure-markdown_github/unnamed-chunk-10-1.png)![](Permits_and_ED_files/figure-markdown_github/unnamed-chunk-10-2.png)
 
 ### **4.Demolitions (Dem)**
 
@@ -395,7 +395,7 @@ March 30, 2017
 </tbody>
 </table>
 
-![](Permits_and_ED_files/figure-markdown_github/unnamed-chunk-9-1.png)![](Permits_and_ED_files/figure-markdown_github/unnamed-chunk-9-2.png)
+![](Permits_and_ED_files/figure-markdown_github/unnamed-chunk-11-1.png)![](Permits_and_ED_files/figure-markdown_github/unnamed-chunk-11-2.png)
 
 ### **5.Installations and Repairs (Ins)**
 
@@ -569,7 +569,7 @@ March 30, 2017
 </tbody>
 </table>
 
-![](Permits_and_ED_files/figure-markdown_github/unnamed-chunk-10-1.png)![](Permits_and_ED_files/figure-markdown_github/unnamed-chunk-10-2.png)
+![](Permits_and_ED_files/figure-markdown_github/unnamed-chunk-12-1.png)![](Permits_and_ED_files/figure-markdown_github/unnamed-chunk-12-2.png)
 
 ### **Ignored (Ign)**
 
@@ -777,7 +777,7 @@ March 30, 2017
 </tbody>
 </table>
 
-![](Permits_and_ED_files/figure-markdown_github/unnamed-chunk-11-1.png)
+![](Permits_and_ED_files/figure-markdown_github/unnamed-chunk-13-1.png)
 
 ### **All together**
 
@@ -793,7 +793,7 @@ plot(shapes
   points(df.F, pch=20, cex= 1.2, col=adjustcolor("forestgreen", alpha.f = 1))
 ```
 
-![](Permits_and_ED_files/figure-markdown_github/unnamed-chunk-12-1.png)
+![](Permits_and_ED_files/figure-markdown_github/unnamed-chunk-14-1.png)
 
 ### NAs in the data per variables
 
