@@ -60,7 +60,7 @@ March 30, 2017
 <td align="center">5</td>
 <td align="center">2</td>
 <td align="center">1</td>
-<td align="center">3</td>
+<td align="center">7</td>
 <td align="center">1</td>
 </tr>
 </tbody>
@@ -89,9 +89,9 @@ March 30, 2017
 <tr class="odd">
 <td align="center">0</td>
 <td align="center">0</td>
-<td align="center">125000</td>
-<td align="center">456600</td>
-<td align="center">788900</td>
+<td align="center">37500</td>
+<td align="center">353400</td>
+<td align="center">4e+05</td>
 <td align="center">2117000</td>
 </tr>
 </tbody>
@@ -159,11 +159,11 @@ March 30, 2017
 </thead>
 <tbody>
 <tr class="odd">
-<td align="center">278</td>
-<td align="center">402</td>
-<td align="center">539</td>
-<td align="center">583</td>
-<td align="center">392</td>
+<td align="center">280</td>
+<td align="center">414</td>
+<td align="center">569</td>
+<td align="center">599</td>
+<td align="center">405</td>
 </tr>
 </tbody>
 </table>
@@ -192,7 +192,7 @@ March 30, 2017
 <td align="center">0</td>
 <td align="center">1000</td>
 <td align="center">3000</td>
-<td align="center">8609</td>
+<td align="center">9064</td>
 <td align="center">9000</td>
 <td align="center">360000</td>
 </tr>
@@ -261,11 +261,11 @@ March 30, 2017
 </thead>
 <tbody>
 <tr class="odd">
-<td align="center">299</td>
-<td align="center">209</td>
-<td align="center">259</td>
-<td align="center">240</td>
-<td align="center">230</td>
+<td align="center">386</td>
+<td align="center">319</td>
+<td align="center">342</td>
+<td align="center">373</td>
+<td align="center">321</td>
 </tr>
 </tbody>
 </table>
@@ -292,10 +292,10 @@ March 30, 2017
 <tbody>
 <tr class="odd">
 <td align="center">0</td>
-<td align="center">6000</td>
-<td align="center">25000</td>
-<td align="center">354400</td>
-<td align="center">125000</td>
+<td align="center">8745</td>
+<td align="center">35000</td>
+<td align="center">324900</td>
+<td align="center">137300</td>
 <td align="center">31810000</td>
 </tr>
 </tbody>
@@ -355,11 +355,11 @@ March 30, 2017
 </thead>
 <tbody>
 <tr class="odd">
-<td align="center">84</td>
-<td align="center">81</td>
-<td align="center">116</td>
-<td align="center">160</td>
-<td align="center">123</td>
+<td align="center">91</td>
+<td align="center">88</td>
+<td align="center">125</td>
+<td align="center">166</td>
+<td align="center">129</td>
 </tr>
 </tbody>
 </table>
@@ -386,10 +386,10 @@ March 30, 2017
 <tbody>
 <tr class="odd">
 <td align="center">0</td>
-<td align="center">5900</td>
-<td align="center">11370</td>
-<td align="center">15840</td>
-<td align="center">18000</td>
+<td align="center">6000</td>
+<td align="center">11500</td>
+<td align="center">17480</td>
+<td align="center">18120</td>
 <td align="center">3e+05</td>
 </tr>
 </tbody>
@@ -529,23 +529,23 @@ March 30, 2017
 </thead>
 <tbody>
 <tr class="odd">
-<td align="center">2246</td>
-<td align="center">2402</td>
-<td align="center">2387</td>
-<td align="center">2233</td>
-<td align="center">1903</td>
+<td align="center">2689</td>
+<td align="center">2871</td>
+<td align="center">2781</td>
+<td align="center">2676</td>
+<td align="center">2249</td>
 </tr>
 </tbody>
 </table>
 
-<table style="width:68%;">
+<table style="width:69%;">
 <colgroup>
 <col width="9%" />
 <col width="13%" />
 <col width="12%" />
 <col width="9%" />
 <col width="13%" />
-<col width="8%" />
+<col width="9%" />
 </colgroup>
 <thead>
 <tr class="header">
@@ -560,11 +560,11 @@ March 30, 2017
 <tbody>
 <tr class="odd">
 <td align="center">0</td>
-<td align="center">700</td>
-<td align="center">2000</td>
-<td align="center">20060</td>
-<td align="center">6000</td>
-<td align="center">8e+06</td>
+<td align="center">785</td>
+<td align="center">2400</td>
+<td align="center">24660</td>
+<td align="center">8000</td>
+<td align="center">9765000</td>
 </tr>
 </tbody>
 </table>
@@ -811,23 +811,23 @@ plot(shapes
 <tbody>
 <tr class="odd">
 <td align="center">Foundations</td>
-<td align="center">4</td>
+<td align="center">0</td>
 </tr>
 <tr class="even">
 <td align="center">Residential</td>
-<td align="center">73</td>
+<td align="center">0</td>
 </tr>
 <tr class="odd">
 <td align="center">Comercial</td>
-<td align="center">504</td>
+<td align="center">0</td>
 </tr>
 <tr class="even">
 <td align="center">Demolition</td>
-<td align="center">35</td>
+<td align="center">0</td>
 </tr>
 <tr class="odd">
 <td align="center">Int and Rep</td>
-<td align="center">2095</td>
+<td align="center">0</td>
 </tr>
 <tr class="even">
 <td align="center">Ignored</td>
