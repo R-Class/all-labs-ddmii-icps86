@@ -781,23 +781,9 @@ March 30, 2017
 
 ### **All together**
 
-``` r
-plot(shapes
-     , axes = T
-     ) 
-  title(main = "All points")
-  points(df.I, pch=20, cex= .2, col=adjustcolor("gold1", alpha.f = .6))
-  points(df.C, pch=20, cex= .2, col=adjustcolor("firebrick", alpha.f = .5))
-  points(df.R, pch=20, cex = .4, col=adjustcolor("dodgerblue4", alpha.f = .5))
-  points(df.D, pch=20, cex = .4, col=adjustcolor("deeppink4", alpha.f = 7))
-  points(df.F, pch=20, cex= 1.2, col=adjustcolor("forestgreen", alpha.f = 1))
-```
-
 ![](Permits_and_ED_files/figure-markdown_github/unnamed-chunk-14-1.png)
 
 ### NAs in the data per variables
-
-After a lot, A LOT, of clever replacing (regular expressions), I fixed all missing NAs:
 
 <table style="width:24%;">
 <colgroup>

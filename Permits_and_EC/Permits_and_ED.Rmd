@@ -672,7 +672,7 @@ plot(shapes
 
 
 ###NAs in the data per variables
-After a lot, A LOT, of clever replacing (regular expressions), I fixed all missing NAs:
+
 ```{r, echo=F}
 missing[nrow(missing)+1,] <- c("Ignored", "0")
 missing %>% pander
