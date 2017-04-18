@@ -1,5 +1,5 @@
 ---
-title: "Permits and ED"
+title: "Permits"
 author: "ignacio"
 date: "March 30, 2017"
 output: github_document
@@ -9,15 +9,18 @@ html_document:
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set( message=F, warning=F )
+#knitr::opts_chunk$set( message=F, warning=F )
 
 setwd("C:/Users/icps/Dropbox/3. Maxwell/3. Spring Term/5. Data Driven II/Labs/all-labs-ddmii-icps86/Permits_and_EC/")
 
 library(dplyr)
-library(spatialEco) # spatial econometrics package
-library(GISTools)
 library(pander)
 library(ggmap)
+library(sp) #coordinates function ir here
+#install.packages("geojsonio")
+library(geojsonio )
+library(maptools )
+library(rgdal)
 
 ```
 
@@ -83,7 +86,7 @@ save(df.Ign, file = "df.Ign.rda")
 
 ```
 
-```{r, echo=F, eval=F}
+```{r, echo=FALSE, eval=FALSE}
 #GEOCODING the dataframes
 
 #devtools::install_github("dkahle/ggmap") #Installing latest ggmap from the creators webpage. Need to download this in order for the code to work.
@@ -121,7 +124,7 @@ save(df.I, file = "df.I.rda")
 
 ```
 
-```{r, echo=F, eval=F}
+```{r, echo=FALSE, eval=FALSE}
 #cLEANING ADDRESSES AND BATCH GEOCODEDING THEM
 
 #1. CLEANING ADDRESSES
@@ -490,163 +493,209 @@ save(types, file= "types.rda")
 
 ```
 
-```{r, echo=F}
-#LOADING THE SHAPEFILES
-load("shapestracts.rda") #loading the shape file with the census tracts.
-shapes <- shapes[as.numeric(as.character(shapes$NAME10)) < 64, ] #Cutting all tracks that are not in syracuse. lower than 64 gets this.#DO THIS FOR  REMOVING SHAPES NOT WANTED.
-
-#FORMATTING the DATAFRAMES into SPATIAL DATA FOR PLOTTING
-#In order to do the points in poly operation, I will convert the dataframes into coordinate objects (this disables the view option in Rstudio) and I will also  specify  the value of the proj4strings (see code below... proj4string(df.F) <- CRS("+proj=longlat +datum=WGS84"))
-#For more reference look at: http://r-sig-geo.2731867.n2.nabble.com/point-in-polygon-or-over-help-td7583635.html
-
-#FOUNDATIONS
-load("df.F.rda") #loading the data frame 
-x <- is.na(df.F$lat)
-missing <- data.frame("variable" = "Foundations", "NAs" = sum(x), row.names = NULL, stringsAsFactors = F) #creating a dataframe with the NAs for each variable
-df.F <- df.F[!x,] #removing NAs
-coordinates(df.F) = ~lon+lat #making it a coordinates object
-proj4string(df.F) <- CRS("+proj=longlat +datum=WGS84") #fixing it 
-
-#RESIDENTIAL
-load("df.R.rda") #loading the data frame 
-x <- is.na(df.R$lat)
-missing[nrow(missing) + 1,] <- c("variable" = "Residential", "Nas" = sum(x))
-df.R <- df.R[!x,] #removing NAs
-coordinates(df.R) = ~lon+lat #making it a coordinates object
-proj4string(df.R) <- CRS("+proj=longlat +datum=WGS84") #fixing it 
-
-#COMERCIAL
-load("df.C.rda") #loading the data frame 
-x <- is.na(df.C$lat)
-missing[nrow(missing) + 1,] <- c("variable" = "Comercial", "Nas" = sum(x))
-df.C <- df.C[!x,] #removing NAs
-coordinates(df.C) = ~lon+lat #making it a coordinates object
-proj4string(df.C) <- CRS("+proj=longlat +datum=WGS84") #fixing it 
-
-#DEMOLITION
-load("df.D.rda") #loading the data frame 
-x <- is.na(df.D$lat)
-missing[nrow(missing) + 1,] <- c("variable" = "Demolition", "Nas" = sum(x))
-df.D <- df.D[!x,] #removing NAs
-coordinates(df.D) = ~lon+lat #making it a coordinates object
-proj4string(df.D) <- CRS("+proj=longlat +datum=WGS84") #fixing it 
-
-#INSTALATIONS AND REPAIRS
-load("df.I.rda") #loading the data frame 
-x <- is.na(df.I$lat)
-missing[nrow(missing) + 1,] <- c("variable" = "Int and Rep", "Nas" = sum(x))
-df.I <- df.I[!x,] #removing NAs
-coordinates(df.I) = ~lon+lat #making it a coordinates object
-proj4string(df.I) <- CRS("+proj=longlat +datum=WGS84") #fixing it 
-
-#IGNORED
+```{r, echo=FALSE, eval=FALSE}
+#AGGREGATING ALL SUBSETS AND CREATING A CSV
+load("df.R.rda")
+load("df.c.rda")
+load("df.D.rda")
+load("df.I.rda")
+load("df.F.rda")
 load("df.Ign.rda")
+
+x<- rbind(df.R, df.C, df.I, df.D, df.F, df.Ign)
+x$id <- c(1:nrow(x))
+dat <- x
+write.csv(dat, file= "Permits.csv", row.names = F)
+
+#CLIPPING DATA
+library(raster)
+library(rgeos)
+
+interstate_clipped <- gIntersection(syr, interstate)
+
 ```
-
-
-###PROPOSED INDICATORS
 
 ```{r, echo=FALSE}
-#loading the types dataframe and creating an index of the types to run the following code chunks
-load("types.rda")
-x<- as.character(types$type)
+#Loading data file and formatting
+dat <- read.csv("Permits.csv", stringsAsFactors = F)
+
+#splitting the dataframe into two: permit types used for analysis and permit types ignored
+x <- dat$Type
+x <- x == "Antenna / Dish" | x =="Electric (Meter Set)" |  x=="Block Party (Business)" | x=="Block Party (Residential)" | x=="Curb Cut" | x=="Encroach (Deminimus)" | x=="Encroach (Major)"  | x=="Encroachment (Converted)" | x=="Liability Waiver" | x=="Loading Zone (Business)" | x=="Parking Meter Rental" | x=="Public Assembly" | x=="Road Cut" | x=="Sidewalk Cafe" | x=="Sidewalk Replace" | x=="Sign" | x=="Site Work"
+df.Ign <- dat[x,] #saving Nas as the ignored dataframe
+
+dat <- dat[!x,] #removing the Ign from dat 
+coordinates(dat) = ~lon+lat #making dat a coordinates object
+proj4string(dat) <- CRS("+proj=longlat +datum=WGS84") #fixing it 
+
+#########################
+
+#LOADING THE SHAPEFILES
+
+#Loading a geojson file of only census tracts
+#url <- "https://github.com/lecy/geojson/raw/master/syr_parcels.geojson"
+shapes <- geojson_read("tracts.geojson", method="local", what="sp" )
+
+##############
+
+#Creating a tract variable in the dataset 
 
 ```
 
-###**1.New Foundations starts (Found)**
+
+##Information about the Dataset
+The Permits Dataset has information for 21,556 permits from 2012 - 2013. 
+For each permit the Dataset inclueds variables like:
+* Type of Permit
+* Applicant name (can be either a person or a company)
+* Location
+* SBL
+* Date Issued
+* Valuation (cost of the activity the applicant is requesting permit for)
+* Fee Amount (the monies for the City)
+
+We used the types of permits to construct 4 categories that we will aggregate as variables at the Census Tract level.
+
+There are 32 types of permits:
+```{r, echo=FALSE}
+load("types.rda")
+levels(types$type)
+```
+
+We have placed this types of Permits into 4 categories to analyze them separately. 
+They are:
+* Residential Properties
+* Commercial Properties
+* Installations and Repairs (to public space, res and com)
+* Demolitions
+
+In what follows we explain the categories that we have constructed and show some descriptives.
+
+###PROPOSED VARIABLES
+####**1.New/Reno of Residential Property**
+```{r, echo=FALSE}
+#types. creating an index of the types to run the following code chunks
+x<- as.character(types$type)
+Res <- x== "Res. Remodel/Chg Occ" | x == "Res. New 1-2 Family" 
+Res <- types[Res,]
+pander(Res)
+
+#df.R
+cat <- as.character(dat@data$Type)
+df.R <- cat== "Res. Remodel/Chg Occ" | cat == "Res. New 1-2 Family" 
+df.R <- dat[df.R,] 
+
+pander(table(df.R$Year))
+summary(df.R$Valuation) %>% pander
+barplot(sort(df.R$Valuation, decreasing = T))
+
+#plotting Residential 
+plot(shapes, col = F, border = "grey10") 
+  title(main = "Residential Permits")
+  points(df.R, pch=20, cex = .4, col=adjustcolor("dodgerblue4", alpha.f = .8))
+
+```
+
+###**2.New/Reno of Commercial Property**
+```{r, echo=FALSE}
+#types
+Com <- x== "Com. New Building" | x=="Com. Reno/Rem/Chg Occ"
+Com <- types[Com,]
+pander(Com)
+
+#df
+df.C <- cat== "Com. New Building" | cat=="Com. Reno/Rem/Chg Occ"
+df.C <- dat[df.C,] 
+
+pander(table(df.C$Year))
+summary(df.C$Valuation) %>% pander
+barplot(sort(df.C$Valuation, decreasing = T))
+
+plot(shapes, col = F, border = "grey10") 
+  title(main = "Residential and commercial Permits")
+  points(df.C, pch=20, cex= .4, col=adjustcolor("red2", alpha.f = .8))
+  
+```
+
+###**3.Installations and Repairs on all properties**
+```{r, echo=FALSE}
+#types
+Ins <- x=="Electric" | x=="Elevator" | x=="Fire Alarm" | x=="HVAC/Mechanical" | x=="Misc.(deck, fence,ramp)" | x=="Pool / Hot Tub" | x=="Security Alarm" | x=="Sprinkler" | x=="Tank"
+Ins <- types[Ins,]
+pander(Ins)
+
+#df
+df.I <- cat=="Electric" | cat=="Elevator" | cat=="Fire Alarm" | cat=="HVAC/Mechanical" | cat=="Misc.(deck, fence,ramp)" | cat=="Pool / Hot Tub" | cat=="Security Alarm" | cat=="Sprinkler" | cat=="Tank"
+df.I <- dat[df.I,] 
+
+pander(table(df.I$Year))
+summary(df.I$Valuation) %>% pander
+barplot(sort(df.I$Valuation, decreasing = T))
+
+plot(shapes, col = F, border = "grey10") 
+  title(main = "Instalations and Repairs")
+  points(df.I, pch=20, cex= .4, col=adjustcolor("orange", alpha.f = .6))
+
+```
+
+###**4.Demolitions**
+```{r, echo=FALSE}
+#types
+Dem <- x=="Demolition"
+Dem <- types[Dem,]
+pander(Dem)
+
+#df
+df.D <- cat=="Demolition"
+df.D <- dat[df.D,] 
+
+pander(table(df.D$Year))
+summary(df.D$Valuation) %>% pander
+barplot(sort(df.D$Valuation, decreasing = T))
+
+plot(shapes, col = F, border = "grey10")  
+  title(main = "Demolition Permits")
+  points(df.D, pch=20, cex= .4, col=adjustcolor("forestgreen", alpha.f = .8))
+
+```
+
+###**Categories not taken into account**
+
+####**New Foundations**
+
+"Footing / foundation" type of permits are not being included because it is only 16 and it is not clear whether they overlap with the permits for new residential and/or new commercial. In other words, a new building will have a foundaiton permit and a new construction permit (either residential or commercial).
+
 ```{r, echo=FALSE}
 Found <- x == "Footing / Foundation"
 Found <- types[Found, ]
 pander(Found)
+
+#df
+df.F <- cat== "Footing / Foundation"
+df.F <- dat[df.F,] 
+
 pander(table(df.F$Year))
 summary(df.F$Valuation) %>% pander
 barplot(sort(df.F$Valuation, decreasing = T))
 
-plot(shapes
-     , axes = T
-     ) 
+plot(shapes, col = F, border = "grey10")  
   title(main = "Foundation starts Permits")
   points(df.F, pch=20, cex = 1.2, col=adjustcolor("deeppink4", alpha.f = 1))
 
 
 ```
 
-###**2.New/Reno Residential (Res)**
+####**Ignored (Ign)**
+
+This category includes all permits we found it was not useful to include
+
 ```{r, echo=FALSE}
-Res <- x== "Res. Remodel/Chg Occ" | x == "Res. New 1-2 Family" 
-Res <- types[Res,]
-pander(Res)
-pander(table(df.R$Year))
-summary(df.R$Valuation) %>% pander
-barplot(sort(df.R$Valuation, decreasing = T))
-
-#plotting Residential 
-plot(shapes
-     , axes = T
-     ) 
-  title(main = "Residential Permits")
-  points(df.R, pch=20, cex = .4, col=adjustcolor("dodgerblue4", alpha.f = .8))
-
-```
-
-###**3.New/Reno Commercial (Com)**
-```{r, echo=FALSE}
-Com <- x== "Com. New Building" | x=="Com. Reno/Rem/Chg Occ"
-Com <- types[Com,]
-pander(Com)
-pander(table(df.C$Year))
-summary(df.C$Valuation) %>% pander
-barplot(sort(df.C$Valuation, decreasing = T))
-
-plot(shapes
-     , axes = T
-     ) 
-title(main = "Residential and commercial Permits")
-points(df.C, pch=20, cex= .2, col=adjustcolor("firebrick", alpha.f = .8))
-
-
-```
-
-###**4.Demolitions (Dem)**
-```{r, echo=FALSE}
-Dem <- x=="Demolition"
-Dem <- types[Dem,]
-pander(Dem)
-pander(table(df.D$Year))
-summary(df.D$Valuation) %>% pander
-barplot(sort(df.D$Valuation, decreasing = T))
-
-plot(shapes
-     , axes = T
-     ) 
-title(main = "Demolition Permits")
-points(df.D, pch=20, cex= .2, col=adjustcolor("forestgreen", alpha.f = .8))
-
-
-```
-
-###**5.Installations and Repairs (Ins)**
-```{r, echo=FALSE}
-Ins <- x=="Antenna / Dish" | x=="Electric" | x=="Electric (Meter Set)" | x=="Elevator" | x=="Fire Alarm" | x=="HVAC/Mechanical" | x=="Misc.(deck, fence,ramp)" | x=="Pool / Hot Tub" | x=="Security Alarm" | x=="Sprinkler" | x=="Tank"
-Ins <- types[Ins,]
-pander(Ins)
-pander(table(df.I$Year))
-summary(df.I$Valuation) %>% pander
-barplot(sort(df.I$Valuation, decreasing = T))
-
-plot(shapes
-     , axes = T
-     ) 
-title(main = "Instalations and Repairs")
-points(df.I, pch=20, cex= .2, col=adjustcolor("gold1", alpha.f = .6))
-
-```
-
-###**Ignored (Ign)**
-```{r, echo=FALSE}
-Ign <- x=="Block Party (Business)" | x=="Block Party (Residential)" | x=="Curb Cut" | x=="Encroach (Deminimus)" | x=="Encroach (Major)"  | x=="Encroachment (Converted)" | x=="Liability Waiver" | x=="Loading Zone (Business)" | x=="Parking Meter Rental" | x=="Public Assembly" | x=="Road Cut" | x=="Sidewalk Cafe" | x=="Sidewalk Replace" | x=="Sign" | x=="Site Work"
+unique(dat@data$Type)
+Ign <- x == "Antenna / Dish" | x =="Electric (Meter Set)" |  x=="Block Party (Business)" | x=="Block Party (Residential)" | x=="Curb Cut" | x=="Encroach (Deminimus)" | x=="Encroach (Major)"  | x=="Encroachment (Converted)" | x=="Liability Waiver" | x=="Loading Zone (Business)" | x=="Parking Meter Rental" | x=="Public Assembly" | x=="Road Cut" | x=="Sidewalk Cafe" | x=="Sidewalk Replace" | x=="Sign" | x=="Site Work"
 Ign <- types[Ign,]  
 pander(Ign)
+
+#the df.Ign already exists
 pander(table(df.Ign$Year))
 paste("total cases:", nrow(df.Ign))
 summary(df.Ign$Valuation) %>% pander
@@ -654,28 +703,83 @@ barplot(sort(df.Ign$Valuation, decreasing = T))
 
 ```
 
-###**All together**
-```{r, echo=F}
 
-plot(shapes
-     , axes = T
-     ) 
-  title(main = "All points")
-  points(df.I, pch=20, cex= .2, col=adjustcolor("gold1", alpha.f = .6))
-  points(df.C, pch=20, cex= .2, col=adjustcolor("firebrick", alpha.f = .5))
-  points(df.R, pch=20, cex = .4, col=adjustcolor("dodgerblue4", alpha.f = .5))
-  points(df.D, pch=20, cex = .4, col=adjustcolor("deeppink4", alpha.f = 7))
-  points(df.F, pch=20, cex= 1.2, col=adjustcolor("forestgreen", alpha.f = 1))
-  
+###All Categories at a glance
 
-```
-
-
-###NAs in the data per variables
-
-```{r, echo=F}
-missing[nrow(missing)+1,] <- c("Ignored", "0")
-missing %>% pander
+```{r, echo=FALSE}
+par( mar = c( 1, 1, 3, 1 ) )
+plot(shapes, col = F, border = "grey10") 
+  title(main = "All categories of Permits")
+  points(df.I, pch=20, cex= .4, col=adjustcolor("orange", alpha.f = .8))
+  points(df.D, pch=20, cex= .4, col=adjustcolor("forestgreen", alpha.f = .8))
+  points(df.C, pch=20, cex= .4, col=adjustcolor("red2", alpha.f = .8))
+  points(df.R, pch=20, cex = .4, col=adjustcolor("dodgerblue4", alpha.f = .8))
+  legend("bottomright", legend = c("Residential", "Commercial", "Insta/Rep", "Demolitions"), bty = "n", pch = 20, cex = .8, pt.cex = 2, col = c("orange","forestgreen","red2","dodgerblue4"))
 
 ```
+
+##Exploring the different types of permits in the Insta/Rep category
+
+```{r,echo=FALSE}
+#EXPLORING THE TYPES IN THE INSTALLATION CATEGORY
+
+#ATENAS
+x <- df.I$Type == "Antenna / Dish"
+class(df.I)
+plot(shapes) 
+  points(df.I[x,], pch=20, cex= .2, col=adjustcolor("red", alpha.f = .6))
+
+#Electric
+  x <- df.I$Type == "Electric"
+plot(shapes) 
+  points(df.I[x,], pch=20, cex= .2, col=adjustcolor("red", alpha.f = .6))
+
+#Electric meter set
+  x <- df.I$Type == "Electric (Meter Set)"
+plot(shapes) 
+  points(df.I[x,], pch=20, cex= .2, col=adjustcolor("red", alpha.f = .6))
+
+#Elevator
+x <- df.I$Type == "Elevator"
+plot(shapes) 
+  points(df.I[x,], pch=20, cex= .2, col=adjustcolor("red", alpha.f = .6))
+
+#Fire Alarm
+x <- df.I$Type == "Fire Alarm"
+plot(shapes) 
+  points(df.I[x,], pch=20, cex= .2, col=adjustcolor("red", alpha.f = .6))
+
+#HVAC/mech
+  x <- df.I$Type == "HVAC/Mechanical"
+plot(shapes) 
+  points(df.I[x,], pch=20, cex= .2, col=adjustcolor("red", alpha.f = .6))
+
+#Misc.(deck, fence,ramp) 
+x <- df.I$Type == "Misc.(deck, fence,ramp)"
+plot(shapes) 
+  points(df.I[x,], pch=20, cex= .2, col=adjustcolor("red", alpha.f = .6))
+
+# Pool / Hot Tub
+x <- df.I$Type == "Pool / Hot Tub"
+plot(shapes) 
+  points(df.I[x,], pch=20, cex= .2, col=adjustcolor("red", alpha.f = .6))
+
+# Security alarm
+x <- df.I$Type == "Security Alarm"
+plot(shapes) 
+  points(df.I[x,], pch=20, cex= .2, col=adjustcolor("red", alpha.f = .6))
+
+# Sprinkler 
+  x <- df.I$Type == "Sprinkler"
+plot(shapes) 
+  points(df.I[x,], pch=20, cex= .2, col=adjustcolor("red", alpha.f = .6))
+
+# Tank
+  x <- df.I$Type == "Tank"
+plot(shapes) 
+  points(df.I[x,], pch=20, cex= .2, col=adjustcolor("red", alpha.f = .6))
+
+    
+```
+
 

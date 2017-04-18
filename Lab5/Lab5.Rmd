@@ -32,7 +32,7 @@ library( censusapi )
 
 ###1. Load dataset of home prices and assests from Zillow
 
-```{}
+```{r, echo=F, eval=F}
 #loading the dataset from Zillow
 dat <- read.csv( "https://github.com/lecy/hedonic-prices/raw/master/Data/Housing%20Price%20In-Class%20Exercise%20(Responses).csv", stringsAsFactors=FALSE ) 
 str( dat )
@@ -40,12 +40,11 @@ str( dat )
 #fixing some variables
 dat$House.Price <- as.numeric(gsub( ",","", dat$House.Price ))
 
-
 ```
 
 ###2. Add a census tract FIPS ID to each home (spatial join)
 
-```{}
+```{r, echo = F, eval=F}
 #cleaning the addresses
 Fadd <- dat$Street.Address.of.House
 Fadd <- gsub( ",","", Fadd ) #deleting comas
@@ -79,7 +78,6 @@ proj4string(dat) <- CRS("+proj=longlat +datum=WGS84") #fixing it
 #adding an id variable
 dat@data <- data.frame(id = 1:nrow(dat@data), dat@data[,1:25])
 
-#Removing outlier from dat file
 plot(dat) #data has outliers
 
 #limits of syracuse
@@ -98,12 +96,13 @@ plot(dat) #now we droped the outliers
 
 #loading TIGER shape file extracted from Census website
 shapes <- readShapePoly(fn="C:\\Users\\icps\\Dropbox\\3. Maxwell\\3. Spring Term\\5. Data Driven II\\Labs\\Instructions\\Lab3_4\\shapefiles\\tl_2010_36067_tract10"
-                          ,proj4string=CRS("+proj=longlat +datum=WGS84"))
+                          , proj4string=CRS("+proj=longlat +datum=WGS84"))
 
 #fixing the data of the shapes files to get only the variables I want
-#names(shapes@data)
-shapes@data <- shapes@data[,c(3,11,12)]
-colnames(shapes@data) <- c("Tract", "centroid.lat", "centroid.lon")
+shapes@data <- data.frame(Tract = shapes@data$NAME10)
+
+#removing tracts that are not from the city
+shapes <- shapes[as.numeric(as.character(shapes$Tract)) < 64, ]
 
 plot(shapes)
   points(dat, pch=20)
@@ -117,6 +116,7 @@ plot(shapes
   points(dat, pch=20, col="dodgerblue4")
 
 #Running Points in poly to add shape id to points in dat
+#Pintsin poly: Intersects point and polygon feature classes and adds polygon attributes to points
 dat <- point.in.poly( dat, shapes )
 
 

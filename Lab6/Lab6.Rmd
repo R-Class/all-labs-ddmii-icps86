@@ -13,7 +13,6 @@ knitr::opts_chunk$set( message=F, warning=F )
 
 setwd("C:/Users/icps/Dropbox/3. Maxwell/3. Spring Term/5. Data Driven II/Labs/all-labs-ddmii-icps86/Lab6/")
 setwd( "./shapefiles" )
-dir()
 
 ```
 
@@ -37,9 +36,8 @@ library( maptools )
 library( sp )
 
 #shapefile
-syr <- readShapePoly( fn="tl_2010_36067_tract10", proj4string=CRS("+proj=longlat +datum=WGS84") )
-syr1 <- syr[as.numeric(as.character(syr$NAME10)) < 64, ] #Cutting all tracks that are not in syracuse. lower than 64 gets this.
-par( mar=c(0,0,0,0) )
+shapes <- readShapePoly( fn="tl_2010_36067_tract10", proj4string=CRS("+proj=longlat +datum=WGS84") )
+shapes <- syr[as.numeric(as.character(syr$NAME10)) < 64, ] #Cutting all tracks that are not in syracuse. lower than 64 gets this.
 
 #getting roads
 roads <- readShapeLines( fn="tl_2015_36_prisecroads", proj4string=CRS("+proj=longlat +datum=WGS84") )
@@ -48,17 +46,16 @@ roads <- readShapeLines( fn="tl_2015_36_prisecroads", proj4string=CRS("+proj=lon
 interstate <- roads[ roads$RTTYP == "I" , ]
 
 #plotting map and roads
-par(mar=c(0,0,0,0))
+par(mar=c(0,0,2,0))
 plot(syr,  border="gray80")
 plot(roads, col="steelblue", lwd=2, add=T)
 plot(interstate, col = "red", add = T)
 
 #clipping roads and interstate
-library(raster)
 library(rgeos)
 
-interstate <- gIntersection(syr, interstate)
-roads <-gIntersection(syr, roads)
+interstate <- gIntersection(shapes, interstate) #the object changes into a line and loses its @data
+roads <-gIntersection(shapes, roads)
 
 
 
