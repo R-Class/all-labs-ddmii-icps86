@@ -21,6 +21,7 @@ library(sp) #coordinates function ir here
 library(geojsonio )
 library(maptools )
 library(rgdal)
+library(spatialEco)
 
 ```
 
@@ -506,28 +507,59 @@ x<- rbind(df.R, df.C, df.I, df.D, df.F, df.Ign)
 x$id <- c(1:nrow(x))
 dat <- x
 write.csv(dat, file= "Permits.csv", row.names = F)
-
-#CLIPPING DATA
-library(raster)
-library(rgeos)
-
-interstate_clipped <- gIntersection(syr, interstate)
-
 ```
 
-```{r, echo=FALSE}
-#Loading data file and formatting
+```{r, echo=FALSE, eval=FALSE}
+#Loading data file and formatting (this csv file in my repository has changed)
 dat <- read.csv("https://raw.githubusercontent.com/R-Class/all-labs-ddmii-icps86/master/Permits_and_EC/Permits.csv", stringsAsFactors = F)
 
 #splitting the dataframe into two: (1) permit types used for analysis and (2)ignored permit types
 x <- dat$Type #creating an index
 #selecting all the types that go to the ignored dataset
-x <- x == "Antenna / Dish" | x =="Electric (Meter Set)" |  x=="Block Party (Business)" | x=="Block Party (Residential)" | x=="Curb Cut" | x=="Encroach (Deminimus)" | x=="Encroach (Major)"  | x=="Encroachment (Converted)" | x=="Liability Waiver" | x=="Loading Zone (Business)" | x=="Parking Meter Rental" | x=="Public Assembly" | x=="Road Cut" | x=="Sidewalk Cafe" | x=="Sidewalk Replace" | x=="Sign" | x=="Site Work"
-df.Ign <- dat[x,] #saving Nas as the ignored dataframe
+x <- x == "Antenna / Dish"  |  x=="Block Party (Business)" | x=="Block Party (Residential)" | x=="Curb Cut" | x =="Electric (Meter Set)" | x=="Encroach (Deminimus)" | x=="Encroach (Major)"  | x=="Encroachment (Converted)" | x=="Liability Waiver" | x=="Loading Zone (Business)" | x=="Parking Meter Rental" | x=="Public Assembly" | x=="Road Cut" | x=="Sidewalk Cafe" | x=="Sidewalk Replace" | x=="Sign" | x=="Site Work"
 
+df.Ign <- dat[x,] #saving Nas as the ignored dataframe
 dat <- dat[!x,] #removing the Ign from dat 
-coordinates(dat) = ~lon+lat #making dat a coordinates object
-proj4string(dat) <- CRS("+proj=longlat +datum=WGS84") #adding a CRS
+
+#nrow(dat) + nrow(df.Ign)
+#17036 + 4520 = 21556 
+
+
+##############
+
+#Creating a tract variable for each permit in dat (this process also clipped the data)
+
+#need to make CRS in both shapes and dat =
+proj4string(dat)
+proj4string(shapes)
+shapes <- spTransform( shapes, CRS( "+proj=longlat +datum=WGS84")) #changing the CRS of the shape file to match the dat
+
+dat <- point.in.poly( dat, shapes) #all the permits that were outside the tracks were dropped. 
+x<- dat@data
+x$id <- c(1:nrow(x)) #correcting the id
+dim(x)
+#new dat file has 16845
+#16845 - 17036 = 191 lost
+
+#formatting df.Ign
+df.Ign$Tract <- NA
+dim(df.Ign)
+df.Ign$id <- c(1:nrow(df.Ign))
+
+#saving both csv
+write.csv(x, file= "Permits.csv", row.names = F)
+write.csv(df.Ign, file= "df.Ign.csv", row.names = F)
+
+```
+
+```{r,echo=FALSE}
+dat <- read.csv("https://raw.githubusercontent.com/R-Class/all-labs-ddmii-icps86/master/Permits_and_EC/Permits.csv", stringsAsFactors = F)
+
+df.Ign <- read.csv("https://raw.githubusercontent.com/R-Class/all-labs-ddmii-icps86/master/Permits_and_EC/Permits.csv", stringsAsFactors = F)
+
+#making dat a spatial object
+coo <- dat[ ,c( "lon", "lat") ]
+dat <- SpatialPointsDataFrame(coo, dat, proj4string=CRS("+proj=longlat +datum=WGS84")) #this is so that it does not lose the lat lon in the dataframe when transformed into a sp
 
 #########################
 
@@ -535,16 +567,12 @@ proj4string(dat) <- CRS("+proj=longlat +datum=WGS84") #adding a CRS
 
 #Loading a geojson file of only census tracts
 #url <- "https://github.com/lecy/geojson/raw/master/syr_parcels.geojson"
-shapes <- geojson_read("tracts.geojson", method="local", what="sp" )
-
-##############
-
-#Creating a tract variable in the dataset 
-
-
+shapes <- geojson_read("https://raw.githubusercontent.com/R-Class/all-labs-ddmii-icps86/master/Permits_and_EC/tracts.geojson", method="local", what="sp" )
 
 
 ```
+
+
 
 
 ##Information about the Dataset
