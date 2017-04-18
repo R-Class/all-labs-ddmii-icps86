@@ -550,26 +550,24 @@ df.Ign$id <- c(1:nrow(df.Ign))
 write.csv(x, file= "Permits.csv", row.names = F)
 write.csv(df.Ign, file= "df.Ign.csv", row.names = F)
 
+#also making the types rda a csv
+write.csv(types, file= "types.csv", row.names = F)
 ```
 
 ```{r,echo=FALSE}
 dat <- read.csv("https://raw.githubusercontent.com/R-Class/all-labs-ddmii-icps86/master/Permits_and_EC/Permits.csv", stringsAsFactors = F)
+df.Ign <- read.csv("https://raw.githubusercontent.com/R-Class/all-labs-ddmii-icps86/master/Permits_and_EC/df.Ign.csv", stringsAsFactors = F)
 
-df.Ign <- read.csv("https://raw.githubusercontent.com/R-Class/all-labs-ddmii-icps86/master/Permits_and_EC/Permits.csv", stringsAsFactors = F)
-
-#making dat a spatial object
-coo <- dat[ ,c( "lon", "lat") ]
-dat <- SpatialPointsDataFrame(coo, dat, proj4string=CRS("+proj=longlat +datum=WGS84")) #this is so that it does not lose the lat lon in the dataframe when transformed into a sp
+#making the permit dat object a spatial object
+dat <- SpatialPointsDataFrame(dat[ ,c( "lon", "lat") ], dat, proj4string=CRS("+proj=longlat +datum=WGS84")) #this is so that it does not lose the lat lon in the dataframe when transformed into a sp
 
 #########################
 
-#LOADING THE SHAPEFILES
+#LOADING THE SHAPEFILE
 
 #Loading a geojson file of only census tracts
 #url <- "https://github.com/lecy/geojson/raw/master/syr_parcels.geojson"
 shapes <- geojson_read("https://raw.githubusercontent.com/R-Class/all-labs-ddmii-icps86/master/Permits_and_EC/tracts.geojson", method="local", what="sp" )
-
-
 ```
 
 
@@ -590,8 +588,8 @@ We used the types of permits to construct 4 categories that we will aggregate as
 
 There are 32 types of permits:
 ```{r, echo=FALSE}
-load("types.rda")
-levels(types$type)
+df.Ign <- read.csv("https://raw.githubusercontent.com/R-Class/all-labs-ddmii-icps86/master/Permits_and_EC/types.csv", stringsAsFactors = F)
+unique(types$type)
 ```
 
 We have placed this types of Permits into 4 categories to analyze them separately. 

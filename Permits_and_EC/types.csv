@@ -1,0 +1,33 @@
+"type","freq","meanval","minval","maxval"
+"Antenna / Dish",112,22830.0714285714,0,80000
+"Block Party (Business)",157,0,0,0
+"Block Party (Residential)",149,0,0,0
+"Com. New Building",60,2463186.21666667,1500,15183229
+"Com. Reno/Rem/Chg Occ",1689,248890.585861456,0,31811000
+"Curb Cut",62,0,0,0
+"Demolition",599,17484.1519198664,0,3e+05
+"Electric",5807,23839.0826915791,0,8e+06
+"Electric (Meter Set)",767,288.073011734029,0,14500
+"Elevator",172,72455.5,0,1172000
+"Encroach (Deminimus)",5,0,0,0
+"Encroach (Major)",37,0,0,0
+"Encroachment (Converted)",29,0,0,0
+"Fire Alarm",616,51749.5805194805,0,8e+06
+"Footing / Foundation",16,353372.375,0,2116550
+"HVAC/Mechanical",2170,52752.1223317972,0,9764733
+"Liability Waiver",598,0,0,0
+"Loading Zone (Business)",175,0,0,0
+"Misc.(deck, fence,ramp)",1166,5173.52332761578,0,2100000
+"Parking Meter Rental",111,0,0,0
+"Pool / Hot Tub",71,6721.44845070423,0,30000
+"Public Assembly",172,0,0,0
+"Res. New 1-2 Family",42,121314.452380952,0,255539
+"Res. Remodel/Chg Occ",2226,6945.72343216532,0,360000
+"Road Cut",595,0,0,0
+"Security Alarm",542,1215.26662361624,0,91968
+"Sidewalk Cafe",236,0,0,0
+"Sidewalk Replace",773,0,0,0
+"Sign",328,6879.49600609756,0,143000
+"Site Work",214,264968.990654206,0,7400000
+"Sprinkler",1793,10739.8898996096,0,1396500
+"Tank",67,17528.6119402985,0,3e+05
