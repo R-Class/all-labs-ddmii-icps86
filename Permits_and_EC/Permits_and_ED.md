@@ -95,11 +95,11 @@ In what follows we explain the categories that we have constructed and show some
 </thead>
 <tbody>
 <tr class="odd">
-<td align="center">280</td>
-<td align="center">414</td>
-<td align="center">569</td>
-<td align="center">599</td>
-<td align="center">405</td>
+<td align="center">279</td>
+<td align="center">410</td>
+<td align="center">565</td>
+<td align="center">598</td>
+<td align="center">404</td>
 </tr>
 </tbody>
 </table>
@@ -128,14 +128,14 @@ In what follows we explain the categories that we have constructed and show some
 <td align="center">0</td>
 <td align="center">1000</td>
 <td align="center">3000</td>
-<td align="center">9064</td>
+<td align="center">9046</td>
 <td align="center">9000</td>
 <td align="center">360000</td>
 </tr>
 </tbody>
 </table>
 
-![](Permits_and_ED_files/figure-markdown_github/unnamed-chunk-9-1.png)![](Permits_and_ED_files/figure-markdown_github/unnamed-chunk-9-2.png)
+![](Permits_and_ED_files/figure-markdown_github/unnamed-chunk-10-1.png)![](Permits_and_ED_files/figure-markdown_github/unnamed-chunk-10-2.png)
 
 ### **2.New/Reno of Commercial Property**
 
@@ -197,11 +197,11 @@ In what follows we explain the categories that we have constructed and show some
 </thead>
 <tbody>
 <tr class="odd">
-<td align="center">386</td>
-<td align="center">319</td>
-<td align="center">342</td>
-<td align="center">373</td>
-<td align="center">321</td>
+<td align="center">382</td>
+<td align="center">317</td>
+<td align="center">327</td>
+<td align="center">364</td>
+<td align="center">318</td>
 </tr>
 </tbody>
 </table>
@@ -228,18 +228,20 @@ In what follows we explain the categories that we have constructed and show some
 <tbody>
 <tr class="odd">
 <td align="center">0</td>
-<td align="center">8745</td>
-<td align="center">35000</td>
-<td align="center">324900</td>
-<td align="center">137300</td>
+<td align="center">8500</td>
+<td align="center">34000</td>
+<td align="center">319500</td>
+<td align="center">132400</td>
 <td align="center">31810000</td>
 </tr>
 </tbody>
 </table>
 
-![](Permits_and_ED_files/figure-markdown_github/unnamed-chunk-10-1.png)![](Permits_and_ED_files/figure-markdown_github/unnamed-chunk-10-2.png)
+![](Permits_and_ED_files/figure-markdown_github/unnamed-chunk-11-1.png)![](Permits_and_ED_files/figure-markdown_github/unnamed-chunk-11-2.png)
 
 ### **3.Installations and Repairs on all properties**
+
+\*At the end of this page each type of permit that makes up this category is plotted.
 
 <table style="width:94%;">
 <colgroup>
@@ -355,11 +357,11 @@ In what follows we explain the categories that we have constructed and show some
 </thead>
 <tbody>
 <tr class="odd">
-<td align="center">2666</td>
-<td align="center">2715</td>
-<td align="center">2551</td>
-<td align="center">2420</td>
-<td align="center">2035</td>
+<td align="center">2645</td>
+<td align="center">2691</td>
+<td align="center">2506</td>
+<td align="center">2389</td>
+<td align="center">2013</td>
 </tr>
 </tbody>
 </table>
@@ -387,15 +389,15 @@ In what follows we explain the categories that we have constructed and show some
 <tr class="odd">
 <td align="center">0</td>
 <td align="center">1000</td>
-<td align="center">2606</td>
-<td align="center">26190</td>
-<td align="center">8200</td>
+<td align="center">2600</td>
+<td align="center">25990</td>
+<td align="center">8035</td>
 <td align="center">9765000</td>
 </tr>
 </tbody>
 </table>
 
-![](Permits_and_ED_files/figure-markdown_github/unnamed-chunk-11-1.png)![](Permits_and_ED_files/figure-markdown_github/unnamed-chunk-11-2.png)
+![](Permits_and_ED_files/figure-markdown_github/unnamed-chunk-12-1.png)![](Permits_and_ED_files/figure-markdown_github/unnamed-chunk-12-2.png)
 
 ### **4.Demolitions**
 
@@ -449,10 +451,10 @@ In what follows we explain the categories that we have constructed and show some
 </thead>
 <tbody>
 <tr class="odd">
-<td align="center">91</td>
-<td align="center">88</td>
+<td align="center">90</td>
+<td align="center">87</td>
 <td align="center">125</td>
-<td align="center">166</td>
+<td align="center">164</td>
 <td align="center">129</td>
 </tr>
 </tbody>
@@ -482,14 +484,14 @@ In what follows we explain the categories that we have constructed and show some
 <td align="center">0</td>
 <td align="center">6000</td>
 <td align="center">11500</td>
-<td align="center">17480</td>
+<td align="center">17510</td>
 <td align="center">18120</td>
 <td align="center">3e+05</td>
 </tr>
 </tbody>
 </table>
 
-![](Permits_and_ED_files/figure-markdown_github/unnamed-chunk-12-1.png)![](Permits_and_ED_files/figure-markdown_github/unnamed-chunk-12-2.png)
+![](Permits_and_ED_files/figure-markdown_github/unnamed-chunk-13-1.png)![](Permits_and_ED_files/figure-markdown_github/unnamed-chunk-13-2.png)
 
 ### **Categories not taken into account**
 
@@ -587,7 +589,7 @@ In what follows we explain the categories that we have constructed and show some
 </tbody>
 </table>
 
-![](Permits_and_ED_files/figure-markdown_github/unnamed-chunk-13-1.png)![](Permits_and_ED_files/figure-markdown_github/unnamed-chunk-13-2.png)
+![](Permits_and_ED_files/figure-markdown_github/unnamed-chunk-14-1.png)![](Permits_and_ED_files/figure-markdown_github/unnamed-chunk-14-2.png)
 
 #### **Ignored (Ign)**
 
@@ -822,13 +824,12 @@ This category includes all permits we found it was not useful to include
 </tbody>
 </table>
 
-![](Permits_and_ED_files/figure-markdown_github/unnamed-chunk-14-1.png)
+![](Permits_and_ED_files/figure-markdown_github/unnamed-chunk-15-1.png)
 
 ### All Categories at a glance
 
-![](Permits_and_ED_files/figure-markdown_github/unnamed-chunk-15-1.png)
+![](Permits_and_ED_files/figure-markdown_github/unnamed-chunk-16-1.png)
 
-Exploring the different types of permits in the Insta/Rep category
-------------------------------------------------------------------
+### Extra: Exploring the different types of permits in the Insta/Rep category
 
-![](Permits_and_ED_files/figure-markdown_github/unnamed-chunk-16-1.png)![](Permits_and_ED_files/figure-markdown_github/unnamed-chunk-16-2.png)![](Permits_and_ED_files/figure-markdown_github/unnamed-chunk-16-3.png)![](Permits_and_ED_files/figure-markdown_github/unnamed-chunk-16-4.png)![](Permits_and_ED_files/figure-markdown_github/unnamed-chunk-16-5.png)![](Permits_and_ED_files/figure-markdown_github/unnamed-chunk-16-6.png)![](Permits_and_ED_files/figure-markdown_github/unnamed-chunk-16-7.png)![](Permits_and_ED_files/figure-markdown_github/unnamed-chunk-16-8.png)![](Permits_and_ED_files/figure-markdown_github/unnamed-chunk-16-9.png)
+![](Permits_and_ED_files/figure-markdown_github/unnamed-chunk-17-1.png)![](Permits_and_ED_files/figure-markdown_github/unnamed-chunk-17-2.png)![](Permits_and_ED_files/figure-markdown_github/unnamed-chunk-17-3.png)![](Permits_and_ED_files/figure-markdown_github/unnamed-chunk-17-4.png)![](Permits_and_ED_files/figure-markdown_github/unnamed-chunk-17-5.png)![](Permits_and_ED_files/figure-markdown_github/unnamed-chunk-17-6.png)![](Permits_and_ED_files/figure-markdown_github/unnamed-chunk-17-7.png)![](Permits_and_ED_files/figure-markdown_github/unnamed-chunk-17-8.png)![](Permits_and_ED_files/figure-markdown_github/unnamed-chunk-17-9.png)

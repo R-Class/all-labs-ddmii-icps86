@@ -588,7 +588,7 @@ We used the types of permits to construct 4 categories that we will aggregate as
 
 There are 32 types of permits:
 ```{r, echo=FALSE}
-df.Ign <- read.csv("https://raw.githubusercontent.com/R-Class/all-labs-ddmii-icps86/master/Permits_and_EC/types.csv", stringsAsFactors = F)
+types <- read.csv("https://raw.githubusercontent.com/R-Class/all-labs-ddmii-icps86/master/Permits_and_EC/types.csv", stringsAsFactors = F)
 unique(types$type)
 ```
 
@@ -648,6 +648,9 @@ plot(shapes, col = F, border = "grey10")
 ```
 
 ###**3.Installations and Repairs on all properties**
+
+*At the end of this page each type of permit that makes up this category is plotted. 
+
 ```{r, echo=FALSE}
 #types
 Ins <- x=="Electric" | x=="Elevator" | x=="Fire Alarm" | x=="HVAC/Mechanical" | x=="Misc.(deck, fence,ramp)" | x=="Pool / Hot Tub" | x=="Security Alarm" | x=="Sprinkler" | x=="Tank"
@@ -748,7 +751,7 @@ plot(shapes, col = F, border = "grey10")
 
 ```
 
-##Exploring the different types of permits in the Insta/Rep category
+### Extra: Exploring the different types of permits in the Insta/Rep category
 
 ```{r,echo=FALSE}
 #EXPLORING THE TYPES IN THE INSTALLATION CATEGORY
@@ -756,46 +759,55 @@ plot(shapes, col = F, border = "grey10")
 #Electric
   x <- df.I$Type == "Electric"
 plot(shapes) 
+  title(main= "Electric Permits")
   points(df.I[x,], pch=20, cex= .2, col=adjustcolor("red", alpha.f = .6))
 
 #Elevator
 x <- df.I$Type == "Elevator"
 plot(shapes) 
+  title(main= "Elevator")
   points(df.I[x,], pch=20, cex= .2, col=adjustcolor("red", alpha.f = .6))
 
 #Fire Alarm
 x <- df.I$Type == "Fire Alarm"
 plot(shapes) 
+  title(main= "Fire Alarm installations")
   points(df.I[x,], pch=20, cex= .2, col=adjustcolor("red", alpha.f = .6))
 
 #HVAC/mech
   x <- df.I$Type == "HVAC/Mechanical"
 plot(shapes) 
+  title(main= "HVAX/MEch (AirConditionin and heating")
   points(df.I[x,], pch=20, cex= .2, col=adjustcolor("red", alpha.f = .6))
 
 #Misc.(deck, fence,ramp) 
 x <- df.I$Type == "Misc.(deck, fence,ramp)"
 plot(shapes) 
+  title(main= "Misc. (deck, fence, ramp)")
   points(df.I[x,], pch=20, cex= .2, col=adjustcolor("red", alpha.f = .6))
 
 # Pool / Hot Tub
 x <- df.I$Type == "Pool / Hot Tub"
 plot(shapes) 
+  title(main= "Hot tub")
   points(df.I[x,], pch=20, cex= .2, col=adjustcolor("red", alpha.f = .6))
 
 # Security alarm
 x <- df.I$Type == "Security Alarm"
 plot(shapes) 
+title(main= "Security Alarm")
   points(df.I[x,], pch=20, cex= .2, col=adjustcolor("red", alpha.f = .6))
 
 # Sprinkler 
   x <- df.I$Type == "Sprinkler"
 plot(shapes) 
+  title(main= "Sprinkler system")
   points(df.I[x,], pch=20, cex= .2, col=adjustcolor("red", alpha.f = .6))
 
 # Tank
   x <- df.I$Type == "Tank"
 plot(shapes) 
+  title(main= "Tank")
   points(df.I[x,], pch=20, cex= .2, col=adjustcolor("red", alpha.f = .6))
 
     
