@@ -831,8 +831,4 @@ This category includes all permits we found it was not useful to include
 Exploring the different types of permits in the Insta/Rep category
 ------------------------------------------------------------------
 
-    ## [1] "SpatialPointsDataFrame"
-    ## attr(,"package")
-    ## [1] "sp"
-
-![](Permits_and_ED_files/figure-markdown_github/unnamed-chunk-16-1.png)![](Permits_and_ED_files/figure-markdown_github/unnamed-chunk-16-2.png)![](Permits_and_ED_files/figure-markdown_github/unnamed-chunk-16-3.png)![](Permits_and_ED_files/figure-markdown_github/unnamed-chunk-16-4.png)![](Permits_and_ED_files/figure-markdown_github/unnamed-chunk-16-5.png)![](Permits_and_ED_files/figure-markdown_github/unnamed-chunk-16-6.png)![](Permits_and_ED_files/figure-markdown_github/unnamed-chunk-16-7.png)![](Permits_and_ED_files/figure-markdown_github/unnamed-chunk-16-8.png)![](Permits_and_ED_files/figure-markdown_github/unnamed-chunk-16-9.png)![](Permits_and_ED_files/figure-markdown_github/unnamed-chunk-16-10.png)![](Permits_and_ED_files/figure-markdown_github/unnamed-chunk-16-11.png)
+![](Permits_and_ED_files/figure-markdown_github/unnamed-chunk-16-1.png)![](Permits_and_ED_files/figure-markdown_github/unnamed-chunk-16-2.png)![](Permits_and_ED_files/figure-markdown_github/unnamed-chunk-16-3.png)![](Permits_and_ED_files/figure-markdown_github/unnamed-chunk-16-4.png)![](Permits_and_ED_files/figure-markdown_github/unnamed-chunk-16-5.png)![](Permits_and_ED_files/figure-markdown_github/unnamed-chunk-16-6.png)![](Permits_and_ED_files/figure-markdown_github/unnamed-chunk-16-7.png)![](Permits_and_ED_files/figure-markdown_github/unnamed-chunk-16-8.png)![](Permits_and_ED_files/figure-markdown_github/unnamed-chunk-16-9.png)

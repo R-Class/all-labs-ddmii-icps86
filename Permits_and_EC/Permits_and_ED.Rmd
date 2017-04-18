@@ -517,16 +517,17 @@ interstate_clipped <- gIntersection(syr, interstate)
 
 ```{r, echo=FALSE}
 #Loading data file and formatting
-dat <- read.csv("Permits.csv", stringsAsFactors = F)
+dat <- read.csv("https://raw.githubusercontent.com/R-Class/all-labs-ddmii-icps86/master/Permits_and_EC/Permits.csv", stringsAsFactors = F)
 
-#splitting the dataframe into two: permit types used for analysis and permit types ignored
-x <- dat$Type
+#splitting the dataframe into two: (1) permit types used for analysis and (2)ignored permit types
+x <- dat$Type #creating an index
+#selecting all the types that go to the ignored dataset
 x <- x == "Antenna / Dish" | x =="Electric (Meter Set)" |  x=="Block Party (Business)" | x=="Block Party (Residential)" | x=="Curb Cut" | x=="Encroach (Deminimus)" | x=="Encroach (Major)"  | x=="Encroachment (Converted)" | x=="Liability Waiver" | x=="Loading Zone (Business)" | x=="Parking Meter Rental" | x=="Public Assembly" | x=="Road Cut" | x=="Sidewalk Cafe" | x=="Sidewalk Replace" | x=="Sign" | x=="Site Work"
 df.Ign <- dat[x,] #saving Nas as the ignored dataframe
 
 dat <- dat[!x,] #removing the Ign from dat 
 coordinates(dat) = ~lon+lat #making dat a coordinates object
-proj4string(dat) <- CRS("+proj=longlat +datum=WGS84") #fixing it 
+proj4string(dat) <- CRS("+proj=longlat +datum=WGS84") #adding a CRS
 
 #########################
 
@@ -539,6 +540,9 @@ shapes <- geojson_read("tracts.geojson", method="local", what="sp" )
 ##############
 
 #Creating a tract variable in the dataset 
+
+
+
 
 ```
 
@@ -612,7 +616,7 @@ summary(df.C$Valuation) %>% pander
 barplot(sort(df.C$Valuation, decreasing = T))
 
 plot(shapes, col = F, border = "grey10") 
-  title(main = "Residential and commercial Permits")
+  title(main = "Commercial Permits")
   points(df.C, pch=20, cex= .4, col=adjustcolor("red2", alpha.f = .8))
   
 ```
@@ -723,19 +727,8 @@ plot(shapes, col = F, border = "grey10")
 ```{r,echo=FALSE}
 #EXPLORING THE TYPES IN THE INSTALLATION CATEGORY
 
-#ATENAS
-x <- df.I$Type == "Antenna / Dish"
-class(df.I)
-plot(shapes) 
-  points(df.I[x,], pch=20, cex= .2, col=adjustcolor("red", alpha.f = .6))
-
 #Electric
   x <- df.I$Type == "Electric"
-plot(shapes) 
-  points(df.I[x,], pch=20, cex= .2, col=adjustcolor("red", alpha.f = .6))
-
-#Electric meter set
-  x <- df.I$Type == "Electric (Meter Set)"
 plot(shapes) 
   points(df.I[x,], pch=20, cex= .2, col=adjustcolor("red", alpha.f = .6))
 
