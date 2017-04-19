@@ -569,10 +569,11 @@ write.csv(types, file= "types.csv", row.names = F)
 dat <- read.csv("https://raw.githubusercontent.com/R-Class/all-labs-ddmii-icps86/master/Permits_and_EC/Permits.csv", stringsAsFactors = F)
 df.Ign <- read.csv("https://raw.githubusercontent.com/R-Class/all-labs-ddmii-icps86/master/Permits_and_EC/df.Ign.csv", stringsAsFactors = F)
 
-#clipping all permits outside syracuse city
+#CLIPPING all permits outside syracuse city
+#use the tract variable, the points outside the tracts have NA
 
-x<- is.na(dat$Tract)
-dat <- dat[!x,]
+x<- is.na(dat$Tract) #191 NAs, or points outside the tracts
+dat <- dat[!x,] # eliminating the NAs
 
 #making the permit dat object a spatial object
 dat <- SpatialPointsDataFrame(dat[ ,c( "lon", "lat") ], dat, proj4string=CRS("+proj=longlat +datum=WGS84")) #this is so that it does not lose the lat lon in the dataframe when transformed into a sp
