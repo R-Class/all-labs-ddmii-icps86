@@ -20,24 +20,12 @@ We used the types of permits to construct 4 categories that we will aggregate as
 
 There are 32 types of permits:
 
-    ##  [1] "Antenna / Dish"            "Block Party (Business)"   
-    ##  [3] "Block Party (Residential)" "Com. New Building"        
-    ##  [5] "Com. Reno/Rem/Chg Occ"     "Curb Cut"                 
-    ##  [7] "Demolition"                "Electric"                 
-    ##  [9] "Electric (Meter Set)"      "Elevator"                 
-    ## [11] "Encroach (Deminimus)"      "Encroach (Major)"         
-    ## [13] "Encroachment (Converted)"  "Fire Alarm"               
-    ## [15] "Footing / Foundation"      "HVAC/Mechanical"          
-    ## [17] "Liability Waiver"          "Loading Zone (Business)"  
-    ## [19] "Misc.(deck, fence,ramp)"   "Parking Meter Rental"     
-    ## [21] "Pool / Hot Tub"            "Public Assembly"          
-    ## [23] "Res. New 1-2 Family"       "Res. Remodel/Chg Occ"     
-    ## [25] "Road Cut"                  "Security Alarm"           
-    ## [27] "Sidewalk Cafe"             "Sidewalk Replace"         
-    ## [29] "Sign"                      "Site Work"                
-    ## [31] "Sprinkler"                 "Tank"
+We have placed this types of Permits into 4 categories to analyze them separately. They are:
 
-We have placed this types of Permits into 4 categories to analyze them separately. They are: \* Residential Properties \* Commercial Properties \* Installations and Repairs (to public space, res and com) \* Demolitions
+-   Residential Properties
+-   Commercial Properties
+-   Demolitions
+-   Installations and Repairs (to public space, res and com)
 
 In what follows we explain the categories that we have constructed and show some descriptives.
 
@@ -66,18 +54,18 @@ In what follows we explain the categories that we have constructed and show some
 </thead>
 <tbody>
 <tr class="odd">
-<td align="center"><strong>23</strong></td>
+<td align="center"><strong>10</strong></td>
 <td align="center">Res. New 1-2 Family</td>
-<td align="center">42</td>
-<td align="center">121314</td>
+<td align="center">41</td>
+<td align="center">122078</td>
 <td align="center">0</td>
 <td align="center">255539</td>
 </tr>
 <tr class="even">
-<td align="center"><strong>24</strong></td>
+<td align="center"><strong>11</strong></td>
 <td align="center">Res. Remodel/Chg Occ</td>
-<td align="center">2226</td>
-<td align="center">6946</td>
+<td align="center">2216</td>
+<td align="center">6955</td>
 <td align="center">0</td>
 <td align="center">360000</td>
 </tr>
@@ -143,13 +131,12 @@ In what follows we explain the categories that we have constructed and show some
 </tbody>
 </table>
 
-![](Permits_Descriptives_files/figure-markdown_github/unnamed-chunk-3-1.png)![](Permits_Descriptives_files/figure-markdown_github/unnamed-chunk-3-2.png)
+![](Permits_Descriptives_files/figure-markdown_github/unnamed-chunk-2-1.png)![](Permits_Descriptives_files/figure-markdown_github/unnamed-chunk-2-2.png)
 
 ### **2.New/Reno of Commercial Property**
 
-<table style="width:90%;">
+<table style="width:79%;">
 <colgroup>
-<col width="11%" />
 <col width="30%" />
 <col width="9%" />
 <col width="13%" />
@@ -158,7 +145,6 @@ In what follows we explain the categories that we have constructed and show some
 </colgroup>
 <thead>
 <tr class="header">
-<th align="left"> </th>
 <th align="center">type</th>
 <th align="center">freq</th>
 <th align="center">meanval</th>
@@ -168,18 +154,16 @@ In what follows we explain the categories that we have constructed and show some
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left"><strong>4</strong></td>
 <td align="center">Com. New Building</td>
-<td align="center">60</td>
-<td align="center">2463186</td>
+<td align="center">56</td>
+<td align="center">2440789</td>
 <td align="center">1500</td>
 <td align="center">15183229</td>
 </tr>
 <tr class="even">
-<td align="left"><strong>5</strong></td>
 <td align="center">Com. Reno/Rem/Chg Occ</td>
-<td align="center">1689</td>
-<td align="center">248891</td>
+<td align="center">1660</td>
+<td align="center">247949</td>
 <td align="center">0</td>
 <td align="center">31811000</td>
 </tr>
@@ -245,9 +229,103 @@ In what follows we explain the categories that we have constructed and show some
 </tbody>
 </table>
 
+![](Permits_Descriptives_files/figure-markdown_github/unnamed-chunk-3-1.png)![](Permits_Descriptives_files/figure-markdown_github/unnamed-chunk-3-2.png)
+
+### **3.Demolitions**
+
+<table style="width:75%;">
+<colgroup>
+<col width="11%" />
+<col width="15%" />
+<col width="9%" />
+<col width="13%" />
+<col width="12%" />
+<col width="12%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left"> </th>
+<th align="center">type</th>
+<th align="center">freq</th>
+<th align="center">meanval</th>
+<th align="center">minval</th>
+<th align="center">maxval</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><strong>3</strong></td>
+<td align="center">Demolition</td>
+<td align="center">595</td>
+<td align="center">17511</td>
+<td align="center">0</td>
+<td align="center">3e+05</td>
+</tr>
+</tbody>
+</table>
+
+<table style="width:49%;">
+<colgroup>
+<col width="9%" />
+<col width="9%" />
+<col width="9%" />
+<col width="9%" />
+<col width="9%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center">2012</th>
+<th align="center">2013</th>
+<th align="center">2014</th>
+<th align="center">2015</th>
+<th align="center">2016</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">90</td>
+<td align="center">87</td>
+<td align="center">125</td>
+<td align="center">164</td>
+<td align="center">129</td>
+</tr>
+</tbody>
+</table>
+
+<table style="width:68%;">
+<colgroup>
+<col width="9%" />
+<col width="13%" />
+<col width="12%" />
+<col width="9%" />
+<col width="13%" />
+<col width="8%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center">Min.</th>
+<th align="center">1st Qu.</th>
+<th align="center">Median</th>
+<th align="center">Mean</th>
+<th align="center">3rd Qu.</th>
+<th align="center">Max.</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">0</td>
+<td align="center">6000</td>
+<td align="center">11500</td>
+<td align="center">17510</td>
+<td align="center">18120</td>
+<td align="center">3e+05</td>
+</tr>
+</tbody>
+</table>
+
 ![](Permits_Descriptives_files/figure-markdown_github/unnamed-chunk-4-1.png)![](Permits_Descriptives_files/figure-markdown_github/unnamed-chunk-4-2.png)
 
-### **3.Installations and Repairs on all properties**
+### **4.Installations and Repairs on all properties**
 
 \*At the end of this page each type of permit that makes up this category is plotted.
 
@@ -272,47 +350,47 @@ In what follows we explain the categories that we have constructed and show some
 </thead>
 <tbody>
 <tr class="odd">
-<td align="center"><strong>8</strong></td>
+<td align="center"><strong>4</strong></td>
 <td align="center">Electric</td>
-<td align="center">5807</td>
-<td align="center">23839</td>
+<td align="center">5712</td>
+<td align="center">23317</td>
 <td align="center">0</td>
 <td align="center">8e+06</td>
 </tr>
 <tr class="even">
-<td align="center"><strong>10</strong></td>
+<td align="center"><strong>5</strong></td>
 <td align="center">Elevator</td>
-<td align="center">172</td>
-<td align="center">72456</td>
+<td align="center">170</td>
+<td align="center">73308</td>
 <td align="center">0</td>
 <td align="center">1172000</td>
 </tr>
 <tr class="odd">
-<td align="center"><strong>14</strong></td>
+<td align="center"><strong>6</strong></td>
 <td align="center">Fire Alarm</td>
-<td align="center">616</td>
-<td align="center">51750</td>
+<td align="center">607</td>
+<td align="center">52336</td>
 <td align="center">0</td>
 <td align="center">8e+06</td>
 </tr>
 <tr class="even">
-<td align="center"><strong>16</strong></td>
+<td align="center"><strong>7</strong></td>
 <td align="center">HVAC/Mechanical</td>
-<td align="center">2170</td>
-<td align="center">52752</td>
+<td align="center">2156</td>
+<td align="center">52791</td>
 <td align="center">0</td>
 <td align="center">9764733</td>
 </tr>
 <tr class="odd">
-<td align="center"><strong>19</strong></td>
+<td align="center"><strong>8</strong></td>
 <td align="center">Misc.(deck, fence,ramp)</td>
-<td align="center">1166</td>
-<td align="center">5174</td>
+<td align="center">1159</td>
+<td align="center">5167</td>
 <td align="center">0</td>
 <td align="center">2100000</td>
 </tr>
 <tr class="even">
-<td align="center"><strong>21</strong></td>
+<td align="center"><strong>9</strong></td>
 <td align="center">Pool / Hot Tub</td>
 <td align="center">71</td>
 <td align="center">6721</td>
@@ -320,7 +398,7 @@ In what follows we explain the categories that we have constructed and show some
 <td align="center">30000</td>
 </tr>
 <tr class="odd">
-<td align="center"><strong>26</strong></td>
+<td align="center"><strong>12</strong></td>
 <td align="center">Security Alarm</td>
 <td align="center">542</td>
 <td align="center">1215</td>
@@ -328,18 +406,18 @@ In what follows we explain the categories that we have constructed and show some
 <td align="center">91968</td>
 </tr>
 <tr class="even">
-<td align="center"><strong>31</strong></td>
+<td align="center"><strong>13</strong></td>
 <td align="center">Sprinkler</td>
-<td align="center">1793</td>
-<td align="center">10740</td>
+<td align="center">1778</td>
+<td align="center">10725</td>
 <td align="center">0</td>
 <td align="center">1396500</td>
 </tr>
 <tr class="odd">
-<td align="center"><strong>32</strong></td>
+<td align="center"><strong>14</strong></td>
 <td align="center">Tank</td>
-<td align="center">67</td>
-<td align="center">17529</td>
+<td align="center">66</td>
+<td align="center">17794</td>
 <td align="center">0</td>
 <td align="center">3e+05</td>
 </tr>
@@ -407,12 +485,19 @@ In what follows we explain the categories that we have constructed and show some
 
 ![](Permits_Descriptives_files/figure-markdown_github/unnamed-chunk-5-1.png)![](Permits_Descriptives_files/figure-markdown_github/unnamed-chunk-5-2.png)
 
-### **4.Demolitions**
+### All Categories at a glance
 
-<table style="width:75%;">
+![](Permits_Descriptives_files/figure-markdown_github/unnamed-chunk-6-1.png)
+
+![](Permits_Descriptives_files/figure-markdown_github/unnamed-chunk-7-1.png)![](Permits_Descriptives_files/figure-markdown_github/unnamed-chunk-7-2.png)![](Permits_Descriptives_files/figure-markdown_github/unnamed-chunk-7-3.png)![](Permits_Descriptives_files/figure-markdown_github/unnamed-chunk-7-4.png)![](Permits_Descriptives_files/figure-markdown_github/unnamed-chunk-7-5.png)![](Permits_Descriptives_files/figure-markdown_github/unnamed-chunk-7-6.png)![](Permits_Descriptives_files/figure-markdown_github/unnamed-chunk-7-7.png)![](Permits_Descriptives_files/figure-markdown_github/unnamed-chunk-7-8.png)![](Permits_Descriptives_files/figure-markdown_github/unnamed-chunk-7-9.png)
+
+### **Categories not taken into account**
+
+All permits we found it was not useful to include:
+
+<table style="width:85%;">
 <colgroup>
-<col width="11%" />
-<col width="15%" />
+<col width="36%" />
 <col width="9%" />
 <col width="13%" />
 <col width="12%" />
@@ -420,7 +505,6 @@ In what follows we explain the categories that we have constructed and show some
 </colgroup>
 <thead>
 <tr class="header">
-<th align="left"> </th>
 <th align="center">type</th>
 <th align="center">freq</th>
 <th align="center">meanval</th>
@@ -430,12 +514,130 @@ In what follows we explain the categories that we have constructed and show some
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left"><strong>7</strong></td>
-<td align="center">Demolition</td>
-<td align="center">599</td>
-<td align="center">17484</td>
+<td align="center">Antenna / Dish</td>
+<td align="center">112</td>
+<td align="center">22830</td>
 <td align="center">0</td>
-<td align="center">3e+05</td>
+<td align="center">80000</td>
+</tr>
+<tr class="even">
+<td align="center">Block Party (Business)</td>
+<td align="center">157</td>
+<td align="center">0</td>
+<td align="center">0</td>
+<td align="center">0</td>
+</tr>
+<tr class="odd">
+<td align="center">Block Party (Residential)</td>
+<td align="center">149</td>
+<td align="center">0</td>
+<td align="center">0</td>
+<td align="center">0</td>
+</tr>
+<tr class="even">
+<td align="center">Curb Cut</td>
+<td align="center">62</td>
+<td align="center">0</td>
+<td align="center">0</td>
+<td align="center">0</td>
+</tr>
+<tr class="odd">
+<td align="center">Electric (Meter Set)</td>
+<td align="center">767</td>
+<td align="center">288.1</td>
+<td align="center">0</td>
+<td align="center">14500</td>
+</tr>
+<tr class="even">
+<td align="center">Encroach (Deminimus)</td>
+<td align="center">5</td>
+<td align="center">0</td>
+<td align="center">0</td>
+<td align="center">0</td>
+</tr>
+<tr class="odd">
+<td align="center">Encroach (Major)</td>
+<td align="center">37</td>
+<td align="center">0</td>
+<td align="center">0</td>
+<td align="center">0</td>
+</tr>
+<tr class="even">
+<td align="center">Encroachment (Converted)</td>
+<td align="center">29</td>
+<td align="center">0</td>
+<td align="center">0</td>
+<td align="center">0</td>
+</tr>
+<tr class="odd">
+<td align="center">Footing / Foundation</td>
+<td align="center">16</td>
+<td align="center">353372</td>
+<td align="center">0</td>
+<td align="center">2116550</td>
+</tr>
+<tr class="even">
+<td align="center">Liability Waiver</td>
+<td align="center">598</td>
+<td align="center">0</td>
+<td align="center">0</td>
+<td align="center">0</td>
+</tr>
+<tr class="odd">
+<td align="center">Loading Zone (Business)</td>
+<td align="center">175</td>
+<td align="center">0</td>
+<td align="center">0</td>
+<td align="center">0</td>
+</tr>
+<tr class="even">
+<td align="center">Parking Meter Rental</td>
+<td align="center">111</td>
+<td align="center">0</td>
+<td align="center">0</td>
+<td align="center">0</td>
+</tr>
+<tr class="odd">
+<td align="center">Public Assembly</td>
+<td align="center">172</td>
+<td align="center">0</td>
+<td align="center">0</td>
+<td align="center">0</td>
+</tr>
+<tr class="even">
+<td align="center">Road Cut</td>
+<td align="center">595</td>
+<td align="center">0</td>
+<td align="center">0</td>
+<td align="center">0</td>
+</tr>
+<tr class="odd">
+<td align="center">Sidewalk Cafe</td>
+<td align="center">236</td>
+<td align="center">0</td>
+<td align="center">0</td>
+<td align="center">0</td>
+</tr>
+<tr class="even">
+<td align="center">Sidewalk Replace</td>
+<td align="center">773</td>
+<td align="center">0</td>
+<td align="center">0</td>
+<td align="center">0</td>
+</tr>
+<tr class="odd">
+<td align="center">Sign</td>
+<td align="center">328</td>
+<td align="center">6879</td>
+<td align="center">0</td>
+<td align="center">143000</td>
+</tr>
+<tr class="even">
+<td align="center">Site Work</td>
+<td align="center">214</td>
+<td align="center">264969</td>
+<td align="center">0</td>
+<td align="center">7400000</td>
 </tr>
 </tbody>
 </table>
@@ -459,23 +661,25 @@ In what follows we explain the categories that we have constructed and show some
 </thead>
 <tbody>
 <tr class="odd">
-<td align="center">90</td>
-<td align="center">87</td>
-<td align="center">125</td>
-<td align="center">164</td>
-<td align="center">129</td>
+<td align="center">541</td>
+<td align="center">813</td>
+<td align="center">970</td>
+<td align="center">1064</td>
+<td align="center">1145</td>
 </tr>
 </tbody>
 </table>
 
-<table style="width:68%;">
+    ## [1] "total cases: 4536"
+
+<table style="width:69%;">
 <colgroup>
 <col width="9%" />
 <col width="13%" />
 <col width="12%" />
 <col width="9%" />
 <col width="13%" />
-<col width="8%" />
+<col width="9%" />
 </colgroup>
 <thead>
 <tr class="header">
@@ -490,26 +694,24 @@ In what follows we explain the categories that we have constructed and show some
 <tbody>
 <tr class="odd">
 <td align="center">0</td>
-<td align="center">6000</td>
-<td align="center">11500</td>
-<td align="center">17510</td>
-<td align="center">18120</td>
-<td align="center">3e+05</td>
+<td align="center">0</td>
+<td align="center">0</td>
+<td align="center">14860</td>
+<td align="center">150</td>
+<td align="center">7400000</td>
 </tr>
 </tbody>
 </table>
 
-![](Permits_Descriptives_files/figure-markdown_github/unnamed-chunk-6-1.png)![](Permits_Descriptives_files/figure-markdown_github/unnamed-chunk-6-2.png)
+![](Permits_Descriptives_files/figure-markdown_github/unnamed-chunk-8-1.png)
 
-### **Categories not taken into account**
-
-#### **New Foundations**
+#### **Why is New Foundations not included?**
 
 "Footing / foundation" type of permits are not being included because it is only 16 and it is not clear whether they overlap with the permits for new residential and/or new commercial. In other words, a new building will have a foundaiton permit and a new construction permit (either residential or commercial).
 
-<table style="width:90%;">
+<table style="width:89%;">
 <colgroup>
-<col width="12%" />
+<col width="11%" />
 <col width="29%" />
 <col width="9%" />
 <col width="13%" />
@@ -518,7 +720,7 @@ In what follows we explain the categories that we have constructed and show some
 </colgroup>
 <thead>
 <tr class="header">
-<th align="center"> </th>
+<th align="left"> </th>
 <th align="center">type</th>
 <th align="center">freq</th>
 <th align="center">meanval</th>
@@ -528,7 +730,7 @@ In what follows we explain the categories that we have constructed and show some
 </thead>
 <tbody>
 <tr class="odd">
-<td align="center"><strong>15</strong></td>
+<td align="left"><strong>9</strong></td>
 <td align="center">Footing / Foundation</td>
 <td align="center">16</td>
 <td align="center">353372</td>
@@ -597,238 +799,4 @@ In what follows we explain the categories that we have constructed and show some
 </tbody>
 </table>
 
-![](Permits_Descriptives_files/figure-markdown_github/unnamed-chunk-7-1.png)![](Permits_Descriptives_files/figure-markdown_github/unnamed-chunk-7-2.png)
-
-#### **Ignored (Ign)**
-
-This category includes all permits we found it was not useful to include
-
-<table style="width:97%;">
-<colgroup>
-<col width="12%" />
-<col width="36%" />
-<col width="9%" />
-<col width="13%" />
-<col width="12%" />
-<col width="12%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th align="center"> </th>
-<th align="center">type</th>
-<th align="center">freq</th>
-<th align="center">meanval</th>
-<th align="center">minval</th>
-<th align="center">maxval</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="center"><strong>1</strong></td>
-<td align="center">Antenna / Dish</td>
-<td align="center">112</td>
-<td align="center">22830</td>
-<td align="center">0</td>
-<td align="center">80000</td>
-</tr>
-<tr class="even">
-<td align="center"><strong>2</strong></td>
-<td align="center">Block Party (Business)</td>
-<td align="center">157</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">0</td>
-</tr>
-<tr class="odd">
-<td align="center"><strong>3</strong></td>
-<td align="center">Block Party (Residential)</td>
-<td align="center">149</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">0</td>
-</tr>
-<tr class="even">
-<td align="center"><strong>6</strong></td>
-<td align="center">Curb Cut</td>
-<td align="center">62</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">0</td>
-</tr>
-<tr class="odd">
-<td align="center"><strong>9</strong></td>
-<td align="center">Electric (Meter Set)</td>
-<td align="center">767</td>
-<td align="center">288.1</td>
-<td align="center">0</td>
-<td align="center">14500</td>
-</tr>
-<tr class="even">
-<td align="center"><strong>11</strong></td>
-<td align="center">Encroach (Deminimus)</td>
-<td align="center">5</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">0</td>
-</tr>
-<tr class="odd">
-<td align="center"><strong>12</strong></td>
-<td align="center">Encroach (Major)</td>
-<td align="center">37</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">0</td>
-</tr>
-<tr class="even">
-<td align="center"><strong>13</strong></td>
-<td align="center">Encroachment (Converted)</td>
-<td align="center">29</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">0</td>
-</tr>
-<tr class="odd">
-<td align="center"><strong>17</strong></td>
-<td align="center">Liability Waiver</td>
-<td align="center">598</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">0</td>
-</tr>
-<tr class="even">
-<td align="center"><strong>18</strong></td>
-<td align="center">Loading Zone (Business)</td>
-<td align="center">175</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">0</td>
-</tr>
-<tr class="odd">
-<td align="center"><strong>20</strong></td>
-<td align="center">Parking Meter Rental</td>
-<td align="center">111</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">0</td>
-</tr>
-<tr class="even">
-<td align="center"><strong>22</strong></td>
-<td align="center">Public Assembly</td>
-<td align="center">172</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">0</td>
-</tr>
-<tr class="odd">
-<td align="center"><strong>25</strong></td>
-<td align="center">Road Cut</td>
-<td align="center">595</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">0</td>
-</tr>
-<tr class="even">
-<td align="center"><strong>27</strong></td>
-<td align="center">Sidewalk Cafe</td>
-<td align="center">236</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">0</td>
-</tr>
-<tr class="odd">
-<td align="center"><strong>28</strong></td>
-<td align="center">Sidewalk Replace</td>
-<td align="center">773</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">0</td>
-</tr>
-<tr class="even">
-<td align="center"><strong>29</strong></td>
-<td align="center">Sign</td>
-<td align="center">328</td>
-<td align="center">6879</td>
-<td align="center">0</td>
-<td align="center">143000</td>
-</tr>
-<tr class="odd">
-<td align="center"><strong>30</strong></td>
-<td align="center">Site Work</td>
-<td align="center">214</td>
-<td align="center">264969</td>
-<td align="center">0</td>
-<td align="center">7400000</td>
-</tr>
-</tbody>
-</table>
-
-<table style="width:49%;">
-<colgroup>
-<col width="9%" />
-<col width="9%" />
-<col width="9%" />
-<col width="9%" />
-<col width="9%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th align="center">2012</th>
-<th align="center">2013</th>
-<th align="center">2014</th>
-<th align="center">2015</th>
-<th align="center">2016</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="center">536</td>
-<td align="center">811</td>
-<td align="center">969</td>
-<td align="center">1057</td>
-<td align="center">1144</td>
-</tr>
-</tbody>
-</table>
-
-    ## [1] "total cases: 4520"
-
-<table style="width:69%;">
-<colgroup>
-<col width="9%" />
-<col width="13%" />
-<col width="12%" />
-<col width="9%" />
-<col width="13%" />
-<col width="9%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th align="center">Min.</th>
-<th align="center">1st Qu.</th>
-<th align="center">Median</th>
-<th align="center">Mean</th>
-<th align="center">3rd Qu.</th>
-<th align="center">Max.</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">13660</td>
-<td align="center">150</td>
-<td align="center">7400000</td>
-</tr>
-</tbody>
-</table>
-
-![](Permits_Descriptives_files/figure-markdown_github/unnamed-chunk-8-1.png)
-
-### All Categories at a glance
-
-![](Permits_Descriptives_files/figure-markdown_github/unnamed-chunk-9-1.png)
-
-### Extra: Exploring the different types of permits in the Insta/Rep category
-
-![](Permits_Descriptives_files/figure-markdown_github/unnamed-chunk-10-1.png)![](Permits_Descriptives_files/figure-markdown_github/unnamed-chunk-10-2.png)![](Permits_Descriptives_files/figure-markdown_github/unnamed-chunk-10-3.png)![](Permits_Descriptives_files/figure-markdown_github/unnamed-chunk-10-4.png)![](Permits_Descriptives_files/figure-markdown_github/unnamed-chunk-10-5.png)![](Permits_Descriptives_files/figure-markdown_github/unnamed-chunk-10-6.png)![](Permits_Descriptives_files/figure-markdown_github/unnamed-chunk-10-7.png)![](Permits_Descriptives_files/figure-markdown_github/unnamed-chunk-10-8.png)![](Permits_Descriptives_files/figure-markdown_github/unnamed-chunk-10-9.png)
+![](Permits_Descriptives_files/figure-markdown_github/unnamed-chunk-9-1.png)![](Permits_Descriptives_files/figure-markdown_github/unnamed-chunk-9-2.png)
