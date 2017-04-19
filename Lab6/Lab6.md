@@ -1,48 +1,13 @@
----
-title: "Lab6"
-author: "ignacio"
-date: "March 23, 2017"
-output: github_document
-html_document:
-  df_print: paged
-  keep_md: true
----
+Lab6
+================
+ignacio
+March 23, 2017
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set( message=F, warning=F )
+### PART I
 
-library( maptools )
-library( sp )
-library( maps ) #has mapscale
-library(rgeos)
-library(raster)
-library(rgdal)
-library(geojsonio)
+(1-3) Loading shapefiles and extracting interstates and clipping it to the map polygon size.
 
-setwd("C:/Users/icps/Dropbox/3. Maxwell/3. Spring Term/5. Data Driven II/Labs/all-labs-ddmii-icps86/Lab6/")
-
-```
-
-###PART I
-
-(1-3)	Loading shapefiles and extracting interstates and clipping it to the map polygon size.
-```{r, echo=FALSE, eval=FALSE}
-#Downloading Shapfiles - this is commented because it was already done
-
-#dir.create( "shapefiles" )
-#setwd( "./shapefiles" )
-#download.file("ftp://ftp2.census.gov/geo/tiger/TIGER2010/TRACT/2010/tl_2010_36067_tract10.zip", "onondaga census tracts.zip" )
-#unzip( "onondaga census tracts.zip" )
-#file.remove( "onondaga census tracts.zip" )
-
-#download.file("ftp://ftp2.census.gov/geo/tiger/TIGER2015/PRISECROADS/tl_2015_36_prisecroads.zip", "primary_and_secondary_roads.zip" )
-#unzip( "primary_and_secondary_roads.zip" )
-#file.remove( "primary_and_secondary_roads.zip" )
-
-```
-
-
-```{r}
+``` r
 #loading shapefile from file
 shapes <- readShapePoly( fn="./shapefiles/tl_2010_36067_tract10", proj4string=CRS("+proj=longlat +datum=WGS84") )
 shapes@data <- data.frame(Tract = shapes@data$NAME10)
@@ -58,7 +23,11 @@ interstate <- roads[ roads$RTTYP == "I" , ]
 par(mar=c(0,0,2,0))
 plot(shapes,  border="gray50")
 plot(interstate, col="red3", lwd=1, add=T)
+```
 
+![](Lab6_files/figure-markdown_github/unnamed-chunk-2-1.png)
+
+``` r
 #clipping roads to the shape file
 interstate <- gIntersection(shapes, interstate)
 #this is an alternative function: 
@@ -66,18 +35,23 @@ interstate <- gIntersection(shapes, interstate)
 
 plot(shapes,  border="gray50")
 plot(interstate, col="red3", lwd=1, add=T)
-
 ```
 
-(4)	Create a buffer of approximately a quarter mile (eyeball this) from the interstate
+![](Lab6_files/figure-markdown_github/unnamed-chunk-2-2.png)
 
-```{r}
+1.  Create a buffer of approximately a quarter mile (eyeball this) from the interstate
+
+``` r
 buffer <- gBuffer(interstate, width = .005)
 
 plot(shapes,  border="gray50")
 plot(buffer, border="brown", col = adjustcolor("brown", alpha.f = .2),lwd=1, add=T)
 plot(interstate, col="red3", lwd=1, add=T)
+```
 
+![](Lab6_files/figure-markdown_github/unnamed-chunk-3-1.png)
+
+``` r
 #uploading the dataset of houses that was geocoded in lab 5
 
 setwd("C:/Users/icps/Dropbox/3. Maxwell/3. Spring Term/5. Data Driven II/Labs/all-labs-ddmii-icps86/Lab5/")
@@ -95,13 +69,13 @@ plot(shapes,  border="gray50")
 plot(buffer, border="brown", col = adjustcolor("brown", alpha.f = .2),lwd=1, add=T)
 plot(interstate, col="red3", lwd=1, add=T)
 plot(dat, pch = 20, cex=.8, add=T)
-
-
 ```
 
-(5)	Add a new categorical variable to the houses dataset that indicates whether it falls within the buffer zone or not. 
+![](Lab6_files/figure-markdown_github/unnamed-chunk-3-2.png)
 
-``` {r}
+1.  Add a new categorical variable to the houses dataset that indicates whether it falls within the buffer zone or not.
+
+``` r
 #Over function to determine what points are within the buffer
 x <- over( dat, buffer ) #outputs a dummy variable
 
@@ -114,18 +88,17 @@ plot(buffer, border="brown", col = adjustcolor("brown", alpha.f = .2),lwd=1, add
 plot(interstate, col="red3", lwd=1, add=T)
 plot(dat, pch = 20, cex=.8, add=T)
 plot(dat[!is.na(dat$hgwy),], pch = 20, col = "red", cex=1, add=T)
-
 ```
 
+![](Lab6_files/figure-markdown_github/unnamed-chunk-4-1.png)
 
+### PART II
 
-###PART II
 Using the Syracuse parcel file for this part.
 
-(1)	Create a buffer a quarter mile from industrial zones (LandUse).  Create a plot to highlight your buffer zone.
+1.  Create a buffer a quarter mile from industrial zones (LandUse). Create a plot to highlight your buffer zone.
 
-```{r}
-
+``` r
 url <- "https://raw.githubusercontent.com/lecy/geojson/master/syr_parcels.geojson"
 
 shapes <- geojson_read( url, method="local", what="sp" )
@@ -145,16 +118,26 @@ par(mar=c(0,0,2,0))
 plot(shapes,  col="gray80", border = FALSE)
 plot(buffer, border="brown", col = adjustcolor("brown", alpha.f = .2),lwd=1, add=T)
 plot(industrial,  col= "red3", border = FALSE, add=T)
-
 ```
 
-(2)	Identify houses within the buffer zone and create a categorical variable in the dataset indicating proximity to industrial zones.
+![](Lab6_files/figure-markdown_github/unnamed-chunk-5-1.png)
 
-```{r}
+1.  Identify houses within the buffer zone and create a categorical variable in the dataset indicating proximity to industrial zones.
+
+``` r
 #need to make CRS in both buffer and dat =. there are two ways
 proj4string(dat)
-proj4string(buffer)
+```
 
+    ## [1] "+proj=longlat +datum=WGS84 +ellps=WGS84 +towgs84=0,0,0"
+
+``` r
+proj4string(buffer)
+```
+
+    ## [1] "+proj=longlat +ellps=WGS84 +towgs84=0,0,0,0,0,0,0 +no_defs"
+
+``` r
 #loading again the dat and using the new CRS
 #setwd("C:/Users/icps/Dropbox/3. Maxwell/3. Spring Term/5. Data Driven II/Labs/all-labs-ddmii-icps86/Lab5/")
 #load("dat_coo.rda") #I has stored it as a rda file.
@@ -170,8 +153,17 @@ buffer <- spTransform( buffer, CRS( "+proj=longlat +datum=WGS84" ) )
 
 #now they are equal
 proj4string(dat)
-proj4string(buffer)
+```
 
+    ## [1] "+proj=longlat +datum=WGS84 +ellps=WGS84 +towgs84=0,0,0"
+
+``` r
+proj4string(buffer)
+```
+
+    ## [1] "+proj=longlat +datum=WGS84 +ellps=WGS84 +towgs84=0,0,0"
+
+``` r
 #Over function to determine what points are within the buffer
 x <- over( dat, buffer ) #outputs a dummy variable
 dat@data$indst <- x
@@ -183,15 +175,13 @@ plot(buffer, border="brown", col = adjustcolor("brown", alpha.f = .2),lwd=1, add
 plot(industrial,  col= "red3", border = FALSE, add=T)
 plot(dat, pch = 20, cex=.8, add=T)
 plot(dat[!is.na(dat$indst),], pch = 20, col = "red", cex=1, add=T)
-
-
 ```
 
+![](Lab6_files/figure-markdown_github/unnamed-chunk-6-1.png)
 
-(3-4)	Create a buffer zone an eighth of a mile from schools and identifying houses within the buffer zone and create a categorical variable in the dataset indicating proximity to schools.
+(3-4) Create a buffer zone an eighth of a mile from schools and identifying houses within the buffer zone and create a categorical variable in the dataset indicating proximity to schools.
 
-```{r}
-
+``` r
 #subsetting industrialzones
 schools <- shapes[ shapes$LandUse == "Schools", ]
 
@@ -218,6 +208,6 @@ dat@data$school <- x
 #plotting the houses
 plot(dat, pch = 20, cex=.8, add=T)
 plot(dat[!is.na(dat$school),], pch = 20, col = "red", cex=1, add=T)
-
 ```
 
+![](Lab6_files/figure-markdown_github/unnamed-chunk-7-1.png)
