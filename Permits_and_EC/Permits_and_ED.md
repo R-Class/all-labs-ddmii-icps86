@@ -595,15 +595,6 @@ In what follows we explain the categories that we have constructed and show some
 
 This category includes all permits we found it was not useful to include
 
-    ##  [1] "Res. Remodel/Chg Occ"    "Res. New 1-2 Family"    
-    ##  [3] "Com. Reno/Rem/Chg Occ"   "Com. New Building"      
-    ##  [5] "Electric"                "Sprinkler"              
-    ##  [7] "HVAC/Mechanical"         "Fire Alarm"             
-    ##  [9] "Elevator"                "Misc.(deck, fence,ramp)"
-    ## [11] "Security Alarm"          "Tank"                   
-    ## [13] "Pool / Hot Tub"          "Demolition"             
-    ## [15] "Footing / Foundation"
-
 <table style="width:97%;">
 <colgroup>
 <col width="12%" />

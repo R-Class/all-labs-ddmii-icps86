@@ -529,25 +529,36 @@ dat <- dat[!x,] #removing the Ign from dat
 
 #Creating a tract variable for each permit in dat (this process also clipped the data)
 
+#making the permit dat object a spatial object
+dat <- SpatialPointsDataFrame(dat[ ,c( "lon", "lat") ], dat, proj4string=CRS("+proj=longlat +datum=WGS84")) #this is so that it does not lose the lat lon in the dataframe when transformed into a sp
+
+#loading shape file
+shapes <- geojson_read("https://raw.githubusercontent.com/R-Class/all-labs-ddmii-icps86/master/Permits_and_EC/tracts.geojson", method="local", what="sp" )
+
 #need to make CRS in both shapes and dat =
 proj4string(dat)
 proj4string(shapes)
+
 shapes <- spTransform( shapes, CRS( "+proj=longlat +datum=WGS84")) #changing the CRS of the shape file to match the dat
 
-dat <- point.in.poly( dat, shapes) #all the permits that were outside the tracks were dropped. 
-x<- dat@data
-x$id <- c(1:nrow(x)) #correcting the id
-dim(x)
-#new dat file has 16845
+# ORIGINALLY I USED POINTS IN POLY, BUT THIS MADE ME DROP 191 CASES. 
+#dat <- point.in.poly( dat, shapes) #all the permits that were outside the tracks were dropped. 
+#new dat file haD 16845
 #16845 - 17036 = 191 lost
+
+# SO I USED THE OVER function to determine what points are within the buffer
+x <- over( dat, shapes ) #outputs a dummy variable
+dat@data$Tract <- x
+x <- dat@data
+x$Tract <- as.factor(as.numeric(as.character(dat$Tract[,1]))) #for some reason x after the over function was a dataframe.
+write.csv(x, file= "Permits.csv", row.names = F)
 
 #formatting df.Ign
 df.Ign$Tract <- NA
 dim(df.Ign)
 df.Ign$id <- c(1:nrow(df.Ign))
 
-#saving both csv
-write.csv(x, file= "Permits.csv", row.names = F)
+#saving csv
 write.csv(df.Ign, file= "df.Ign.csv", row.names = F)
 
 #also making the types rda a csv
@@ -558,6 +569,11 @@ write.csv(types, file= "types.csv", row.names = F)
 dat <- read.csv("https://raw.githubusercontent.com/R-Class/all-labs-ddmii-icps86/master/Permits_and_EC/Permits.csv", stringsAsFactors = F)
 df.Ign <- read.csv("https://raw.githubusercontent.com/R-Class/all-labs-ddmii-icps86/master/Permits_and_EC/df.Ign.csv", stringsAsFactors = F)
 
+#clipping all permits outside syracuse city
+
+x<- is.na(dat$Tract)
+dat <- dat[!x,]
+
 #making the permit dat object a spatial object
 dat <- SpatialPointsDataFrame(dat[ ,c( "lon", "lat") ], dat, proj4string=CRS("+proj=longlat +datum=WGS84")) #this is so that it does not lose the lat lon in the dataframe when transformed into a sp
 
@@ -566,7 +582,6 @@ dat <- SpatialPointsDataFrame(dat[ ,c( "lon", "lat") ], dat, proj4string=CRS("+p
 #LOADING THE SHAPEFILE
 
 #Loading a geojson file of only census tracts
-#url <- "https://github.com/lecy/geojson/raw/master/syr_parcels.geojson"
 shapes <- geojson_read("https://raw.githubusercontent.com/R-Class/all-labs-ddmii-icps86/master/Permits_and_EC/tracts.geojson", method="local", what="sp" )
 ```
 
@@ -723,7 +738,6 @@ plot(shapes, col = F, border = "grey10")
 This category includes all permits we found it was not useful to include
 
 ```{r, echo=FALSE}
-unique(dat@data$Type)
 Ign <- x == "Antenna / Dish" | x =="Electric (Meter Set)" |  x=="Block Party (Business)" | x=="Block Party (Residential)" | x=="Curb Cut" | x=="Encroach (Deminimus)" | x=="Encroach (Major)"  | x=="Encroachment (Converted)" | x=="Liability Waiver" | x=="Loading Zone (Business)" | x=="Parking Meter Rental" | x=="Public Assembly" | x=="Road Cut" | x=="Sidewalk Cafe" | x=="Sidewalk Replace" | x=="Sign" | x=="Site Work"
 Ign <- types[Ign,]  
 pander(Ign)
@@ -750,6 +764,7 @@ plot(shapes, col = F, border = "grey10")
   legend("bottomright", legend = c("Residential", "Commercial", "Insta/Rep", "Demolitions"), bty = "n", pch = 20, cex = .8, pt.cex = 2, col = c("orange","forestgreen","red2","dodgerblue4"))
 
 ```
+
 
 ### Extra: Exploring the different types of permits in the Insta/Rep category
 
