@@ -537,4 +537,91 @@ write.csv(df.Ign, file= "df.Ign.csv", row.names = F)
 
 #also making the types rda a csv
 write.csv(types, file= "types.csv", row.names = F)
+
 ```
+
+```{r}
+dat <- read.csv("https://raw.githubusercontent.com/R-Class/all-labs-ddmii-icps86/master/Permits_and_EC/Permits_processed.csv", stringsAsFactors = F)
+
+#Creating two subsets: dat and df.Ign
+
+#1. df.Ign subset holds  the permit types we are not using.
+#creating a vector that contains all the cases of ignored permit types.
+x <- dat$Type
+Ign <- x == "Antenna / Dish" | x =="Electric (Meter Set)" |  x=="Block Party (Business)" | x=="Block Party (Residential)" | x=="Curb Cut" | x=="Encroach (Deminimus)" | x=="Encroach (Major)"  | x=="Encroachment (Converted)" | x=="Footing / Foundation"  | x=="Liability Waiver" | x=="Loading Zone (Business)" | x=="Parking Meter Rental" | x=="Public Assembly" | x=="Road Cut" | x=="Sidewalk Cafe" | x=="Sidewalk Replace" | x=="Sign" | x=="Site Work"
+
+#subsetting it (18 ignored permit types)
+df.Ign <- dat[Ign,]
+
+#2. dat subset holds all permit types we are going to use. These are geocoded and have tract id (14 permit types)
+dat <- dat[!Ign,]
+
+#CLIPPING all dat permits outside syracuse city
+#use the tract variable, because of the over spatial function (described in the data wrangling rmd) the points outside the tracts have NA
+
+x<- is.na(dat$Tract) #191 NAs, or points outside the tracts
+dat <- dat[!x,] # eliminating the NAs
+
+####################
+
+#Creating the Dataframe with aggregates for each variable
+dat <- dat@data
+
+#TOTAL 
+x <- group_by(dat, Tract, Year)
+total <- summarize(x, 
+                   Tot.Frq = n(),
+                   Tot.Val = sum(Valuation)
+                   )
+
+#df.R
+cat <- as.character(dat@data$Type)  #setting up indexes
+df.R <- cat== "Res. Remodel/Chg Occ" | cat == "Res. New 1-2 Family" 
+df.R <- dat[df.R,] 
+
+x <- group_by(df.R, Tract, Year)
+Res <- summarize(x, 
+                   Res.Frq = n(),
+                   Res.Val = sum(Valuation)
+                   )
+
+#df.C
+df.C <- cat== "Com. New Building" | cat=="Com. Reno/Rem/Chg Occ"
+df.C <- dat[df.C,] 
+
+x <- group_by(df.C, Tract, Year)
+Com <- summarize(x, 
+                   Com.Frq = n(),
+                   Com.Val = sum(Valuation)
+                   )
+
+#df.D
+df.D <- cat=="Demolition"
+df.D <- dat[df.D,] 
+
+x <- group_by(df.D, Tract, Year)
+Dem <- summarize(x, 
+                   Dem.Frq = n(),
+                   Dem.Val = sum(Valuation)
+                   )
+
+#df.I
+df.I <- cat=="Electric" | cat=="Elevator" | cat=="Fire Alarm" | cat=="HVAC/Mechanical" | cat=="Misc.(deck, fence,ramp)" | cat=="Pool / Hot Tub" | cat=="Security Alarm" | cat=="Sprinkler" | cat=="Tank"
+df.I <- dat[df.I,] 
+
+x <- group_by(df.I, Tract, Year)
+Ins <- summarize(x, 
+                   Ins.Frq = n(),
+                   Ins.Val = sum(Valuation)
+                   )
+
+#binding the different aggregates by variable
+var <- merge(total, Res, all = T)
+var <- merge(w,Com, all = T)
+var <- merge(w,Ins, all = T)
+
+#write.csv(var, file = "Permits_var.csv")
+
+```
+
+
