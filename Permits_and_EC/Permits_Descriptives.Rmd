@@ -57,8 +57,8 @@ dat <- dat[!x,] # eliminating the NAs
 #TOTAL 
 x <- group_by(dat, Tract, Year)
 total <- summarize(x, 
-                   Tot.Frq = n(),
-                   Tot.Val = sum(Valuation)
+                   PER_TOT_FRQ = n(),
+                   PER_TOT_VAL = sum(Valuation)
                    )
 
 #df.R
@@ -68,8 +68,8 @@ df.R <- dat[df.R,]
 
 x <- group_by(df.R, Tract, Year)
 Res <- summarize(x, 
-                   Res.Frq = n(),
-                   Res.Val = sum(Valuation)
+                   PER_RES_FRQ = n(),
+                   PER_RES_VAL = sum(Valuation)
                    )
 
 #df.C
@@ -78,8 +78,8 @@ df.C <- dat[df.C,]
 
 x <- group_by(df.C, Tract, Year)
 Com <- summarize(x, 
-                   Com.Frq = n(),
-                   Com.Val = sum(Valuation)
+                   PER_COM_FRQ = n(),
+                   PER_COM_VAL = sum(Valuation)
                    )
 
 #df.D
@@ -88,8 +88,8 @@ df.D <- dat[df.D,]
 
 x <- group_by(df.D, Tract, Year)
 Dem <- summarize(x, 
-                   Dem.Frq = n(),
-                   Dem.Val = sum(Valuation)
+                   PER_DEM_FRQ = n(),
+                   PER_DEM_VAL = sum(Valuation)
                    )
 
 #df.I
@@ -98,8 +98,8 @@ df.I <- dat[df.I,]
 
 x <- group_by(df.I, Tract, Year)
 Ins <- summarize(x, 
-                   Ins.Frq = n(),
-                   Ins.Val = sum(Valuation)
+                   PER_INS_FRQ = n(),
+                   PER_INS_VAL = sum(Valuation)
                    )
 
 #binding the different aggregates by variable
@@ -107,8 +107,9 @@ var <- merge(total, Res, all = T)
 var <- merge(var,Com, all = T)
 var <- merge(var,Ins, all = T)
 
-#write.csv(var, file = "Permits_var.csv")
+colnames(var)[c(1,2)] <- c("TRACT", "YEAR")
 
+write.csv(var, file = "Permits_aggregated.csv")
 
 ####################
 
