@@ -3,10 +3,9 @@ Permits
 ignacio
 March 30, 2017
 
-Information about the Dataset
------------------------------
+### Information about the Dataset
 
-The Permits Dataset has information for 21,556 permits from 2012 - 2013. For each permit the Dataset inclueds variables like:
+The Permits Dataset has information for 21,556 permits from 2012 - 2016. For each permit the Dataset inclueds variables like:
 
 -   Type of Permit
 -   Applicant name (can be either a person or a company)
@@ -20,12 +19,25 @@ We used the types of permits to construct 4 categories that we will aggregate as
 
 There are 32 types of permits:
 
+    ##  [1] "Com. New Building"       "Com. Reno/Rem/Chg Occ"  
+    ##  [3] "Demolition"              "Electric"               
+    ##  [5] "Elevator"                "Fire Alarm"             
+    ##  [7] "HVAC/Mechanical"         "Misc.(deck, fence,ramp)"
+    ##  [9] "Pool / Hot Tub"          "Res. New 1-2 Family"    
+    ## [11] "Res. Remodel/Chg Occ"    "Security Alarm"         
+    ## [13] "Sprinkler"               "Tank"
+
 We have placed this types of Permits into 4 categories to analyze them separately. They are:
 
--   Residential Properties
--   Commercial Properties
--   Demolitions
--   Installations and Repairs (to public space, res and com)
+-   Residential Properties, 2 Types of permits in this category: "Res. Remodel/Chg Occ", "Res. New 1-2 Family"
+
+-   Commercial Properties, 2 Types of permits in this category: "Com. New Building", "Com. Reno/Rem/Chg Occ"
+
+-   Demolitions, 1 Type of permit in this category: Demolitions
+
+-   Installations and Repairs (to public space, res and com), 9 Types of permits in this category: Electric, Elevator, Fire Alarm, HVAC/Mechanical, Misc.(deck, fence,ramp), Pool / Hot Tub, Security Alarm, Sprinkler, Tank.
+
+Finally, 18 permit types have been ignored.
 
 In what follows we explain the categories that we have constructed and show some descriptives.
 
@@ -131,7 +143,7 @@ In what follows we explain the categories that we have constructed and show some
 </tbody>
 </table>
 
-![](Permits_Descriptives_files/figure-markdown_github/unnamed-chunk-2-1.png)![](Permits_Descriptives_files/figure-markdown_github/unnamed-chunk-2-2.png)
+![](Permits_Descriptives_files/figure-markdown_github/unnamed-chunk-3-1.png)![](Permits_Descriptives_files/figure-markdown_github/unnamed-chunk-3-2.png)
 
 ### **2.New/Reno of Commercial Property**
 
@@ -229,7 +241,7 @@ In what follows we explain the categories that we have constructed and show some
 </tbody>
 </table>
 
-![](Permits_Descriptives_files/figure-markdown_github/unnamed-chunk-3-1.png)![](Permits_Descriptives_files/figure-markdown_github/unnamed-chunk-3-2.png)
+![](Permits_Descriptives_files/figure-markdown_github/unnamed-chunk-4-1.png)![](Permits_Descriptives_files/figure-markdown_github/unnamed-chunk-4-2.png)
 
 ### **3.Demolitions**
 
@@ -323,7 +335,7 @@ In what follows we explain the categories that we have constructed and show some
 </tbody>
 </table>
 
-![](Permits_Descriptives_files/figure-markdown_github/unnamed-chunk-4-1.png)![](Permits_Descriptives_files/figure-markdown_github/unnamed-chunk-4-2.png)
+![](Permits_Descriptives_files/figure-markdown_github/unnamed-chunk-5-1.png)![](Permits_Descriptives_files/figure-markdown_github/unnamed-chunk-5-2.png)
 
 ### **4.Installations and Repairs on all properties**
 
@@ -483,13 +495,13 @@ In what follows we explain the categories that we have constructed and show some
 </tbody>
 </table>
 
-![](Permits_Descriptives_files/figure-markdown_github/unnamed-chunk-5-1.png)![](Permits_Descriptives_files/figure-markdown_github/unnamed-chunk-5-2.png)
+![](Permits_Descriptives_files/figure-markdown_github/unnamed-chunk-6-1.png)![](Permits_Descriptives_files/figure-markdown_github/unnamed-chunk-6-2.png)
 
 ### All Categories at a glance
 
-![](Permits_Descriptives_files/figure-markdown_github/unnamed-chunk-6-1.png)
+![](Permits_Descriptives_files/figure-markdown_github/unnamed-chunk-7-1.png)
 
-![](Permits_Descriptives_files/figure-markdown_github/unnamed-chunk-7-1.png)![](Permits_Descriptives_files/figure-markdown_github/unnamed-chunk-7-2.png)![](Permits_Descriptives_files/figure-markdown_github/unnamed-chunk-7-3.png)![](Permits_Descriptives_files/figure-markdown_github/unnamed-chunk-7-4.png)![](Permits_Descriptives_files/figure-markdown_github/unnamed-chunk-7-5.png)![](Permits_Descriptives_files/figure-markdown_github/unnamed-chunk-7-6.png)![](Permits_Descriptives_files/figure-markdown_github/unnamed-chunk-7-7.png)![](Permits_Descriptives_files/figure-markdown_github/unnamed-chunk-7-8.png)![](Permits_Descriptives_files/figure-markdown_github/unnamed-chunk-7-9.png)
+![](Permits_Descriptives_files/figure-markdown_github/unnamed-chunk-8-1.png)![](Permits_Descriptives_files/figure-markdown_github/unnamed-chunk-8-2.png)![](Permits_Descriptives_files/figure-markdown_github/unnamed-chunk-8-3.png)![](Permits_Descriptives_files/figure-markdown_github/unnamed-chunk-8-4.png)![](Permits_Descriptives_files/figure-markdown_github/unnamed-chunk-8-5.png)![](Permits_Descriptives_files/figure-markdown_github/unnamed-chunk-8-6.png)![](Permits_Descriptives_files/figure-markdown_github/unnamed-chunk-8-7.png)![](Permits_Descriptives_files/figure-markdown_github/unnamed-chunk-8-8.png)![](Permits_Descriptives_files/figure-markdown_github/unnamed-chunk-8-9.png)
 
 ### **Categories not taken into account**
 
@@ -703,7 +715,7 @@ All permits we found it was not useful to include:
 </tbody>
 </table>
 
-![](Permits_Descriptives_files/figure-markdown_github/unnamed-chunk-8-1.png)
+![](Permits_Descriptives_files/figure-markdown_github/unnamed-chunk-9-1.png)
 
 #### **Why is New Foundations not included?**
 
@@ -799,4 +811,4 @@ All permits we found it was not useful to include:
 </tbody>
 </table>
 
-![](Permits_Descriptives_files/figure-markdown_github/unnamed-chunk-9-1.png)![](Permits_Descriptives_files/figure-markdown_github/unnamed-chunk-9-2.png)
+![](Permits_Descriptives_files/figure-markdown_github/unnamed-chunk-10-1.png)![](Permits_Descriptives_files/figure-markdown_github/unnamed-chunk-10-2.png)
