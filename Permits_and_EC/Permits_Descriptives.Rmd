@@ -25,7 +25,7 @@ library(spatialEco)
 
 ```
 
-```{r,echo=FALSE}
+```{r, echo=FALSE}
 
 #LOADING DATASET, formating it for sp and creating a types subset
 
@@ -50,9 +50,73 @@ dat <- dat[!Ign,]
 x<- is.na(dat$Tract) #191 NAs, or points outside the tracts
 dat <- dat[!x,] # eliminating the NAs
 
+####################
+
+#Creating the Dataframe with aggregates for each variable
+
+#TOTAL 
+x <- group_by(dat, Tract, Year)
+total <- summarize(x, 
+                   Tot.Frq = n(),
+                   Tot.Val = sum(Valuation)
+                   )
+
+#df.R
+cat <- as.character(dat$Type)  #setting up indexes
+df.R <- cat== "Res. Remodel/Chg Occ" | cat == "Res. New 1-2 Family" 
+df.R <- dat[df.R,] 
+
+x <- group_by(df.R, Tract, Year)
+Res <- summarize(x, 
+                   Res.Frq = n(),
+                   Res.Val = sum(Valuation)
+                   )
+
+#df.C
+df.C <- cat== "Com. New Building" | cat=="Com. Reno/Rem/Chg Occ"
+df.C <- dat[df.C,] 
+
+x <- group_by(df.C, Tract, Year)
+Com <- summarize(x, 
+                   Com.Frq = n(),
+                   Com.Val = sum(Valuation)
+                   )
+
+#df.D
+df.D <- cat=="Demolition"
+df.D <- dat[df.D,] 
+
+x <- group_by(df.D, Tract, Year)
+Dem <- summarize(x, 
+                   Dem.Frq = n(),
+                   Dem.Val = sum(Valuation)
+                   )
+
+#df.I
+df.I <- cat=="Electric" | cat=="Elevator" | cat=="Fire Alarm" | cat=="HVAC/Mechanical" | cat=="Misc.(deck, fence,ramp)" | cat=="Pool / Hot Tub" | cat=="Security Alarm" | cat=="Sprinkler" | cat=="Tank"
+df.I <- dat[df.I,] 
+
+x <- group_by(df.I, Tract, Year)
+Ins <- summarize(x, 
+                   Ins.Frq = n(),
+                   Ins.Val = sum(Valuation)
+                   )
+
+#binding the different aggregates by variable
+var <- merge(total, Res, all = T)
+var <- merge(var,Com, all = T)
+var <- merge(var,Ins, all = T)
+
+#write.csv(var, file = "Permits_var.csv")
+
+
+####################
+
 #FORMATTING dat as a spatial object
 dat <- SpatialPointsDataFrame(dat[ ,c( "lon", "lat") ], dat, proj4string=CRS("+proj=longlat +datum=WGS84")) #this is so that it does not lose the lat lon in the dataframe when transformed into a sp
 
+
+####################
 
 #CREATING types SUBSET for dat and df.Ign: just to show the freq of the different permits types
 
@@ -77,7 +141,6 @@ x <- aggregate(dat$Valuation, by=list(dat$Type), FUN=max)
 x <- arrange(x, Group.1)
 types$maxval <- x$x
 
-
 #Second, for the df.Ign dataset
 #using table to create a dataframe with the frequencies for each category
 types.Ign <- data.frame(type = names(table(df.Ign$Type)), freq = as.numeric(table(df.Ign$Type)))
@@ -100,7 +163,6 @@ x <- arrange(x, Group.1)
 types.Ign$maxval <- x$x
 
 
-
 #########################
 
 #LOADING THE SHAPEFILE
@@ -110,7 +172,6 @@ shapes <- geojson_read("https://raw.githubusercontent.com/R-Class/all-labs-ddmii
 
 
 ```
-
 
 
 
